@@ -6,10 +6,10 @@ import requests
 from ...constants import column_names
 from boiler.weater_info.interpolators.weather_data_interpolator import WeatherDataInterpolator
 from boiler.weater_info.parsers.weather_data_parser import WeatherDataParser
-from .weather_provider import WeatherProvider
+from .weather_repository import WeatherRepository
 
 
-class OnlineSoftMWeatherForecastProvider(WeatherProvider):
+class OnlineSoftMWeatherForecastRepository(WeatherRepository):
 
     def __init__(self,
                  server_address="https://lysva.agt.town/",
@@ -30,7 +30,7 @@ class OnlineSoftMWeatherForecastProvider(WeatherProvider):
         self._logger.debug("Weather data parser is set")
         self._weather_data_parser = weather_data_parser
 
-    def get_weather(self, start_datetime: pd.Timestamp = None, end_datetime: pd.Timestamp = None):
+    def get_weather_info(self, start_datetime: pd.Timestamp = None, end_datetime: pd.Timestamp = None):
         self._logger.debug(f"Requested weather info from {start_datetime} to {end_datetime}")
 
         data = self._get_forecast_from_server()
@@ -44,7 +44,6 @@ class OnlineSoftMWeatherForecastProvider(WeatherProvider):
 
         return weather_df
 
-    # noinspection PyMethodMayBeStatic
     def _get_forecast_from_server(self):
         self._logger.debug(f"Requesting weather forecast from server {self._weather_data_server_address}")
         url = f"{self._weather_data_server_address}/JSON/"
@@ -55,3 +54,12 @@ class OnlineSoftMWeatherForecastProvider(WeatherProvider):
         response = requests.get(url, params=params)
         self._logger.debug(f"Weather forecast is loaded. Response status code is {response.status_code}")
         return response.text
+
+    def set_weather_info(self, weather_df: pd.DataFrame):
+        raise ValueError("This operationis not supported for this repository type")
+
+    def update_weather_info(self, weather_df: pd.DataFrame):
+        raise ValueError("This operationis not supported for this repository type")
+
+    def delete_weather_info(self, start_datetime: pd.Timestamp = None, end_datetime: pd.Timestamp = None):
+        raise ValueError("This operationis not supported for this repository type")
