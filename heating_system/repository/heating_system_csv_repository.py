@@ -20,7 +20,7 @@ class HeatingSystemCSVRepository(HeatingSystemRepository):
                  storage_path: str = "./storage",
                  parser: HeatingSystemDataParser = None,
                  interpolator: HeatingSystemDataInterpolator = None,
-                 encoding: str = None):
+                 encoding: str = 'UTF-8'):
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance of the service")
 
