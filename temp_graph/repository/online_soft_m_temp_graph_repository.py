@@ -6,7 +6,7 @@ from .temp_graph_provider import TempGraphProvider
 from ..parsers.temp_graph_parser import TempGraphParser
 
 
-class OnlineSoftMTempGraphProvider(TempGraphProvider):
+class OnlineSoftMTempGraphRepository(TempGraphProvider):
 
     def __init__(self,
                  server_address="https://lysva.agt.town/",
