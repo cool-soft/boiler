@@ -64,5 +64,5 @@ class AsyncOnlineSoftMWeatherForecastRepository(AsyncWeatherRepository):
     async def update_weather_info(self, weather_df: pd.DataFrame):
         raise ValueError("This operationis not supported for this repository type")
 
-    async def delete_weather_info(self, start_datetime: pd.Timestamp = None, end_datetime: pd.Timestamp = None):
+    async def delete_weather_info_older_than(self, datetime: pd.Timestamp):
         raise ValueError("This operationis not supported for this repository type")
