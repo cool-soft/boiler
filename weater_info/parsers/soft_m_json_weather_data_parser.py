@@ -1,7 +1,7 @@
 import logging
 
 import pandas as pd
-from dateutil.tz import gettz
+from dateutil import tz
 
 from ...constants import column_names
 from ..constants import soft_m_column_names, soft_m_column_names_equals
@@ -10,16 +10,16 @@ from .weather_data_parser import WeatherDataParser
 
 class SoftMJSONWeatherDataParser(WeatherDataParser):
 
-    def __init__(self, weather_data_timezone_name="UTC"):
+    def __init__(self, weather_data_timezone=tz.UTC):
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance of the service")
 
-        self._weather_data_timezone = gettz(weather_data_timezone_name)
+        self._weather_data_timezone = weather_data_timezone
         self._column_names_equals = soft_m_column_names_equals.DICT
 
-    def set_weather_data_timezone_name(self, timezone_name):
+    def set_weather_data_timezone(self, timezone):
         self._logger.debug("Weater timezone is set")
-        self._weather_data_timezone = gettz(timezone_name)
+        self._weather_data_timezone = timezone
 
     def set_column_names_equals(self, names_equals):
         self._logger.debug("Column names equals are set")
