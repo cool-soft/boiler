@@ -42,6 +42,8 @@ class OnlineSoftMWeatherForecastRepository(WeatherRepository):
         if end_datetime is not None:
             weather_df = weather_df[weather_df[column_names.TIMESTAMP] <= end_datetime]
 
+        self._logger.debug(f"Gathered {len(weather_df)} weather info items")
+
         return weather_df
 
     async def _get_forecast_from_server(self):
