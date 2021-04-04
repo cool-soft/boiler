@@ -3,7 +3,7 @@ import logging
 import pandas as pd
 
 from boiler.constants import column_names
-from boiler.temp_requirements_calculators.utils import arithmetic_round
+from boiler.temp_requirements.calculators.utils import arithmetic_round
 
 
 class TempGraphRequirementsCalculator:
