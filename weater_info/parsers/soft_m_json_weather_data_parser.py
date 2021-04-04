@@ -18,7 +18,7 @@ class SoftMJSONWeatherDataParser(WeatherDataParser):
         self._column_names_equals = soft_m_column_names_equals.DICT
 
     def set_weather_data_timezone(self, timezone):
-        self._logger.debug("Weater timezone is set")
+        self._logger.debug(f"Weater timezone is set to {timezone}")
         self._weather_data_timezone = timezone
 
     def set_column_names_equals(self, names_equals):
@@ -39,7 +39,7 @@ class SoftMJSONWeatherDataParser(WeatherDataParser):
         df.rename(columns=self._column_names_equals, inplace=True)
 
     def _convert_date_and_time_to_timestamp(self, df):
-        self._logger.debug("Convering dates ant time to timestamp")
+        self._logger.debug("Convering dates and time to timestamp")
 
         dates_as_str = df[soft_m_column_names.SOFT_M_WEATHER_DATE]
         time_as_str = df[soft_m_column_names.SOFT_M_WEATHER_TIME]
