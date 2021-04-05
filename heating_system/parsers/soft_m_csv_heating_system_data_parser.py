@@ -14,7 +14,7 @@ class SoftMCSVHeatingSystemDataParser(HeatingSystemDataParser):
 
     def __init__(self, weather_data_timezone_name=None):
         self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance of the service")
+        self._logger.debug("Creating instance of the provider")
 
         self._timestamp_timezone_name = weather_data_timezone_name
         self._timestamp_parse_patterns = (

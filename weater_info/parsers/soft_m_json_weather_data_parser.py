@@ -12,7 +12,7 @@ class SoftMJSONWeatherDataParser(WeatherDataParser):
 
     def __init__(self, weather_data_timezone=tz.UTC):
         self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance of the service")
+        self._logger.debug("Creating instance of the provider")
 
         self._weather_data_timezone = weather_data_timezone
         self._column_names_equals = soft_m_column_names_equals.DICT

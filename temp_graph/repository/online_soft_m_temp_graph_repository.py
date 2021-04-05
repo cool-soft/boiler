@@ -13,7 +13,7 @@ class OnlineSoftMTempGraphRepository(TempGraphRepository):
                  server_address="https://lysva.agt.town/",
                  temp_graph_parser: TempGraphParser = None):
         self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance of the service")
+        self._logger.debug("Creating instance of the provider")
 
         self._temp_graph_server_address = server_address
         self._temp_graph_parser = temp_graph_parser

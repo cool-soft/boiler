@@ -10,7 +10,7 @@ class CorrTableTempPredictor:
                  home_time_deltas=None,
                  home_min_temp_coefficient=1):
         self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance of the service")
+        self._logger.debug("Creating instance of the provider")
 
         self._temp_correlation_table = temp_correlation_table
         self._homes_time_deltas = home_time_deltas

@@ -22,7 +22,7 @@ class HeatingSystemCSVRepository(HeatingSystemRepository):
                  interpolator: HeatingSystemDataInterpolator = None,
                  encoding: str = 'UTF-8'):
         self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance of the service")
+        self._logger.debug("Creating instance of the provider")
 
         self._circuit_id = circuit_id
         self._storage_path = storage_path

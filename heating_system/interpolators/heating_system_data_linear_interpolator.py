@@ -11,7 +11,7 @@ class HeatingSystemDataLinearInterpolator(HeatingSystemDataInterpolator):
 
     def __init__(self):
         self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance of the service")
+        self._logger.debug("Creating instance of the provider")
 
         self._columns_to_interpolate = (
             column_names.FORWARD_PIPE_COOLANT_TEMP,

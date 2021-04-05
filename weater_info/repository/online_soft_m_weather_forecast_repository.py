@@ -16,7 +16,7 @@ class OnlineSoftMWeatherForecastRepository(WeatherRepository):
                  weather_data_parser: WeatherDataParser = None,
                  weather_data_interpolator: WeatherDataInterpolator = None):
         self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance of the service")
+        self._logger.debug("Creating instance of the provider")
 
         self._weather_data_server_address = server_address
         self._weather_data_parser = weather_data_parser
