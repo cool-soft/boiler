@@ -1,7 +1,8 @@
 import logging
 
 import numpy as np
-from scipy.signal import correlate
+from numpy import correlate
+# from scipy.signal import correlate
 
 from boiler.time_delta.time_delta_calculator import TimeDeltaCalculator
 
