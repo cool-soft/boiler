@@ -16,6 +16,8 @@ class CorrTableTempPredictor:
         self._homes_time_deltas = home_time_deltas
         self._home_min_temp_coefficient = home_min_temp_coefficient
 
+        self._logger.debug(f"Home min temp coefficient is {home_min_temp_coefficient}")
+
     def set_homes_time_deltas(self, homes_time_deltas):
         self._logger.debug("Set homes time deltas")
         self._homes_time_deltas = homes_time_deltas
