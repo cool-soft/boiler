@@ -10,8 +10,8 @@ from boiler.constants import column_names
 class CorrTableTempPredictor:
 
     def __init__(self,
-                 temp_correlation_table: Optional[pd.Dataframe] = None,
-                 home_time_deltas: Optional[pd.Dataframe] = None,
+                 temp_correlation_table: Optional[pd.DataFrame] = None,
+                 home_time_deltas: Optional[pd.DataFrame] = None,
                  home_min_temp_coefficient: float = 1.0) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance of the provider")
@@ -22,7 +22,7 @@ class CorrTableTempPredictor:
 
         self._logger.debug(f"Home min temp coefficient is {home_min_temp_coefficient}")
 
-    def set_homes_time_deltas(self, homes_time_deltas: pd.Dataframe) -> None:
+    def set_homes_time_deltas(self, homes_time_deltas: pd.DataFrame) -> None:
         self._logger.debug("Set homes time deltas")
         self._homes_time_deltas = homes_time_deltas
 
@@ -30,7 +30,7 @@ class CorrTableTempPredictor:
     def get_homes_time_deltas(self) -> pd.DataFrame:
         return self._homes_time_deltas.copy()
 
-    def set_temp_correlation_table(self, temp_correlation_table: pd.Dataframe) -> None:
+    def set_temp_correlation_table(self, temp_correlation_table: pd.DataFrame) -> None:
         self._logger.debug("Set temp correlation table")
         self._temp_correlation_table = temp_correlation_table
 
