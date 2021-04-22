@@ -11,7 +11,7 @@ class StdVarTimeDeltaCalculator(TimeDeltaCalculator):
     def __init__(self,
                  x_round_step: float = 0.1,
                  min_lag: int = 1,
-                 max_lag: int = 20):
+                 max_lag: int = 20) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance")
 

@@ -1,4 +1,5 @@
 import logging
+from typing import Optional
 
 import pandas as pd
 
@@ -8,17 +9,18 @@ from boiler.temp_requirements.calculators.utils import arithmetic_round
 
 class TempGraphRequirementsCalculator:
 
-    def __init__(self, temp_graph: pd.DataFrame = None):
+    def __init__(self,
+                 temp_graph: Optional[pd.DataFrame] = None) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance of the provider")
 
         self._temp_graph = temp_graph
 
-    def set_temp_graph(self, temp_graph):
+    def set_temp_graph(self, temp_graph: pd.DataFrame) -> None:
         self._logger.debug("Temp graph is set")
         self._temp_graph = temp_graph
 
-    def get_temp_requirements_for_weather_temp(self, weather_temp):
+    def get_temp_requirements_for_weather_temp(self, weather_temp: float) -> float:
         weather_temp = arithmetic_round(weather_temp)
         available_temp = self._temp_graph[self._temp_graph[column_names.WEATHER_TEMP] <= weather_temp]
         if not available_temp.empty:

@@ -1,7 +1,10 @@
 import numpy as np
+import pandas as pd
+
+from boiler.constants import column_names
 
 
-def average_values(x, window_len=4, window='hanning'):
+def average_values(x: np.array, window_len: int = 4, window: str = 'hanning') -> np.array:
     if x.ndim != 1:
         raise ValueError("smooth only accepts 1 dimension arrays.")
 
@@ -26,10 +29,9 @@ def average_values(x, window_len=4, window='hanning'):
     # return y
 
 
-def filter_by_timestamp_closed(df, start_datetime, end_datetime, timestamp_column="timestamp"):
+def filter_by_timestamp_closed(df: pd.Dataframe, start_datetime, end_datetime) -> pd.DataFrame:
     df = df[
-        (df[timestamp_column] >= start_datetime) &
-        (df[timestamp_column] <= end_datetime)
+        (df[column_names.TIMESTAMP] >= start_datetime) &
+        (df[column_names.TIMESTAMP] <= end_datetime)
     ]
-
     return df

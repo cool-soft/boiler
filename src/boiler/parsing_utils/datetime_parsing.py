@@ -1,8 +1,11 @@
 import datetime
 import re
+from typing import List
 
 
-def parse_datetime(datetime_as_str, datetime_patterns, timezone=None):
+def parse_datetime(datetime_as_str: str,
+                   datetime_patterns: List[str],
+                   timezone=None) -> datetime.datetime:
     for pattern in datetime_patterns:
         parsed = re.match(pattern, datetime_as_str)
         if parsed is not None:
@@ -18,5 +21,14 @@ def parse_datetime(datetime_as_str, datetime_patterns, timezone=None):
     second = 0
     millisecond = 0
 
-    datetime_ = datetime.datetime(year, month, day, hour, minute, second, millisecond, tzinfo=timezone)
+    datetime_ = datetime.datetime(
+        year,
+        month,
+        day,
+        hour,
+        minute,
+        second,
+        millisecond,
+        tzinfo=timezone
+    )
     return datetime_

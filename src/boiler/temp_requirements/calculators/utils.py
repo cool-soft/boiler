@@ -1,7 +1,7 @@
 import math
 
 
-def arithmetic_round(number):
+def arithmetic_round(number: float) -> int:
     number_floor = math.floor(number)
     if number - number_floor < 0.5:
         rounded_number = number_floor

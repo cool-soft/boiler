@@ -1,4 +1,8 @@
 import logging
+from typing import Optional, List
+
+import numpy as np
+import pandas as pd
 
 from boiler.constants import column_names
 
@@ -6,9 +10,9 @@ from boiler.constants import column_names
 class CorrTableTempPredictor:
 
     def __init__(self,
-                 temp_correlation_table=None,
-                 home_time_deltas=None,
-                 home_min_temp_coefficient=1):
+                 temp_correlation_table: Optional[pd.Dataframe] = None,
+                 home_time_deltas: Optional[pd.Dataframe] = None,
+                 home_min_temp_coefficient: float = 1.0) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance of the provider")
 
@@ -18,22 +22,24 @@ class CorrTableTempPredictor:
 
         self._logger.debug(f"Home min temp coefficient is {home_min_temp_coefficient}")
 
-    def set_homes_time_deltas(self, homes_time_deltas):
+    def set_homes_time_deltas(self, homes_time_deltas: pd.Dataframe) -> None:
         self._logger.debug("Set homes time deltas")
         self._homes_time_deltas = homes_time_deltas
 
-    def get_homes_time_deltas(self):
+    # TODO: Убрать использование
+    def get_homes_time_deltas(self) -> pd.DataFrame:
         return self._homes_time_deltas.copy()
 
-    def set_temp_correlation_table(self, temp_correlation_table):
+    def set_temp_correlation_table(self, temp_correlation_table: pd.Dataframe) -> None:
         self._logger.debug("Set temp correlation table")
         self._temp_correlation_table = temp_correlation_table
 
-    def set_home_min_temp_coefficient(self, min_temp_coefficient):
+    def set_home_min_temp_coefficient(self, min_temp_coefficient: float) -> None:
         logging.debug(f"Set home min temp coefficient to {min_temp_coefficient}")
         self._home_min_temp_coefficient = min_temp_coefficient
 
-    def predict_on_temp_requirements(self, temp_requirements):
+    # TODO: возвращать np.array
+    def predict_on_temp_requirements(self, temp_requirements: np.array) -> List:
         max_home_time_delta = self._homes_time_deltas[column_names.TIME_DELTA].max()
         boiler_temp_count = len(temp_requirements) - max_home_time_delta
 
@@ -44,7 +50,9 @@ class CorrTableTempPredictor:
 
         return boiler_temp_list
 
-    def _calc_boiler_temp_for_time_moment(self, time_moment_number, temp_requirements_arr):
+    def _calc_boiler_temp_for_time_moment(self,
+                                          time_moment_number: int,
+                                          temp_requirements_arr: np.array) -> float:
         need_boiler_temp = float("-inf")
 
         home_names_list = self._homes_time_deltas[column_names.HOME_NAME].to_list()

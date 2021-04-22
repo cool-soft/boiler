@@ -1,19 +1,21 @@
+from typing import List, Optional
+
 import pandas as pd
 
 
 class HeatingSystemRepository:
 
-    def list(self) -> list:
+    def list(self) -> List[str]:
         raise NotImplementedError
 
     def get_dataset(self,
                     dataset_id: str,
-                    start_datetime: pd.Timestamp = None,
-                    end_datetime: pd.Timestamp = None):
+                    start_datetime: Optional[pd.Timestamp] = None,
+                    end_datetime: Optional[pd.Timestamp] = None) -> pd.DataFrame:
         raise NotImplementedError
 
-    def set_dataset(self, dataset_id: str, dataset: pd.DataFrame):
+    def set_dataset(self, dataset_id: str, dataset: pd.DataFrame) -> None:
         raise NotImplementedError
 
-    def update_dataset(self, dataset_id: str, dataset: pd.DataFrame):
+    def update_dataset(self, dataset_id: str, dataset: pd.DataFrame) -> None:
         raise NotImplementedError

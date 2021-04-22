@@ -1,15 +1,16 @@
 import logging
 
 import numpy as np
-from numpy import correlate
-# from scipy.signal import correlate
 
 from boiler.time_delta.time_delta_calculator import TimeDeltaCalculator
 
 
+# from scipy.signal import correlate
+
+
 class CorrTimeDeltaCalculator(TimeDeltaCalculator):
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance")
 
@@ -22,7 +23,7 @@ class CorrTimeDeltaCalculator(TimeDeltaCalculator):
         y -= y.mean()
         y /= y.std()
 
-        corr = correlate(y, x)
+        corr = np.correlate(y, x)
         lag = corr.argmax() + 1 - len(y)
 
         return lag

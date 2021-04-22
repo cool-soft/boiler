@@ -1,32 +1,34 @@
 from datetime import timedelta
 import logging
+from typing import List, Optional
 
 import pandas as pd
 
-from ...constants import column_names
-from .weather_data_interpolator import WeatherDataInterpolator
+from boiler.constants import column_names
+from boiler.weater_info.interpolators.weather_data_interpolator \
+    import WeatherDataInterpolator
 
 
 class WeatherDataLinearInterpolator(WeatherDataInterpolator):
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance of the provider")
 
         self._interpolation_step = timedelta(minutes=3)
         self._columns_to_interpolate = [column_names.WEATHER_TEMP]
 
-    def set_interpolation_step(self, interpolation_step):
+    def set_interpolation_step(self, interpolation_step: pd.Timedelta) -> None:
         self._interpolation_step = interpolation_step
 
-    def set_columns_to_interpolate(self, columns_to_interpolate):
+    def set_columns_to_interpolate(self, columns_to_interpolate: List[str]) -> None:
         self._columns_to_interpolate = columns_to_interpolate
 
     def interpolate_weather_data(self,
                                  df: pd.DataFrame,
-                                 start_datetime=None,
-                                 end_datetime=None,
-                                 inplace=False) -> pd.DataFrame:
+                                 start_datetime: Optional[pd.Timestamp] = None,
+                                 end_datetime: Optional[pd.Timestamp] = None,
+                                 inplace: bool = False) -> pd.DataFrame:
         self._logger.debug("Requested weather data interpolating")
 
         if not inplace:
@@ -44,15 +46,17 @@ class WeatherDataLinearInterpolator(WeatherDataInterpolator):
 
         return df
 
-    def _round_datetime(self, df):
+    def _round_datetime(self, df: pd.DataFrame) -> None:
         self._logger.debug("Rounding datetime")
 
         interpolations_step_in_seconds = int(self._interpolation_step.total_seconds())
         df[column_names.TIMESTAMP] = df[column_names.TIMESTAMP].dt.round(f"{interpolations_step_in_seconds}s")
         df.drop_duplicates(column_names.TIMESTAMP, inplace=True, ignore_index=True)
 
-    # noinspection PyMethodMayBeStatic
-    def _interpolate_border_datetime(self, df: pd.DataFrame, start_datetime: pd.Timestamp, end_datetime: pd.Timestamp):
+    def _interpolate_border_datetime(self,
+                                     df: pd.DataFrame,
+                                     start_datetime: pd.Timestamp,
+                                     end_datetime: pd.Timestamp) -> pd.DataFrame:
         self._logger.debug("Interpolating border datetime values")
 
         if start_datetime is not None:
@@ -73,7 +77,7 @@ class WeatherDataLinearInterpolator(WeatherDataInterpolator):
 
         return df
 
-    def _interpolate_passes_of_datetime(self, df: pd.DataFrame):
+    def _interpolate_passes_of_datetime(self, df: pd.DataFrame) -> pd.DataFrame:
         self._logger.debug("Interpolating passes of datetime")
 
         datetime_to_insert = []
@@ -98,7 +102,7 @@ class WeatherDataLinearInterpolator(WeatherDataInterpolator):
 
         return df
 
-    def _interpolate_border_data(self, df):
+    def _interpolate_border_data(self, df: pd.DataFrame) -> None:
         self._logger.debug("Interpolating border data values")
 
         first_datetime_index = df[column_names.TIMESTAMP].idxmin()
@@ -115,7 +119,7 @@ class WeatherDataLinearInterpolator(WeatherDataInterpolator):
                 last_valid_value = df.loc[last_valid_index, column_name]
                 df.loc[last_datetime_index, column_name] = last_valid_value
 
-    def _interpolate_passes_of_data(self, df):
+    def _interpolate_passes_of_data(self, df: pd.DataFrame) -> None:
         self._logger.debug("Interpolating passes of data")
         for column_to_interpolate in self._columns_to_interpolate:
             df[column_to_interpolate] = pd.to_numeric(df[column_to_interpolate], downcast="float")

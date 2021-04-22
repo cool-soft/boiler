@@ -1,15 +1,17 @@
 import logging
 from datetime import timedelta
+from typing import List, Optional
 
 import pandas as pd
 
-from ...constants import column_names
-from .heating_system_data_interpolator import HeatingSystemDataInterpolator
+from boiler.constants import column_names
+from boiler.heating_system.interpolators.heating_system_data_interpolator \
+    import HeatingSystemDataInterpolator
 
 
 class HeatingSystemDataLinearInterpolator(HeatingSystemDataInterpolator):
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance of the provider")
 
@@ -23,18 +25,18 @@ class HeatingSystemDataLinearInterpolator(HeatingSystemDataInterpolator):
         )
         self._interpolation_step = timedelta(seconds=180)
 
-    def set_columns_to_interpolate(self, columns):
+    def set_columns_to_interpolate(self, columns: List[str]) -> None:
         self._columns_to_interpolate = columns
 
-    def set_interpolation_step(self, interpolation_step):
+    def set_interpolation_step(self, interpolation_step: pd.Timedelta) -> None:
         self._interpolation_step = interpolation_step
 
     def interpolate_data(
             self,
             df: pd.DataFrame,
-            start_datetime=None,
-            end_datetime=None,
-            inplace=False
+            start_datetime: Optional[pd.Timestamp] = None,
+            end_datetime: Optional[pd.Timestamp] = None,
+            inplace: bool = False
     ) -> pd.DataFrame:
         self._logger.debug("Interpolating is requested")
 
@@ -53,7 +55,7 @@ class HeatingSystemDataLinearInterpolator(HeatingSystemDataInterpolator):
 
         return df
 
-    def _round_datetime(self, df):
+    def _round_datetime(self, df: pd.DataFrame) -> None:
         self._logger.debug("Rounding datetime")
 
         interpolations_step_in_seconds = int(self._interpolation_step.total_seconds())
@@ -64,7 +66,7 @@ class HeatingSystemDataLinearInterpolator(HeatingSystemDataInterpolator):
     def _interpolate_border_datetime(self,
                                      df: pd.DataFrame,
                                      start_datetime: pd.Timestamp,
-                                     end_datetime: pd.Timestamp):
+                                     end_datetime: pd.Timestamp) -> pd.DataFrame:
         self._logger.debug("Interpolating border datetime values")
 
         if start_datetime is not None:
@@ -110,7 +112,7 @@ class HeatingSystemDataLinearInterpolator(HeatingSystemDataInterpolator):
 
         return df
 
-    def _interpolate_border_data(self, df):
+    def _interpolate_border_data(self, df: pd.DataFrame) -> None:
         self._logger.debug("Interpolating border data values")
 
         first_datetime_index = df[column_names.TIMESTAMP].idxmin()
@@ -127,7 +129,7 @@ class HeatingSystemDataLinearInterpolator(HeatingSystemDataInterpolator):
                 last_valid_value = df.loc[last_valid_index, column_name]
                 df.loc[last_datetime_index, column_name] = last_valid_value
 
-    def _interpolate_passes_of_data(self, df):
+    def _interpolate_passes_of_data(self, df: pd.DataFrame) -> None:
         self._logger.debug("Interpolating passes of data")
         for column_to_interpolate in self._columns_to_interpolate:
             df[column_to_interpolate] = pd.to_numeric(df[column_to_interpolate], downcast="float")
