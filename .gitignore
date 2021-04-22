@@ -1,6 +1,5 @@
+.idea/
+/venv/
 
-**/__pycache__/
-
-src/updater.egg-info/
-
-src/boiler.egg-info/
+*.py[cod]
+src/*.egg-info/
