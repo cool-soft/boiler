@@ -21,7 +21,7 @@ class TempGraphStreamSyncCSVRepository(TempGraphStreamSyncRepository):
         self._parser = parser
         self._encoding = encoding
 
-        self._logger.debug(f"File path is {filepath}")
+        self._logger.debug(f"Filepath is {filepath}")
         self._logger.debug(f"Parse is {parser}")
         self._logger.debug(f"Encoding is {encoding}")
 
