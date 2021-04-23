@@ -7,7 +7,7 @@ from boiler.constants import column_names
 from .temp_requirements_db_async_repository import TempRequirementsDBAsyncRepository
 
 
-class TempRequirementsDBSyncFakeRepository(TempRequirementsDBAsyncRepository):
+class TempRequirementsDBAsyncFakeRepository(TempRequirementsDBAsyncRepository):
 
     def __init__(self) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
