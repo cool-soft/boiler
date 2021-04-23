@@ -1,3 +1,5 @@
+from typing import Optional
+
 import numpy as np
 import pandas as pd
 
@@ -29,9 +31,11 @@ def average_values(x: np.array, window_len: int = 4, window: str = 'hanning') ->
     # return y
 
 
-def filter_by_timestamp_closed(df: pd.Dataframe, start_datetime, end_datetime) -> pd.DataFrame:
-    df = df[
-        (df[column_names.TIMESTAMP] >= start_datetime) &
-        (df[column_names.TIMESTAMP] <= end_datetime)
-    ]
+def filter_by_timestamp_closed(df: pd.DataFrame,
+                               start_datetime: Optional[pd.Timestamp] = None,
+                               end_datetime: Optional[pd.Timestamp] = None) -> pd.DataFrame:
+    if start_datetime is not None:
+        df = df[df[column_names.TIMESTAMP] >= start_datetime]
+    if end_datetime is not None:
+        df = df[df[column_names.TIMESTAMP] <= end_datetime]
     return df
