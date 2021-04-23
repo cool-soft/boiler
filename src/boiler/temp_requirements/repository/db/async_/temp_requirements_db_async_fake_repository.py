@@ -4,10 +4,10 @@ from typing import Optional
 import pandas as pd
 
 from boiler.constants import column_names
-from .temp_requirements_db_sync_repository import TempRequirementsDBSyncRepository
+from .temp_requirements_db_async_repository import TempRequirementsDBAsyncRepository
 
 
-class TempRequirementsDBSyncFakeRepository(TempRequirementsDBSyncRepository):
+class TempRequirementsDBSyncFakeRepository(TempRequirementsDBAsyncRepository):
 
     def __init__(self) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
@@ -22,9 +22,9 @@ class TempRequirementsDBSyncFakeRepository(TempRequirementsDBSyncRepository):
             )
         )
 
-    def get_temp_requirements(self,
-                              start_datetime: Optional[pd.Timestamp] = None,
-                              end_datetime: Optional[pd.Timestamp] = None) -> pd.DataFrame:
+    async def get_temp_requirements(self,
+                                    start_datetime: Optional[pd.Timestamp] = None,
+                                    end_datetime: Optional[pd.Timestamp] = None) -> pd.DataFrame:
         self._logger.debug(f"Requested temp requirements from {start_datetime} to {end_datetime}")
 
         control_df = self._cache.copy()
@@ -35,12 +35,12 @@ class TempRequirementsDBSyncFakeRepository(TempRequirementsDBSyncRepository):
 
         return control_df
 
-    def set_temp_requirements(self, temp_requirements_df: pd.DataFrame) -> None:
+    async def set_temp_requirements(self, temp_requirements_df: pd.DataFrame) -> None:
         self._logger.debug("Temp requirements are stored")
 
         self._cache = temp_requirements_df.copy()
 
-    def update_temp_requirements(self, temp_requirements_df: pd.DataFrame) -> None:
+    async def update_temp_requirements(self, temp_requirements_df: pd.DataFrame) -> None:
         self._logger.debug("Stored temp requirements are updated")
 
         cache_df = self._cache.copy()
@@ -49,12 +49,12 @@ class TempRequirementsDBSyncFakeRepository(TempRequirementsDBSyncRepository):
         cache_df = cache_df.sort_values(column_names.TIMESTAMP, ignore_index=True)
         self._cache = cache_df
 
-    def delete_temp_requirements_older_than(self, datetime: pd.Timestamp) -> None:
+    async def delete_temp_requirements_older_than(self, datetime: pd.Timestamp) -> None:
         self._logger.debug(f"Requested deleting temp requirements older than {datetime}")
 
         self._cache = self._cache[self._cache[column_names.TIMESTAMP] >= datetime].copy()
 
-    def get_max_timestamp(self) -> pd.Timestamp:
+    async def get_max_timestamp(self) -> pd.Timestamp:
         self._logger.debug("Requested max timestamp")
 
         max_timestamp = None
