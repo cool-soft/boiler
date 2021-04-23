@@ -5,10 +5,10 @@ from typing import List, Optional
 import pandas as pd
 
 from boiler.parsing_utils.utils import filter_by_timestamp_closed
-from boiler.heating_system.repository.heating_system_repository import HeatingSystemRepository
+from .heating_system_stream_sync_repository import HeatingSystemStreamSyncRepository
 
 
-class HeatingSystemPickleRepository(HeatingSystemRepository):
+class HeatingSystemStreamSyncPickleRepository(HeatingSystemStreamSyncRepository):
 
     FILENAME_EXT = ".pickle"
 
@@ -39,19 +39,14 @@ class HeatingSystemPickleRepository(HeatingSystemRepository):
                     dataset_id: str,
                     start_datetime: Optional[pd.Timestamp] = None,
                     end_datetime: Optional[pd.Timestamp] = None) -> pd.DataFrame:
+
         dataset_path = os.path.abspath(f"{self._storage_path}/{dataset_id}{self.FILENAME_EXT}")
         logging.debug(f"Loading {dataset_path} from {start_datetime} to {end_datetime}")
-
         df = pd.read_pickle(dataset_path)
         filter_by_timestamp_closed(df, start_datetime, end_datetime)
-
         return df
 
     def set_dataset(self, dataset_id: str, dataset: pd.DataFrame) -> None:
         dataset_path = os.path.abspath(f"{self._storage_path}/{dataset_id}{self.FILENAME_EXT}")
         logging.debug(f"Saving {dataset_path}")
-
         dataset.to_pickle(dataset_path)
-
-    def update_dataset(self, dataset_id: str, dataset: pd.DataFrame) -> None:
-        raise ValueError("Operation not supported for this type of repository")

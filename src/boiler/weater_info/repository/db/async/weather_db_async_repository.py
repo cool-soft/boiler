@@ -3,7 +3,7 @@ from typing import Optional
 import pandas as pd
 
 
-class WeatherRepository:
+class WeatherDBAsyncRepository:
 
     async def get_weather_info(self,
                                start_datetime: Optional[pd.Timestamp] = None,
