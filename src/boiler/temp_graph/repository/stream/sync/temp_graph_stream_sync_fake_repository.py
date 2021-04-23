@@ -14,7 +14,7 @@ class TempGraphStreamSyncFakeRepository(TempGraphStreamSyncRepository):
 
         # TODO: вынести создание пустого DataFrame с заданными колонками куда-нибудь
         self._cache = pd.DataFrame(
-            columns=(column_names.TIMESTAMP,
+            columns=(column_names.WEATHER_TEMP,
                      column_names.FORWARD_PIPE_COOLANT_TEMP,
                      column_names.BACKWARD_PIPE_COOLANT_TEMP)
         )
