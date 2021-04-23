@@ -6,7 +6,7 @@ from boiler.constants import column_names
 from .temp_graph_stream_async_repository import TempGraphStreamAsyncRepository
 
 
-class TempGraphStreamSyncFakeRepository(TempGraphStreamAsyncRepository):
+class TempGraphStreamAsyncFakeRepository(TempGraphStreamAsyncRepository):
 
     def __init__(self) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
