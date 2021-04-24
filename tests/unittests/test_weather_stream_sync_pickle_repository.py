@@ -1,7 +1,7 @@
 import pytest
 
-from boiler.weater_info.repository.stream.sync.weather_stream_sync_pickle_repository import \
-    WeatherStreamSyncPickleRepository
+from boiler.weater_info.io.sync.sync_weather_binary_file_loader import \
+    SyncWeatherBinaryFileDumper
 from unittests.weather_stream_sync_repository_base_operations_testing import \
     WeatherStreamSyncRepositoryBaseOperationsTesting
 
@@ -14,5 +14,5 @@ class TestWeatherStreamSyncPickleRepository(WeatherStreamSyncRepositoryBaseOpera
 
     @pytest.fixture
     def repository(self, filepath):
-        repo = WeatherStreamSyncPickleRepository(filepath)
+        repo = SyncWeatherBinaryFileDumper(filepath)
         return repo

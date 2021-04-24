@@ -38,8 +38,8 @@ class WeatherStreamSyncRepositoryBaseOperationsTesting:
         return weather_df
 
     def test_weather_stream_sync_repository_set_get(self, weather_info, repository):
-        repository.set_weather_info(weather_info)
-        loaded_weather_info = repository.get_weather_info()
+        repository.dump_weather(weather_info)
+        loaded_weather_info = repository.load_weather()
         weather_info[column_names.WEATHER_TEMP] = weather_info[column_names.WEATHER_TEMP].round(2)
         loaded_weather_info[column_names.WEATHER_TEMP] = loaded_weather_info[column_names.WEATHER_TEMP].round(2)
         assert loaded_weather_info.to_dict("records") == weather_info.to_dict("records")

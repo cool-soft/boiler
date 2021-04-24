@@ -1,7 +1,7 @@
 import pytest
 
-from boiler.weater_info.parsers.weather_data_csv_parser import WeatherDataCSVParser
-from boiler.weater_info.repository.stream.sync.weather_stream_sync_csv_repository import WeatherStreamSyncCSVRepository
+from boiler.weater_info.io.sync.sync_weather_csv_reader import SyncWeatherCSVReader
+from boiler.weater_info.io.sync.sync_weather_text_file_loader import SyncWeatherTextFileLoader
 from unittests.weather_stream_sync_repository_base_operations_testing import \
     WeatherStreamSyncRepositoryBaseOperationsTesting
 
@@ -18,7 +18,7 @@ class TestWeatherStreamSyncCSVRepository(WeatherStreamSyncRepositoryBaseOperatio
 
     @pytest.fixture
     def repository(self, filepath, encoding):
-        parser = WeatherDataCSVParser()
-        repo = WeatherStreamSyncCSVRepository(filepath, parser, encoding)
+        parser = SyncWeatherCSVReader()
+        repo = SyncWeatherTextFileLoader(filepath, parser, encoding)
         return repo
 
