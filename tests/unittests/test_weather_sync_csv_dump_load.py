@@ -4,11 +4,10 @@ from boiler.weater_info.io.sync.sync_weather_csv_reader import SyncWeatherCSVRea
 from boiler.weater_info.io.sync.sync_weather_csv_writer import SyncWeatherCSVWriter
 from boiler.weater_info.io.sync.sync_weather_text_file_dumper import SyncWeatherTextFileDumper
 from boiler.weater_info.io.sync.sync_weather_text_file_loader import SyncWeatherTextFileLoader
-from unittests.weather_sync_dump_load_testing import \
-    WeatherSyncDumpLoadTesting
+from unittests.weather_sync_dump_load_testing import WeatherSyncDumpLoadTesting
 
 
-class TestWeatherCSVDumpLoad(WeatherSyncDumpLoadTesting):
+class TestWeatherSyncCSVDumpLoad(WeatherSyncDumpLoadTesting):
 
     @pytest.fixture
     def filepath(self, tmp_path):
