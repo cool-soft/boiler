@@ -1,9 +1,9 @@
 import pytest
 
-from boiler.weather.io.sync.sync_weather_binary_file_dumper import SyncWeatherBinaryFileDumper
-from boiler.weather.io.sync.sync_weather_binary_file_loader import SyncWeatherBinaryFileLoader
-from boiler.weather.io.sync.sync_weather_pickle_writer import SyncWeatherPickleWriter
+from boiler.weather.io.sync.sync_weather_file_dumper import SyncWeatherFileDumper
+from boiler.weather.io.sync.sync_weather_file_loader import SyncWeatherFileLoader
 from boiler.weather.io.sync.sync_weather_pickle_reader import SyncWeatherPickleReader
+from boiler.weather.io.sync.sync_weather_pickle_writer import SyncWeatherPickleWriter
 from unittests.weather_sync_dump_load_testing import WeatherSyncDumpLoadTesting
 
 
@@ -23,14 +23,14 @@ class TestWeatherSyncPickleDumpLoad(WeatherSyncDumpLoadTesting):
 
     @pytest.fixture
     def loader(self, reader, filepath):
-        return SyncWeatherBinaryFileLoader(
+        return SyncWeatherFileLoader(
             filepath=filepath,
             reader=reader
         )
 
     @pytest.fixture
     def dumper(self, writer, filepath):
-        return SyncWeatherBinaryFileDumper(
+        return SyncWeatherFileDumper(
             filepath=filepath,
             writer=writer
         )

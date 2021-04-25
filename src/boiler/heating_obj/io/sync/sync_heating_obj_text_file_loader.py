@@ -26,6 +26,10 @@ class SyncHeatingObjTextFileLoader(SyncHeatingObjLoader):
         self._logger.debug(f"Reader is {reader}")
         self._logger.debug(f"Encoding is {encoding}")
 
+    def set_filepath(self, filepath: str):
+        self._logger.debug(f"Set filepath to {filepath}")
+        self._filepath = filepath
+
     def set_encoding(self, encoding: str) -> None:
         self._logger.debug(f"Encoding is set to {encoding}")
         self._encoding = encoding
