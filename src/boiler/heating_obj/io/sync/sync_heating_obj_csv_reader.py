@@ -1,20 +1,31 @@
+import io
 import logging
-from typing import TextIO
+from typing import BinaryIO
 
 import pandas as pd
 
-from .sync_heating_obj_text_reader import SyncHeatingObjTextReader
 from boiler.constants import column_names
+from .sync_heating_obj_reader import SyncHeatingObjReader
 
 
-class SyncHeatingObjCSVReader(SyncHeatingObjTextReader):
+class SyncHeatingObjCSVReader(SyncHeatingObjReader):
 
-    def __init__(self) -> None:
+    def __init__(self, encoding: str = "utf-8") -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance")
 
-    def read_heating_obj_from_text_io(self, text_io: TextIO) -> pd.DataFrame:
+        self._encoding = encoding
+
+        self._logger.debug(f"Encoding is {encoding}")
+
+    def set_encoding(self, encoding: str) -> None:
+        self._logger.debug(f"Encoding is set to {encoding}")
+        self._encoding = encoding
+
+    def read_heating_obj_from_binary_stream(self,
+                                            binary_stream: BinaryIO) -> pd.DataFrame:
         self._logger.debug("Loading heating object")
-        heating_obj_df = pd.read_csv(text_io, parse_dates=[column_names.TIMESTAMP])
+        with io.TextIOWrapper(binary_stream, encoding="utf-8") as text_stream:
+            heating_obj_df = pd.read_csv(text_stream, parse_dates=[column_names.TIMESTAMP])
         self._logger.debug("Heating object is loaded")
         return heating_obj_df
