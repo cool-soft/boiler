@@ -5,10 +5,10 @@ from typing import List, Optional
 import pandas as pd
 
 from .sync_heating_obj_repository_wo_transactions import SyncHeatingObjRepositoryWithoutTransactions
-from ...io.sync.sync_heating_obj_text_file_dumper import SyncHeatingObjTextFileDumper
-from ...io.sync.sync_heating_obj_text_file_loader import SyncHeatingObjTextFileLoader
-from ...io.sync.sync_heating_obj_text_reader import SyncHeatingObjTextReader
-from ...io.sync.sync_heating_obj_text_writer import SyncHeatingObjTextWriter
+from ...io.sync.sync_heating_obj_file_dumper import SyncHeatingObjFileDumper
+from ...io.sync.sync_heating_obj_file_loader import SyncHeatingObjFileLoader
+from ...io.sync.sync_heating_obj_reader import SyncHeatingObjReader
+from ...io.sync.sync_heating_obj_writer import SyncHeatingObjWriter
 
 
 class SyncHeatingObjTextFilesDirRepository(SyncHeatingObjRepositoryWithoutTransactions):
@@ -16,8 +16,8 @@ class SyncHeatingObjTextFilesDirRepository(SyncHeatingObjRepositoryWithoutTransa
     def __init__(self,
                  dir_path: Optional[str] = None,
                  filename_ext: Optional[str] = None,
-                 reader: Optional[SyncHeatingObjTextReader] = None,
-                 writer: Optional[SyncHeatingObjTextWriter] = None,
+                 reader: Optional[SyncHeatingObjReader] = None,
+                 writer: Optional[SyncHeatingObjWriter] = None,
                  encoding="utf-8") -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance")
@@ -46,11 +46,11 @@ class SyncHeatingObjTextFilesDirRepository(SyncHeatingObjRepositoryWithoutTransa
         self._logger.debug(f"Encoding is set to {encoding}")
         self._encoding = encoding
 
-    def set_reader(self, reader: SyncHeatingObjTextReader) -> None:
+    def set_reader(self, reader: SyncHeatingObjReader) -> None:
         self._logger.debug(f"Reader is set to {reader}")
         self._reader = reader
 
-    def set_writer(self, writer: SyncHeatingObjTextWriter) -> None:
+    def set_writer(self, writer: SyncHeatingObjWriter) -> None:
         self._logger.debug(f"Writer is set to {writer}")
         self._writer = writer
 
@@ -72,14 +72,14 @@ class SyncHeatingObjTextFilesDirRepository(SyncHeatingObjRepositoryWithoutTransa
                     end_datetime: Optional[pd.Timestamp] = None) -> pd.DataFrame:
         dataset_path = os.path.abspath(f"{self._dir_path}/{dataset_id}{self._filename_ext}")
         logging.debug(f"Loading {dataset_path} from {start_datetime} to {end_datetime}")
-        loader = SyncHeatingObjTextFileLoader(reader=self._reader)
+        loader = SyncHeatingObjFileLoader(reader=self._reader)
         heating_obj_df = loader.load_heating_obj(start_datetime, end_datetime)
         return heating_obj_df
 
     def set_dataset(self, dataset_id: str, heating_obj_df: pd.DataFrame) -> None:
         dataset_path = os.path.abspath(f"{self._dir_path}/{dataset_id}{self._filename_ext}")
         logging.debug(f"Saving {dataset_path}")
-        dumper = SyncHeatingObjTextFileDumper(writer=self._writer)
+        dumper = SyncHeatingObjFileDumper(writer=self._writer)
         dumper.dump_heating_obj(heating_obj_df)
 
     def del_dataset(self, dataset_id: str) -> None:
