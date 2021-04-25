@@ -25,7 +25,7 @@ class SyncHeatingObjCSVReader(SyncHeatingObjReader):
     def read_heating_obj_from_binary_stream(self,
                                             binary_stream: BinaryIO) -> pd.DataFrame:
         self._logger.debug("Loading heating object")
-        with io.TextIOWrapper(binary_stream, encoding="utf-8") as text_stream:
+        with io.TextIOWrapper(binary_stream, encoding=self._encoding) as text_stream:
             heating_obj_df = pd.read_csv(text_stream, parse_dates=[column_names.TIMESTAMP])
         self._logger.debug("Heating object is loaded")
         return heating_obj_df
