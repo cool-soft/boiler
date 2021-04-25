@@ -14,6 +14,6 @@ class SyncTempGraphCSVReader(SyncTempGraphTextReader):
 
     def read_temp_graph_from_text_io(self, text_io: TextIO) -> pd.DataFrame:
         self._logger.debug("Loading temp graph")
-        weather_df = pd.read_csv(text_io)
+        temp_graph_df = pd.read_csv(text_io)
         self._logger.debug("Temp graph is loaded")
-        return weather_df
+        return temp_graph_df
