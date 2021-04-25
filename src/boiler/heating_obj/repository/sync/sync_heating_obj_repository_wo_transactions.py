@@ -3,7 +3,7 @@ from typing import List, Optional
 import pandas as pd
 
 
-class HeatingSystemStreamSyncRepository:
+class SyncHeatingObjRepositoryWithoutTransactions:
 
     def list(self) -> List[str]:
         raise NotImplementedError
@@ -14,5 +14,8 @@ class HeatingSystemStreamSyncRepository:
                     end_datetime: Optional[pd.Timestamp] = None) -> pd.DataFrame:
         raise NotImplementedError
 
-    def set_dataset(self, dataset_id: str, dataset: pd.DataFrame) -> None:
+    def set_dataset(self, dataset_id: str, heating_obj_df: pd.DataFrame) -> None:
+        raise NotImplementedError
+
+    def del_dataset(self, dataset_id: str) -> None:
         raise NotImplementedError
