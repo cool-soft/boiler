@@ -9,7 +9,7 @@ from .sync_heating_obj_text_reader import SyncHeatingObjTextReader
 from .sync_heating_obj_loader import SyncHeatingObjLoader
 
 
-class SyncWeatherTextFileLoader(SyncHeatingObjLoader):
+class SyncHeatingObjTextFileLoader(SyncHeatingObjLoader):
 
     def __init__(self,
                  filepath: Optional[str] = None,

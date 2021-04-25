@@ -7,7 +7,7 @@ import pandas as pd
 from .sync_heating_obj_binary_writer import SyncHeatingObjBinaryWriter
 
 
-class SyncWeatherPickleWriter(SyncHeatingObjBinaryWriter):
+class SyncHeatingObjPickleWriter(SyncHeatingObjBinaryWriter):
 
     def __init__(self) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)

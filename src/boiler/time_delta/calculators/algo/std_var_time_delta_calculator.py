@@ -3,7 +3,7 @@ import logging
 import numpy as np
 import pandas as pd
 
-from boiler.time_delta.time_delta_calculator import TimeDeltaCalculator
+from boiler.time_delta.calculators.algo.time_delta_calculator import TimeDeltaCalculator
 
 
 class StdVarTimeDeltaCalculator(TimeDeltaCalculator):
