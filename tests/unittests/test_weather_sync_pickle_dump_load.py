@@ -1,9 +1,9 @@
 import pytest
 
-from boiler.weater_info.io.sync.sync_weather_binary_file_dumper import SyncWeatherBinaryFileDumper
-from boiler.weater_info.io.sync.sync_weather_binary_file_loader import SyncWeatherBinaryFileLoader
-from boiler.weater_info.io.sync.sync_weather_pickle_writer import SyncWeatherPickleWriter
-from boiler.weater_info.io.sync.sync_weather_pickle_reader import SyncWeatherPickleReader
+from boiler.weather.io.sync.sync_weather_binary_file_dumper import SyncWeatherBinaryFileDumper
+from boiler.weather.io.sync.sync_weather_binary_file_loader import SyncWeatherBinaryFileLoader
+from boiler.weather.io.sync.sync_weather_pickle_writer import SyncWeatherPickleWriter
+from boiler.weather.io.sync.sync_weather_pickle_reader import SyncWeatherPickleReader
 from unittests.weather_sync_dump_load_testing import WeatherSyncDumpLoadTesting
 
 

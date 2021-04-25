@@ -1,6 +1,6 @@
 import pytest
 
-from boiler.weater_info.io.sync.sync_weather_in_memory_dumper_loader import SyncWeatherInMemoryDumperLoader
+from boiler.weather.io.sync.sync_weather_in_memory_dumper_loader import SyncWeatherInMemoryDumperLoader
 from unittests.weather_sync_dump_load_testing import WeatherSyncDumpLoadTesting
 
 
