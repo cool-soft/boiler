@@ -12,7 +12,7 @@ from .sync_weather_loader import SyncWeatherLoader
 class SyncWeatherTextFileLoader(SyncWeatherLoader):
 
     def __init__(self,
-                 filepath: str = "./storage/weather.csv",
+                 filepath: Optional[str] = None,
                  reader: Optional[SyncWeatherTextReader] = None,
                  encoding="utf-8") -> None:
         self._logger = logging.getLogger(self.__class__.__name__)

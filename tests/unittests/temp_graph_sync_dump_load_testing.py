@@ -2,28 +2,10 @@ import pandas as pd
 import pytest
 
 from boiler.constants import column_names
-from boiler.temp_graph.parsers.temp_graph_csv_parser import TempGraphCSVParser
-from boiler.temp_graph.repository.stream.sync.temp_graph_stream_sync_csv_repository import \
-    TempGraphStreamSyncCSVRepository
-from unittests.temp_graph_stream_sync_repository_base_operations_testing \
-    import TempGraphStreamSyncRepositoryBaseOperationsTesting
 
 
-class TestTempGraphStreamSyncCSVRepository(TempGraphStreamSyncRepositoryBaseOperationsTesting):
-
-    @pytest.fixture
-    def filepath(self, tmp_path):
-        return tmp_path / "temp_graph.csv"
-
-    @pytest.fixture
-    def encoding(self):
-        return "utf-8"
-
-    @pytest.fixture
-    def repository(self, filepath, encoding):
-        parser = TempGraphCSVParser()
-        repo = TempGraphStreamSyncCSVRepository(filepath, parser, encoding)
-        return repo
+# noinspection PyMethodMayBeStatic
+class TempGraphSyncDumpLoadTesting:
 
     @pytest.fixture
     def temp_graph(self):
@@ -46,3 +28,8 @@ class TestTempGraphStreamSyncCSVRepository(TempGraphStreamSyncRepositoryBaseOper
         ])
 
         return temp_graph
+
+    def test_temp_graph_sync_dump_load(self, temp_graph, dumper, loader):
+        dumper.dump_temp_graph(temp_graph)
+        loaded_temp_graph = loader.load_temp_graph()
+        assert loaded_temp_graph.to_dict("records") == temp_graph.to_dict("records")

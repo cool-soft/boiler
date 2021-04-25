@@ -4,7 +4,7 @@ from typing import Optional
 
 import pandas as pd
 
-from boiler.temp_graph.parsers.temp_graph_parser import TempGraphParser
+from boiler.temp_graph.io.temp_graph_parser import TempGraphParser
 from .temp_graph_stream_sync_repository import TempGraphStreamSyncRepository
 
 
