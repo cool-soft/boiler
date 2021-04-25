@@ -5,7 +5,7 @@ from boiler.constants import column_names
 
 
 # noinspection PyMethodMayBeStatic
-class TempGraphStreamSyncRepositoryBaseOperationsTesting:
+class TempGraphSyncDumpLoadTesting:
 
     @pytest.fixture
     def temp_graph(self):
@@ -29,7 +29,7 @@ class TempGraphStreamSyncRepositoryBaseOperationsTesting:
 
         return temp_graph
 
-    def test_temp_graph_repository_set_get(self, temp_graph, repository):
-        repository.set_temp_graph(temp_graph)
-        loaded_temp_graph = repository.get_temp_graph()
+    def test_temp_graph_sync_dump_load(self, temp_graph, dumper, loader):
+        dumper.dump_temp_graph(temp_graph)
+        loaded_temp_graph = loader.load_temp_graph()
         assert loaded_temp_graph.to_dict("records") == temp_graph.to_dict("records")

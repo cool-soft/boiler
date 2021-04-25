@@ -4,7 +4,6 @@ from typing import TextIO
 import pandas as pd
 
 from .sync_temp_graph_text_reader import SyncTempGraphTextReader
-from boiler.constants import column_names
 
 
 class SyncTempGraphCSVReader(SyncTempGraphTextReader):
@@ -15,6 +14,6 @@ class SyncTempGraphCSVReader(SyncTempGraphTextReader):
 
     def read_temp_graph_from_text_io(self, text_io: TextIO) -> pd.DataFrame:
         self._logger.debug("Loading temp graph")
-        weather_df = pd.read_csv(text_io, parse_dates=[column_names.TIMESTAMP])
+        weather_df = pd.read_csv(text_io)
         self._logger.debug("Temp graph is loaded")
         return weather_df
