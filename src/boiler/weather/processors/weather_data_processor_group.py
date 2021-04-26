@@ -25,19 +25,19 @@ class WeatherDataProcessorsGroup(WeatherDataProcessor):
         self._logger.debug(f"Found {len(processors)} processors")
 
     def process_weather_df(self,
-                           heating_obj_df: pd.DataFrame,
+                           weather_df: pd.DataFrame,
                            start_datetime: Optional[pd.Timestamp] = None,
                            end_datetime: Optional[pd.Timestamp] = None,
                            inplace: bool = False) -> pd.DataFrame:
-        self._logger.debug("Requested heating_obj_df processing")
+        self._logger.debug("Requested processing")
 
         for processor in self._processors:
-            heating_obj_df = processor.process_weather_df(
-                heating_obj_df,
+            weather_df = processor.process_weather_df(
+                weather_df,
                 start_datetime,
                 end_datetime,
                 inplace
             )
 
         self._logger.debug("Processed")
-        return heating_obj_df
+        return weather_df

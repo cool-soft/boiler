@@ -29,7 +29,7 @@ class HeatingObjDataProcessorsGroup(HeatingObjDataProcessor):
                                start_datetime: Optional[pd.Timestamp] = None,
                                end_datetime: Optional[pd.Timestamp] = None,
                                inplace: bool = False) -> pd.DataFrame:
-        self._logger.debug("Requested heating_obj_df processing")
+        self._logger.debug("Requested weather_df processing")
 
         for processor in self._processors:
             heating_obj_df = processor.process_heating_obj_df(

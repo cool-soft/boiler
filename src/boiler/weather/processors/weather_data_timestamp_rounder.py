@@ -23,19 +23,17 @@ class HeatingObjDataTimestampRounder(WeatherDataProcessor):
         self._logger.debug(f"Round algo is set to {round_algo}")
         self._round_algo = round_algo
 
-    def process_weather_df(
-            self,
-            df: pd.DataFrame,
-            start_datetime: Optional[pd.Timestamp] = None,
-            end_datetime: Optional[pd.Timestamp] = None,
-            inplace: bool = False
-    ) -> pd.DataFrame:
+    def process_weather_df(self,
+                           weather_df: pd.DataFrame,
+                           start_datetime: Optional[pd.Timestamp] = None,
+                           end_datetime: Optional[pd.Timestamp] = None,
+                           inplace: bool = False) -> pd.DataFrame:
         self._logger.debug("Processing is requested")
 
         if not inplace:
-            df = df.copy()
-        df[column_names.TIMESTAMP] = self._round_algo.round_series(df[column_names.TIMESTAMP])
-        df.drop_duplicates(column_names.TIMESTAMP, inplace=True, ignore_index=True)
+            weather_df = weather_df.copy()
+        weather_df[column_names.TIMESTAMP] = self._round_algo.round_series(weather_df[column_names.TIMESTAMP])
+        weather_df.drop_duplicates(column_names.TIMESTAMP, inplace=True, ignore_index=True)
 
         self._logger.debug("Processed")
-        return df
+        return weather_df
