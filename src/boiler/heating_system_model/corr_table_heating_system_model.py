@@ -7,7 +7,7 @@ import pandas as pd
 from boiler.constants import column_names
 
 
-class CorrTableTempPredictor:
+class CorrTableHeatingSystemModel:
 
     def __init__(self,
                  temp_correlation_table: Optional[pd.DataFrame] = None,

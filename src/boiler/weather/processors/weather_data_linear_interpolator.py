@@ -5,7 +5,7 @@ from typing import List, Optional
 import pandas as pd
 
 from boiler.constants import column_names
-from boiler.weather.interpolators.weather_data_interpolator \
+from boiler.weather.processors.weather_data_interpolator \
     import WeatherDataInterpolator
 
 

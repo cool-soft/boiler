@@ -4,7 +4,7 @@ from typing import Optional
 
 import pandas as pd
 
-from boiler.parsing_utils.utils import filter_by_timestamp_closed
+from boiler.utils.processing_utils import filter_by_timestamp_closed
 from .sync_heating_obj_reader import SyncHeatingObjReader
 from .sync_heating_obj_loader import SyncHeatingObjLoader
 
