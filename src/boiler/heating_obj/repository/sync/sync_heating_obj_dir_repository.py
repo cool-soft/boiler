@@ -59,10 +59,10 @@ class SyncHeatingObjDirRepository(SyncHeatingObjRepositoryWithoutTransactions):
         self._logger.debug(f"Found {len(heating_obj_filenames)} heating objects")
         return heating_obj_filenames
 
-    def get_dataset(self,
-                    dataset_id: str,
-                    start_datetime: Optional[pd.Timestamp] = None,
-                    end_datetime: Optional[pd.Timestamp] = None) -> pd.DataFrame:
+    def load_dataset(self,
+                     dataset_id: str,
+                     start_datetime: Optional[pd.Timestamp] = None,
+                     end_datetime: Optional[pd.Timestamp] = None) -> pd.DataFrame:
         dataset_path = os.path.abspath(f"{self._dir_path}/{dataset_id}{self._filename_ext}")
         logging.debug(f"Loading {dataset_path} from {start_datetime} to {end_datetime}")
         loader = SyncHeatingObjFileLoader(
@@ -72,7 +72,7 @@ class SyncHeatingObjDirRepository(SyncHeatingObjRepositoryWithoutTransactions):
         heating_obj_df = loader.load_heating_obj(start_datetime, end_datetime)
         return heating_obj_df
 
-    def set_dataset(self, dataset_id: str, heating_obj_df: pd.DataFrame) -> None:
+    def store_dataset(self, dataset_id: str, heating_obj_df: pd.DataFrame) -> None:
         dataset_path = os.path.abspath(f"{self._dir_path}/{dataset_id}{self._filename_ext}")
         logging.debug(f"Saving {dataset_path}")
         dumper = SyncHeatingObjFileDumper(
