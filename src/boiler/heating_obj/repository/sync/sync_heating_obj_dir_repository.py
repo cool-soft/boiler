@@ -5,10 +5,10 @@ from typing import List, Optional
 import pandas as pd
 
 from .sync_heating_obj_repository_wo_transactions import SyncHeatingObjRepositoryWithoutTransactions
-from ...io.sync.sync_heating_obj_file_dumper import SyncHeatingObjFileDumper
-from ...io.sync.sync_heating_obj_file_loader import SyncHeatingObjFileLoader
-from ...io.sync.sync_heating_obj_reader import SyncHeatingObjReader
-from ...io.sync.sync_heating_obj_writer import SyncHeatingObjWriter
+from boiler.heating_obj.io.sync.sync_heating_obj_file_dumper import SyncHeatingObjFileDumper
+from boiler.heating_obj.io.sync.sync_heating_obj_file_loader import SyncHeatingObjFileLoader
+from boiler.heating_obj.io.sync.sync_heating_obj_reader import SyncHeatingObjReader
+from boiler.heating_obj.io.sync.sync_heating_obj_writer import SyncHeatingObjWriter
 
 
 class SyncHeatingObjDirRepository(SyncHeatingObjRepositoryWithoutTransactions):
