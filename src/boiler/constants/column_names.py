@@ -1,7 +1,7 @@
 TIMESTAMP = "timestamp"
 
-TIME_DELTA = "time_delta"
-HOME_NAME = "home_name"
+HEATING_OBJ_ID = "heating_obj_id"
+AVG_TIMEDELTA = "avg_timedelta"
 
 WEATHER_TEMP = "weather_temp"
 
