@@ -11,7 +11,7 @@ class TestHeatingObjSyncPickleDumpLoad(HeatingObjSyncDumpLoadTesting):
 
     @pytest.fixture
     def filepath(self, tmp_path):
-        return tmp_path / "weather.csv"
+        return tmp_path / "heating_obj.pickle"
 
     @pytest.fixture
     def writer(self):
