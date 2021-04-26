@@ -4,8 +4,8 @@ from typing import Optional
 
 import pandas as pd
 
-from .sync_temp_graph_loader import SyncTempGraphLoader
-from .sync_temp_graph_reader import SyncTempGraphReader
+from boiler.temp_graph.io.sync.sync_temp_graph_loader import SyncTempGraphLoader
+from boiler.temp_graph.io.sync.sync_temp_graph_reader import SyncTempGraphReader
 
 
 class SyncTempGraphFileLoader(SyncTempGraphLoader):

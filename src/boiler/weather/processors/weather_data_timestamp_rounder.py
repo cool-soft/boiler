@@ -5,7 +5,7 @@ import pandas as pd
 
 from boiler.constants import column_names
 from boiler.utils.processing_utils import TimestampRoundAlgo
-from .weather_data_processor import WeatherDataProcessor
+from boiler.weather.processors.weather_data_processor import WeatherDataProcessor
 
 
 class HeatingObjDataTimestampRounder(WeatherDataProcessor):

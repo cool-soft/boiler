@@ -5,7 +5,7 @@ from typing import List, Optional
 import pandas as pd
 
 from boiler.constants import column_names
-from .heating_obj_data_processor import HeatingObjDataProcessor
+from boiler.heating_obj.processors.heating_obj_data_processor import HeatingObjDataProcessor
 
 
 class HeatingObjDataLinearInterpolator(HeatingObjDataProcessor):

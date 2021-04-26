@@ -4,7 +4,7 @@ from typing import BinaryIO
 
 import pandas as pd
 
-from .sync_weather_reader import SyncWeatherReader
+from boiler.weather.io.sync.sync_weather_reader import SyncWeatherReader
 from boiler.constants import column_names
 
 

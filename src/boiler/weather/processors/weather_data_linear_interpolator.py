@@ -4,7 +4,7 @@ from typing import List, Optional
 import pandas as pd
 
 from boiler.constants import column_names
-from .weather_data_processor import WeatherDataProcessor
+from boiler.weather.processors.weather_data_processor import WeatherDataProcessor
 
 
 class WeatherDataLinearInterpolator(WeatherDataProcessor):

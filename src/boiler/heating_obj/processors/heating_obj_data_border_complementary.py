@@ -5,7 +5,7 @@ import pandas as pd
 
 from boiler.constants import column_names
 from boiler.utils.processing_utils import TimestampRoundAlgo
-from .heating_obj_data_processor import HeatingObjDataProcessor
+from boiler.heating_obj.processors.heating_obj_data_processor import HeatingObjDataProcessor
 
 
 class HeatingObjDataBorderComplementary(HeatingObjDataProcessor):

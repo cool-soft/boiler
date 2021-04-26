@@ -3,7 +3,7 @@ from typing import List, Optional
 
 import pandas as pd
 
-from .weather_data_processor import WeatherDataProcessor
+from boiler.weather.processors.weather_data_processor import WeatherDataProcessor
 
 
 class WeatherDataProcessorsGroup(WeatherDataProcessor):

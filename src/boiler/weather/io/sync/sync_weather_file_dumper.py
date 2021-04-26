@@ -4,8 +4,8 @@ from typing import Optional
 
 import pandas as pd
 
-from .sync_weather_dumper import SyncWeatherDumper
-from .sync_weather_writer import SyncWeatherWriter
+from boiler.weather.io.sync.sync_weather_dumper import SyncWeatherDumper
+from boiler.weather.io.sync.sync_weather_writer import SyncWeatherWriter
 
 
 class SyncWeatherFileDumper(SyncWeatherDumper):

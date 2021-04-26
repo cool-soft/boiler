@@ -5,8 +5,8 @@ import pandas as pd
 
 from boiler.constants import column_names
 from boiler.utils.processing_utils import filter_by_timestamp_closed
-from .sync_weather_dumper import SyncWeatherDumper
-from .sync_weather_loader import SyncWeatherLoader
+from boiler.weather.io.sync.sync_weather_dumper import SyncWeatherDumper
+from boiler.weather.io.sync.sync_weather_loader import SyncWeatherLoader
 
 
 class SyncWeatherInMemoryDumperLoader(SyncWeatherLoader, SyncWeatherDumper):

@@ -4,8 +4,8 @@ from typing import Optional
 
 import pandas as pd
 
-from .sync_heating_obj_dumper import SyncHeatingObjDumper
-from .sync_heating_obj_writer import SyncHeatingObjWriter
+from boiler.heating_obj.io.sync.sync_heating_obj_dumper import SyncHeatingObjDumper
+from boiler.heating_obj.io.sync.sync_heating_obj_writer import SyncHeatingObjWriter
 
 
 class SyncHeatingObjFileDumper(SyncHeatingObjDumper):

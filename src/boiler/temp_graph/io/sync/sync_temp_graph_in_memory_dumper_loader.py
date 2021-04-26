@@ -3,8 +3,8 @@ import logging
 import pandas as pd
 
 from boiler.constants import column_names
-from .sync_temp_graph_dumper import SyncTempGraphDumper
-from .sync_temp_graph_loader import SyncTempGraphLoader
+from boiler.temp_graph.io.sync.sync_temp_graph_dumper import SyncTempGraphDumper
+from boiler.temp_graph.io.sync.sync_temp_graph_loader import SyncTempGraphLoader
 
 
 class SyncTempGraphInMemoryDumperLoader(SyncTempGraphDumper, SyncTempGraphLoader):

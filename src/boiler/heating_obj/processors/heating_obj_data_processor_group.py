@@ -3,7 +3,7 @@ from typing import List, Optional
 
 import pandas as pd
 
-from .heating_obj_data_processor import HeatingObjDataProcessor
+from boiler.heating_obj.processors.heating_obj_data_processor import HeatingObjDataProcessor
 
 
 class HeatingObjDataProcessorsGroup(HeatingObjDataProcessor):

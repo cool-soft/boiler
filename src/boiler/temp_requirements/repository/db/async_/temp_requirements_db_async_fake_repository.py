@@ -4,7 +4,8 @@ from typing import Optional
 import pandas as pd
 
 from boiler.constants import column_names
-from .temp_requirements_db_async_repository import TempRequirementsDBAsyncRepository
+from boiler.temp_requirements.repository.db.async_.temp_requirements_db_async_repository \
+    import TempRequirementsDBAsyncRepository
 
 
 class TempRequirementsDBAsyncFakeRepository(TempRequirementsDBAsyncRepository):

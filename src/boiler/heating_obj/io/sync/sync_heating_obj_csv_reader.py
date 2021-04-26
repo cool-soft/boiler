@@ -5,7 +5,7 @@ from typing import BinaryIO
 import pandas as pd
 
 from boiler.constants import column_names
-from .sync_heating_obj_reader import SyncHeatingObjReader
+from boiler.heating_obj.io.sync.sync_heating_obj_reader import SyncHeatingObjReader
 
 
 class SyncHeatingObjCSVReader(SyncHeatingObjReader):
