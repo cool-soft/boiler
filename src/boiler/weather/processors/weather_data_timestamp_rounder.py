@@ -4,11 +4,11 @@ from typing import Optional
 import pandas as pd
 
 from boiler.constants import column_names
-from .weather_data_processor import HeatingObjDataProcessor
-from ...utils.processing_utils import TimestampRoundAlgo
+from boiler.utils.processing_utils import TimestampRoundAlgo
+from .weather_data_processor import WeatherDataProcessor
 
 
-class HeatingObjDataTimestampRounder(HeatingObjDataProcessor):
+class HeatingObjDataTimestampRounder(WeatherDataProcessor):
 
     def __init__(self,
                  round_algo: Optional[TimestampRoundAlgo] = None) -> None:
@@ -23,7 +23,7 @@ class HeatingObjDataTimestampRounder(HeatingObjDataProcessor):
         self._logger.debug(f"Round algo is set to {round_algo}")
         self._round_algo = round_algo
 
-    def process_heating_obj_df(
+    def process_weather_df(
             self,
             df: pd.DataFrame,
             start_datetime: Optional[pd.Timestamp] = None,

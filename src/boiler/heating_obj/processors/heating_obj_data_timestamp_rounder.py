@@ -23,19 +23,17 @@ class HeatingObjDataTimestampRounder(HeatingObjDataProcessor):
         self._logger.debug(f"Round algo is set to {round_algo}")
         self._round_algo = round_algo
 
-    def process_heating_obj_df(
-            self,
-            df: pd.DataFrame,
-            start_datetime: Optional[pd.Timestamp] = None,
-            end_datetime: Optional[pd.Timestamp] = None,
-            inplace: bool = False
-    ) -> pd.DataFrame:
+    def process_heating_obj_df(self,
+                               heating_obj_df: pd.DataFrame,
+                               start_datetime: Optional[pd.Timestamp] = None,
+                               end_datetime: Optional[pd.Timestamp] = None,
+                               inplace: bool = False) -> pd.DataFrame:
         self._logger.debug("Processing is requested")
 
         if not inplace:
-            df = df.copy()
-        df[column_names.TIMESTAMP] = self._round_algo.round_series(df[column_names.TIMESTAMP])
-        df.drop_duplicates(column_names.TIMESTAMP, inplace=True, ignore_index=True)
+            heating_obj_df = heating_obj_df.copy()
+        heating_obj_df[column_names.TIMESTAMP] = self._round_algo.round_series(heating_obj_df[column_names.TIMESTAMP])
+        heating_obj_df.drop_duplicates(column_names.TIMESTAMP, inplace=True, ignore_index=True)
 
         self._logger.debug("Processed")
-        return df
+        return heating_obj_df

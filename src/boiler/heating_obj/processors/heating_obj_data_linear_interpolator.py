@@ -30,28 +30,26 @@ class HeatingObjDataLinearInterpolator(HeatingObjDataProcessor):
     def set_interpolation_step(self, interpolation_step: pd.Timedelta) -> None:
         self._interpolation_step = interpolation_step
 
-    def process_heating_obj_df(
-            self,
-            df: pd.DataFrame,
-            start_datetime: Optional[pd.Timestamp] = None,
-            end_datetime: Optional[pd.Timestamp] = None,
-            inplace: bool = False
-    ) -> pd.DataFrame:
+    def process_heating_obj_df(self,
+                               heating_obj_df: pd.DataFrame,
+                               start_datetime: Optional[pd.Timestamp] = None,
+                               end_datetime: Optional[pd.Timestamp] = None,
+                               inplace: bool = False) -> pd.DataFrame:
         self._logger.debug("Interpolating is requested")
         if not inplace:
-            df = df.copy()
-        df.sort_values(by=column_names.TIMESTAMP, ignore_index=True, inplace=True)
-        df = self._interpolate_passes_of_datetime(df)
-        self._interpolate_passes_of_data(df)
+            heating_obj_df = heating_obj_df.copy()
+        heating_obj_df.sort_values(by=column_names.TIMESTAMP, ignore_index=True, inplace=True)
+        heating_obj_df = self._interpolate_passes_of_datetime(heating_obj_df)
+        self._interpolate_passes_of_data(heating_obj_df)
         self._logger.debug("Interpolated")
-        return df
+        return heating_obj_df
 
-    def _interpolate_passes_of_datetime(self, df: pd.DataFrame):
+    def _interpolate_passes_of_datetime(self, heating_obj_df: pd.DataFrame):
         self._logger.debug("Interpolating passes of datetime")
 
         datetime_to_insert = []
         previous_datetime = None
-        for timestamp in df[column_names.TIMESTAMP].to_list():
+        for timestamp in heating_obj_df[column_names.TIMESTAMP].to_list():
             if previous_datetime is None:
                 previous_datetime = timestamp
                 continue
@@ -66,13 +64,13 @@ class HeatingObjDataLinearInterpolator(HeatingObjDataProcessor):
 
             previous_datetime = next_datetime
 
-        df = df.append(datetime_to_insert, ignore_index=True)
-        df.sort_values(by=column_names.TIMESTAMP, ignore_index=True, inplace=True)
+        heating_obj_df = heating_obj_df.append(datetime_to_insert, ignore_index=True)
+        heating_obj_df.sort_values(by=column_names.TIMESTAMP, ignore_index=True, inplace=True)
 
-        return df
+        return heating_obj_df
 
-    def _interpolate_passes_of_data(self, df: pd.DataFrame) -> None:
+    def _interpolate_passes_of_data(self, heating_obj_df: pd.DataFrame) -> None:
         self._logger.debug("Interpolating passes of data")
         for column_to_interpolate in self._columns_to_interpolate:
-            df[column_to_interpolate] = pd.to_numeric(df[column_to_interpolate], downcast="float")
-            df[column_to_interpolate].interpolate(inplace=True)
+            heating_obj_df[column_to_interpolate] = pd.to_numeric(heating_obj_df[column_to_interpolate], downcast="float")
+            heating_obj_df[column_to_interpolate].interpolate(inplace=True)

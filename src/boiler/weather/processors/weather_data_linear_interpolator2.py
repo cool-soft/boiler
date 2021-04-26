@@ -5,10 +5,10 @@ from typing import List, Optional
 import pandas as pd
 
 from boiler.constants import column_names
-from .weather_data_processor import HeatingObjDataProcessor
+from .weather_data_processor import WeatherDataProcessor
 
 
-class HeatingObjDataLinearInterpolator(HeatingObjDataProcessor):
+class WeatherDataLinearInterpolator(WeatherDataProcessor):
 
     def __init__(self) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
@@ -30,7 +30,7 @@ class HeatingObjDataLinearInterpolator(HeatingObjDataProcessor):
     def set_interpolation_step(self, interpolation_step: pd.Timedelta) -> None:
         self._interpolation_step = interpolation_step
 
-    def process_heating_obj_df(
+    def process_weather_df(
             self,
             df: pd.DataFrame,
             start_datetime: Optional[pd.Timestamp] = None,
