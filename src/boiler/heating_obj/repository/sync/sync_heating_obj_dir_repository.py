@@ -4,7 +4,8 @@ from typing import List, Optional
 
 import pandas as pd
 
-from boiler.heating_obj.repository.sync.sync_heating_obj_repository_wo_transactions import SyncHeatingObjRepositoryWithoutTransactions
+from boiler.heating_obj.repository.sync.sync_heating_obj_repository_wo_transactions \
+    import SyncHeatingObjRepositoryWithoutTransactions
 from boiler.heating_obj.io.sync.sync_heating_obj_file_dumper import SyncHeatingObjFileDumper
 from boiler.heating_obj.io.sync.sync_heating_obj_file_loader import SyncHeatingObjFileLoader
 from boiler.heating_obj.io.sync.sync_heating_obj_reader import SyncHeatingObjReader
