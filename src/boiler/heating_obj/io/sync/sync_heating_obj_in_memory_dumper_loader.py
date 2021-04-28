@@ -4,9 +4,9 @@ from typing import Optional
 import pandas as pd
 
 from boiler.constants import column_names
-from boiler.parsing_utils.utils import filter_by_timestamp_closed
-from .sync_heating_obj_dumper import SyncHeatingObjDumper
-from .sync_heating_obj_loader import SyncHeatingObjLoader
+from boiler.utils.processing import filter_by_timestamp_closed
+from boiler.heating_obj.io.sync.sync_heating_obj_dumper import SyncHeatingObjDumper
+from boiler.heating_obj.io.sync.sync_heating_obj_loader import SyncHeatingObjLoader
 
 
 class SyncHeatingObjInMemoryDumperLoader(SyncHeatingObjDumper, SyncHeatingObjLoader):

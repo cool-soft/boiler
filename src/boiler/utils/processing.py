@@ -1,3 +1,4 @@
+import math
 from typing import Optional
 
 import numpy as np
@@ -29,6 +30,15 @@ def average_values(x: np.array, window_len: int = 4, window: str = 'hanning') ->
     y = np.convolve(w / w.sum(), s, mode='valid')
     return y[(window_len // 2 - 1 + (window_len % 2)):-(window_len // 2)]
     # return y
+
+
+def arithmetic_round(number: float) -> int:
+    number_floor = math.floor(number)
+    if number - number_floor < 0.5:
+        rounded_number = number_floor
+    else:
+        rounded_number = number_floor + 1
+    return rounded_number
 
 
 def filter_by_timestamp_closed(df: pd.DataFrame,

@@ -11,7 +11,7 @@ class TestWeatherSyncPickleDumpLoad(TempGraphSyncDumpLoadTesting):
 
     @pytest.fixture
     def filepath(self, tmp_path):
-        return tmp_path / "weather.csv"
+        return tmp_path / "temp_graph.pickle"
 
     @pytest.fixture
     def writer(self):
