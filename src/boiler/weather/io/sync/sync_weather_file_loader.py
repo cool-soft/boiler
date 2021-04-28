@@ -4,7 +4,7 @@ from typing import Optional
 
 import pandas as pd
 
-from boiler.utils.processing_utils import filter_by_timestamp_closed
+from boiler.utils.processing import filter_by_timestamp_closed
 from boiler.weather.io.sync.sync_weather_reader import SyncWeatherReader
 from boiler.weather.io.sync.sync_weather_loader import SyncWeatherLoader
 
