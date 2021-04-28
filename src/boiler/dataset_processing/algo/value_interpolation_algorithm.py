@@ -11,7 +11,7 @@ class AbstractValueInterpolationAlgorithm:
 
 class LinearInsideValueInterpolationAlgorithm(AbstractValueInterpolationAlgorithm):
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance")
 
@@ -25,7 +25,7 @@ class LinearInsideValueInterpolationAlgorithm(AbstractValueInterpolationAlgorith
 
 class LinearOutsideValueInterpolationAlgorithm(AbstractValueInterpolationAlgorithm):
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance")
 
