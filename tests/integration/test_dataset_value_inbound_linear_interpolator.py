@@ -7,7 +7,7 @@ from boiler.dataset_processing.algo.value_interpolation_algorithm import LinearI
 from boiler.dataset_processing.dataset_value_interpolator import DatasetValueInterpolator
 
 
-class TestDatasetLinearValueInterpolator:
+class TestDatasetValueInboundLinearInterpolator:
 
     @pytest.fixture
     def columns_to_interpolate(self):
