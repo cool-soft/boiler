@@ -4,11 +4,11 @@ from typing import Optional
 import pandas as pd
 
 from boiler.constants import column_names
-from boiler.dataset_processing.dataset_processor import DatasetProcessor
+from boiler.dataset_processing.abstract_dataset_processor import AbstractDatasetProcessor
 from boiler.dataset_processing.algo.timestamp_round_algorithm import AbstractTimestampRoundAlgorithm
 
 
-class DatasetTimestampRounder(DatasetProcessor):
+class DatasetTimestampRounder(AbstractDatasetProcessor):
 
     def __init__(self, round_algo: Optional[AbstractTimestampRoundAlgorithm] = None) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)

@@ -3,12 +3,12 @@ from typing import List, Optional
 
 import pandas as pd
 
-from boiler.dataset_processing.dataset_processor import DatasetProcessor
+from boiler.dataset_processing.abstract_dataset_processor import AbstractDatasetProcessor
 
 
-class DataFrameProcessorsGroup(DatasetProcessor):
+class DataFrameProcessorsGroup(AbstractDatasetProcessor):
 
-    def __init__(self, processors: Optional[List[DatasetProcessor]] = None) -> None:
+    def __init__(self, processors: Optional[List[AbstractDatasetProcessor]] = None) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance")
 
@@ -18,7 +18,7 @@ class DataFrameProcessorsGroup(DatasetProcessor):
 
         self._logger.debug(f"Found {len(processors)} dataframe_processors")
 
-    def set_processors(self, processors: List[DatasetProcessor]) -> None:
+    def set_processors(self, processors: List[AbstractDatasetProcessor]) -> None:
         self._logger.debug("Processors is set")
         self._processors = processors.copy()
         self._logger.debug(f"Found {len(processors)} dataframe_processors")
