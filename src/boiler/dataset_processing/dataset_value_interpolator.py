@@ -3,9 +3,8 @@ from typing import List, Optional
 
 import pandas as pd
 
-from boiler.constants import column_names
-from boiler.dataset_processing.algo.value_interpolation_algorithm import AbstractValueInterpolationAlgorithm
 from boiler.dataset_processing.abstract_dataset_processor import AbstractDatasetProcessor
+from boiler.dataset_processing.algo.value_interpolation_algorithm import AbstractValueInterpolationAlgorithm
 
 
 class DatasetValueInterpolator(AbstractDatasetProcessor):
@@ -35,7 +34,6 @@ class DatasetValueInterpolator(AbstractDatasetProcessor):
     def process_df(self, df: pd.DataFrame) -> pd.DataFrame:
         self._logger.debug("Interpolating is requested")
         df = df.copy()
-        df = df.sort_values(by=column_names.TIMESTAMP, ignore_index=True)
         for column_to_interpolate in self._columns_to_interpolate:
             df[column_to_interpolate] = self._interpolation_algorithm.interpolate_series(df[column_to_interpolate])
         self._logger.debug("Interpolated")
