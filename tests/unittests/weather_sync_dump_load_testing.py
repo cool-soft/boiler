@@ -4,26 +4,21 @@ import pandas as pd
 import pytest
 from dateutil.tz import tzlocal
 
-from boiler.constants import column_names, time_tick
+from boiler.constants import column_names, time_tick, dataset_prototypes
 
 
 # noinspection PyMethodMayBeStatic
 class WeatherSyncDumpLoadTesting:
 
-    @pytest.fixture
-    def time_tick_(self):
-        return time_tick.TIME_TICK
+    time_tick_ = time_tick.TIME_TICK
+    weather_df_len = 5
 
     @pytest.fixture
-    def weather_info(self, time_tick_):
-        weather_df = pd.DataFrame(
-            columns=(column_names.TIMESTAMP,
-                     column_names.WEATHER_TEMP)
-        )
+    def weather_info(self):
+        weather_df = dataset_prototypes.WEATHER.copy()
 
-        weather_df_len = 5
         start_datetime = pd.Timestamp.now(tz=tzlocal())
-        end_datetime = start_datetime + (weather_df_len * time_tick_)
+        end_datetime = start_datetime + (self.weather_df_len * self.time_tick_)
 
         weather_data_to_append = []
         current_datetime = start_datetime
@@ -32,7 +27,7 @@ class WeatherSyncDumpLoadTesting:
                 column_names.TIMESTAMP: current_datetime,
                 column_names.WEATHER_TEMP: random()
             })
-            current_datetime += time_tick_
+            current_datetime += self.time_tick_
         weather_df = weather_df.append(weather_data_to_append)
 
         return weather_df

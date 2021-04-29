@@ -8,9 +8,7 @@ from unittests.heating_obj_sync_repo_testing import HeatingObjSyncRepoTesting
 
 class TestHeatingObjectSyncDirRepo(HeatingObjSyncRepoTesting):
 
-    @pytest.fixture
-    def filename_ext(self):
-        return ".pickle"
+    filename_ext = ".pickle"
 
     @pytest.fixture
     def reader(self):
@@ -21,10 +19,10 @@ class TestHeatingObjectSyncDirRepo(HeatingObjSyncRepoTesting):
         return SyncHeatingObjPickleWriter()
 
     @pytest.fixture
-    def repository(self, reader, writer, filename_ext, tmpdir):
+    def repository(self, reader, writer, tmpdir):
         return SyncHeatingObjDirRepository(
             dir_path=tmpdir,
-            filename_ext=filename_ext,
+            filename_ext=self.filename_ext,
             reader=reader,
             writer=writer
         )
