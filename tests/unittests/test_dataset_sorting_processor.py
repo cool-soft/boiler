@@ -9,13 +9,12 @@ from boiler.data_processing.dataset_processors.dataset_sort_processor import Dat
 class TestDatasetSortingProcessor:
 
     columns = ["col_0", "col_1", "col_2"]
+    row_count = 20
 
     @pytest.fixture
     def dataset(self):
-        row_count = 20
-
         df = pd.DataFrame(columns=self.columns)
-        for i in range(row_count):
+        for i in range(self.row_count):
             new_row = {}
             for column_name in df.columns:
                 new_row[column_name] = random()
