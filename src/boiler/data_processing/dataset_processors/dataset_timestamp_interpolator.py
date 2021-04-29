@@ -4,8 +4,8 @@ from typing import Optional
 import pandas as pd
 
 from boiler.constants import column_names
-from boiler.dataset_processing.abstract_dataset_processor import AbstractDatasetProcessor
-from boiler.dataset_processing.algo.timestamp_round_algorithm import AbstractTimestampRoundAlgorithm
+from boiler.data_processing.dataset_processors.abstract_dataset_processor import AbstractDatasetProcessor
+from boiler.data_processing.processing_algo.timestamp_round_algorithm import AbstractTimestampRoundAlgorithm
 
 
 class DatasetTimestampInterpolator(AbstractDatasetProcessor):
