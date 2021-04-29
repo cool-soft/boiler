@@ -1,10 +1,6 @@
 import math
-from typing import Optional
 
 import numpy as np
-import pandas as pd
-
-from boiler.constants import column_names
 
 
 def average_values(x: np.array, window_len: int = 4, window: str = 'hanning') -> np.array:
@@ -41,11 +37,3 @@ def arithmetic_round(number: float) -> int:
     return rounded_number
 
 
-def filter_by_timestamp_closed(df: pd.DataFrame,
-                               start_datetime: Optional[pd.Timestamp] = None,
-                               end_datetime: Optional[pd.Timestamp] = None) -> pd.DataFrame:
-    if start_datetime is not None:
-        df = df[df[column_names.TIMESTAMP] >= start_datetime]
-    if end_datetime is not None:
-        df = df[df[column_names.TIMESTAMP] <= end_datetime]
-    return df
