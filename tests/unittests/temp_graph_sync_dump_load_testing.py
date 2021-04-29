@@ -1,7 +1,6 @@
-import pandas as pd
 import pytest
 
-from boiler.constants import column_names
+from boiler.constants import column_names, dataset_prototypes
 
 
 # noinspection PyMethodMayBeStatic
@@ -9,11 +8,7 @@ class TempGraphSyncDumpLoadTesting:
 
     @pytest.fixture
     def temp_graph(self):
-        temp_graph = pd.DataFrame(
-            columns=(column_names.WEATHER_TEMP,
-                     column_names.FORWARD_PIPE_COOLANT_TEMP,
-                     column_names.BACKWARD_PIPE_COOLANT_TEMP)
-        )
+        temp_graph = dataset_prototypes.TEMP_GRAPH.copy()
 
         temp_graph = temp_graph.append([
             {column_names.WEATHER_TEMP: -10,

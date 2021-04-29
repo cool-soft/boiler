@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Optional
+from typing import Any
 
 import pandas as pd
 
@@ -32,8 +32,8 @@ class FullClosedBetweenFilterAlgorithm(AbstractBetweenFilterAlgorithm):
 
     def filter_df_by_min_max_values(self,
                                     df: pd.DataFrame,
-                                    min_value: Optional[Any] = None,
-                                    max_value: Optional[Any] = None) -> pd.DataFrame:
+                                    min_value: Any = None,
+                                    max_value: Any = None) -> pd.DataFrame:
         self._logger.debug(f"Filter by column {self._column_name}: [{min_value}, {max_value}]")
         if min_value is not None:
             df = df[df[self._column_name] >= min_value]
@@ -60,8 +60,8 @@ class LeftClosedBetweenFilterAlgorithm(AbstractBetweenFilterAlgorithm):
 
     def filter_df_by_min_max_values(self,
                                     df: pd.DataFrame,
-                                    min_value: Optional[Any] = None,
-                                    max_value: Optional[Any] = None) -> pd.DataFrame:
+                                    min_value: Any = None,
+                                    max_value: Any = None) -> pd.DataFrame:
         self._logger.debug(f"Filter by column {self._column_name}: [{min_value}, {max_value})")
         if min_value is not None:
             df = df[df[self._column_name] >= min_value]

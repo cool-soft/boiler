@@ -9,33 +9,25 @@ from boiler.data_processing.dataset_processors.dataset_value_interpolator import
 
 class TestDatasetValueInboundLinearInterpolator:
 
-    @pytest.fixture
-    def columns_to_interpolate(self):
-        return ["col_0", "col_1", "col_2"]
+    columns_to_interpolate = ["col_0", "col_1", "col_2"]
+    columns_not_interpolate = ["col_3", "col_4"]
+    columns = [*columns_to_interpolate, *columns_not_interpolate]
 
     @pytest.fixture
-    def columns_not_interpolate(self):
-        return ["col_3", "col_4"]
-
-    @pytest.fixture
-    def columns(self, columns_to_interpolate, columns_not_interpolate):
-        return [*columns_to_interpolate, *columns_not_interpolate]
-
-    @pytest.fixture
-    def dataset(self, columns):
+    def dataset(self):
         row_count = 100
         generation_prob = 0.3
 
-        df = pd.DataFrame(columns=columns)
+        df = pd.DataFrame(columns=self.columns)
 
         row_without_nones = {}
-        for column_name in columns:
+        for column_name in self.columns:
             row_without_nones[column_name] = random()
         df = df.append(row_without_nones, ignore_index=True)
 
         for i in range(row_count):
             new_row = {}
-            for column_name in columns:
+            for column_name in self.columns:
                 if random() <= generation_prob:
                     new_row[column_name] = random()
                 else:
@@ -51,25 +43,21 @@ class TestDatasetValueInboundLinearInterpolator:
         return LinearInsideValueInterpolationAlgorithm()
 
     @pytest.fixture
-    def processor(self, algorithm, columns_to_interpolate):
+    def processor(self, algorithm):
         return DatasetValueInterpolator(
-            algorithm,
-            columns_to_interpolate
+            interpolation_algorithm=algorithm,
+            columns_to_interpolate=self.columns_to_interpolate
         )
 
-    def test_dataset_linear_value_interpolation(self,
-                                                dataset,
-                                                columns_to_interpolate,
-                                                columns_not_interpolate,
-                                                processor):
+    def test_dataset_linear_value_interpolation(self, dataset, processor):
         nan_count_before = {}
-        for column in columns_not_interpolate:
+        for column in self.columns_not_interpolate:
             nan_count_before[column] = dataset[column].isnull().sum()
 
         interpolated_dataset = processor.process_df(dataset)
 
-        for column in columns_to_interpolate:
+        for column in self.columns_to_interpolate:
             assert interpolated_dataset[column].isnull().sum() == 0
         
-        for column in columns_not_interpolate:
+        for column in self.columns_not_interpolate:
             assert interpolated_dataset[column].isnull().sum() == nan_count_before.get(column)
