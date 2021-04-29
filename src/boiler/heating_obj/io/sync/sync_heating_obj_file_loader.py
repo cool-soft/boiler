@@ -4,7 +4,8 @@ from typing import Optional
 
 import pandas as pd
 
-from boiler.data_processing.processing_algo.processing import filter_by_timestamp_closed
+from boiler.constants import column_names
+from boiler.data_processing.processing_algo.beetween_filter_algorithm import FullClosedBetweenFilterAlgorithm
 from boiler.heating_obj.io.sync.sync_heating_obj_reader import SyncHeatingObjReader
 from boiler.heating_obj.io.sync.sync_heating_obj_loader import SyncHeatingObjLoader
 
@@ -19,6 +20,7 @@ class SyncHeatingObjFileLoader(SyncHeatingObjLoader):
 
         self._filepath = filepath
         self._reader = reader
+        self._filter_algorithm = FullClosedBetweenFilterAlgorithm(column_name=column_names.TIMESTAMP)
 
         self._logger.debug(f"Filepath is {filepath}")
         self._logger.debug(f"Reader is {reader}")
@@ -38,6 +40,10 @@ class SyncHeatingObjFileLoader(SyncHeatingObjLoader):
         self._logger.debug(f"Loading heating object from {filepath}")
         with open(filepath, mode="rb") as input_file:
             heating_object_df = self._reader.read_heating_obj_from_binary_stream(input_file)
-        heating_object_df = filter_by_timestamp_closed(heating_object_df, start_datetime, end_datetime)
+        heating_object_df = self._filter_algorithm.filter_df_by_min_max_values(
+            heating_object_df,
+            start_datetime,
+            end_datetime
+        )
         self._logger.debug("Heating object is loaded")
         return heating_object_df
