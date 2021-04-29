@@ -22,10 +22,11 @@ class TestHeatingObjSyncPickleDumpLoad(HeatingObjSyncDumpLoadTesting):
         return SyncHeatingObjPickleReader()
 
     @pytest.fixture
-    def loader(self, reader, filepath):
+    def loader(self, reader, filepath, filter_algorithm):
         return SyncHeatingObjFileLoader(
             filepath=filepath,
-            reader=reader
+            reader=reader,
+            filter_algorithm=filter_algorithm
         )
 
     @pytest.fixture

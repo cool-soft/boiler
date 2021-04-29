@@ -5,7 +5,8 @@ from typing import Optional
 import pandas as pd
 
 from boiler.constants import column_names
-from boiler.data_processing.processing_algo.beetween_filter_algorithm import FullClosedBetweenFilterAlgorithm
+from boiler.data_processing.processing_algo.beetween_filter_algorithm import FullClosedBetweenFilterAlgorithm, \
+    AbstractBetweenFilterAlgorithm
 from boiler.heating_obj.io.sync.sync_heating_obj_reader import SyncHeatingObjReader
 from boiler.heating_obj.io.sync.sync_heating_obj_loader import SyncHeatingObjLoader
 
@@ -14,16 +15,18 @@ class SyncHeatingObjFileLoader(SyncHeatingObjLoader):
 
     def __init__(self,
                  filepath: Optional[str] = None,
-                 reader: Optional[SyncHeatingObjReader] = None) -> None:
+                 reader: Optional[SyncHeatingObjReader] = None,
+                 filter_algorithm: Optional[AbstractBetweenFilterAlgorithm] = None) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance")
 
         self._filepath = filepath
         self._reader = reader
-        self._filter_algorithm = FullClosedBetweenFilterAlgorithm(column_name=column_names.TIMESTAMP)
+        self._filter_algorithm = filter_algorithm
 
         self._logger.debug(f"Filepath is {filepath}")
         self._logger.debug(f"Reader is {reader}")
+        self._logger.debug(f"Filter algorithm is {filter_algorithm}")
 
     def set_filepath(self, filepath: str):
         self._logger.debug(f"Set filepath to {filepath}")
@@ -32,6 +35,10 @@ class SyncHeatingObjFileLoader(SyncHeatingObjLoader):
     def set_reader(self, reader: SyncHeatingObjReader):
         self._logger.debug(f"Reader is set to {reader}")
         self._reader = reader
+
+    def set_filter_algorithm(self, algorithm: AbstractBetweenFilterAlgorithm) -> None:
+        self._logger.debug(f"Filter algorithm is set to {algorithm}")
+        self._filter_algorithm = algorithm
 
     def load_heating_obj(self,
                          start_datetime: Optional[pd.Timestamp] = None,

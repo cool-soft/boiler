@@ -74,8 +74,8 @@ class SyncHeatingObjDirRepository(SyncHeatingObjRepositoryWithoutTransactions):
         logging.debug(f"Loading {dataset_path} "
                       f"from {start_datetime} to {end_datetime} "
                       f"from file {dataset_path}")
-        with open(dataset_path, "rb") as f:
-            heating_obj_df = self._reader.read_heating_obj_from_binary_stream(f)
+        with open(dataset_path, "rb") as input_file:
+            heating_obj_df = self._reader.read_heating_obj_from_binary_stream(input_file)
         heating_obj_df = self._filter_algorithm.filter_df_by_min_max_values(
             heating_obj_df,
             start_datetime,
@@ -86,8 +86,8 @@ class SyncHeatingObjDirRepository(SyncHeatingObjRepositoryWithoutTransactions):
     def store_dataset(self, dataset_id: str, heating_obj_df: pd.DataFrame) -> None:
         dataset_path = self._get_path_for_dataset_id(dataset_id)
         logging.debug(f"Saving {dataset_path}")
-        with open(dataset_path, "wb") as f:
-            self._writer.write_heating_obj_to_binary_stream(f, heating_obj_df)
+        with open(dataset_path, "wb") as output_file:
+            self._writer.write_heating_obj_to_binary_stream(output_file, heating_obj_df)
 
     def del_dataset(self, dataset_id: str) -> None:
         dataset_path = self._get_path_for_dataset_id(dataset_id)
