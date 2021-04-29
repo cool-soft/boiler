@@ -2,7 +2,7 @@ import logging
 
 import pandas as pd
 
-from boiler.constants import column_names
+from boiler.constants import dataset_prototypes
 from boiler.temp_graph.io.sync.sync_temp_graph_dumper import SyncTempGraphDumper
 from boiler.temp_graph.io.sync.sync_temp_graph_loader import SyncTempGraphLoader
 
@@ -13,12 +13,7 @@ class SyncTempGraphInMemoryDumperLoader(SyncTempGraphDumper, SyncTempGraphLoader
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance")
 
-        # TODO: вынести создание пустого DataFrame с заданными колонками куда-нибудь
-        self._storage = pd.DataFrame(
-            columns=(column_names.WEATHER_TEMP,
-                     column_names.FORWARD_PIPE_COOLANT_TEMP,
-                     column_names.BACKWARD_PIPE_COOLANT_TEMP)
-        )
+        self._storage = dataset_prototypes.TEMP_GRAPH.copy()
 
     def load_temp_graph(self) -> pd.DataFrame:
         self._logger.debug("Requested temp graph")

@@ -3,7 +3,7 @@ from typing import Optional
 
 import pandas as pd
 
-from boiler.constants import column_names
+from boiler.constants import dataset_prototypes
 from boiler.data_processing.processing_algo.processing import filter_by_timestamp_closed
 from boiler.weather.io.sync.sync_weather_dumper import SyncWeatherDumper
 from boiler.weather.io.sync.sync_weather_loader import SyncWeatherLoader
@@ -15,11 +15,7 @@ class SyncWeatherInMemoryDumperLoader(SyncWeatherLoader, SyncWeatherDumper):
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance")
 
-        # TODO: вынести создание пустого DataFrame с заданными колонками куда-нибудь
-        self._storage = pd.DataFrame(
-            columns=(column_names.TIMESTAMP,
-                     column_names.WEATHER_TEMP)
-        )
+        self._storage = dataset_prototypes.WEATHER.copy()
 
     def load_weather(self,
                      start_datetime: Optional[pd.Timestamp] = None,
