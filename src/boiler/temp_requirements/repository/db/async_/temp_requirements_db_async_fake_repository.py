@@ -3,7 +3,7 @@ from typing import Optional
 
 import pandas as pd
 
-from boiler.constants import column_names
+from boiler.constants import column_names, dataset_prototypes
 from boiler.temp_requirements.repository.db.async_.temp_requirements_db_async_repository \
     import TempRequirementsDBAsyncRepository
 
@@ -14,14 +14,7 @@ class TempRequirementsDBAsyncFakeRepository(TempRequirementsDBAsyncRepository):
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance of provider")
 
-        # TODO: вынести создание пустого DataFrame с заданными колонками куда-нибудь
-        self._cache = pd.DataFrame(
-            columns=(
-                column_names.TIMESTAMP,
-                column_names.FORWARD_PIPE_COOLANT_TEMP,
-                column_names.BACKWARD_PIPE_COOLANT_TEMP
-            )
-        )
+        self._cache = dataset_prototypes.TEMP_REQUIREMENTS.copy()
 
     async def get_temp_requirements(self,
                                     start_datetime: Optional[pd.Timestamp] = None,
