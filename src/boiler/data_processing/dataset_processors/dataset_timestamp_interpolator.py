@@ -5,13 +5,13 @@ import pandas as pd
 
 from boiler.constants import column_names
 from boiler.data_processing.dataset_processors.abstract_dataset_processor import AbstractDatasetProcessor
-from boiler.data_processing.processing_algo.timestamp_round_algorithm import AbstractTimestampRoundAlgorithm
+from boiler.data_processing.processing_algo.timestamp_round_algorithm import AbstractRoundAlgorithm
 
 
 class DatasetTimestampInterpolator(AbstractDatasetProcessor):
 
     def __init__(self,
-                 timestamp_round_algo: Optional[AbstractTimestampRoundAlgorithm] = None,
+                 timestamp_round_algo: Optional[AbstractRoundAlgorithm] = None,
                  interpolation_step: Optional[pd.Timedelta] = None,
                  start_timestamp: Optional[pd.Timestamp] = None,
                  end_timestamp: Optional[pd.Timestamp] = None,
@@ -43,7 +43,7 @@ class DatasetTimestampInterpolator(AbstractDatasetProcessor):
         self._logger.debug(f"Interpolation step is set to {interpolation_step}")
         self._interpolation_step = interpolation_step
 
-    def set_timestamp_round_algo(self, round_algo: AbstractTimestampRoundAlgorithm) -> None:
+    def set_timestamp_round_algo(self, round_algo: AbstractRoundAlgorithm) -> None:
         self._logger.debug(f"Round algo is set to {round_algo}")
         self._timestamp_round_algo = round_algo
 
