@@ -6,7 +6,7 @@ from boiler.constants import column_names
 from boiler.data_processing.dataset_processors.abstract_dataset_processor import AbstractDatasetProcessor
 
 
-class DatasetTimestampRounder(AbstractDatasetProcessor):
+class DatasetDropDuplicatesProcessor(AbstractDatasetProcessor):
 
     def __init__(self,
                  column_by: str = column_names.TIMESTAMP,
