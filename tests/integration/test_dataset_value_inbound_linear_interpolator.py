@@ -3,8 +3,8 @@ from random import random
 import pytest
 import pandas as pd
 
-from boiler.dataset_processing.algo.value_interpolation_algorithm import LinearInsideValueInterpolationAlgorithm
-from boiler.dataset_processing.dataset_value_interpolator import DatasetValueInterpolator
+from boiler.data_processing.processing_algo.value_interpolation_algorithm import LinearInsideValueInterpolationAlgorithm
+from boiler.data_processing.dataset_processors.dataset_value_interpolator import DatasetValueInterpolator
 
 
 class TestDatasetValueInboundLinearInterpolator:

@@ -3,8 +3,8 @@ from typing import List, Optional
 
 import pandas as pd
 
-from boiler.dataset_processing.abstract_dataset_processor import AbstractDatasetProcessor
-from boiler.dataset_processing.algo.value_interpolation_algorithm import AbstractValueInterpolationAlgorithm
+from boiler.data_processing.dataset_processors.abstract_dataset_processor import AbstractDatasetProcessor
+from boiler.data_processing.processing_algo.value_interpolation_algorithm import AbstractValueInterpolationAlgorithm
 
 
 class DatasetValueInterpolator(AbstractDatasetProcessor):

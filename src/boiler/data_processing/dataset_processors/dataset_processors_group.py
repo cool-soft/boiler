@@ -3,7 +3,7 @@ from typing import List, Optional
 
 import pandas as pd
 
-from boiler.dataset_processing.abstract_dataset_processor import AbstractDatasetProcessor
+from boiler.data_processing.dataset_processors.abstract_dataset_processor import AbstractDatasetProcessor
 
 
 class DataFrameProcessorsGroup(AbstractDatasetProcessor):
