@@ -7,7 +7,7 @@ from boiler.temp_graph.io.sync.sync_temp_graph_file_loader import SyncTempGraphF
 from unittests.temp_graph_sync_dump_load_testing import TempGraphSyncDumpLoadTesting
 
 
-class TestWeatherSyncCSVDumpLoad(TempGraphSyncDumpLoadTesting):
+class TestTempGraphSyncCSVDumpLoad(TempGraphSyncDumpLoadTesting):
 
     @pytest.fixture
     def filepath(self, tmp_path):
