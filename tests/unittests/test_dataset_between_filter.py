@@ -3,8 +3,7 @@ from random import random
 import pandas as pd
 import pytest
 
-from boiler.data_processing.dataset_processors.dataset_min_max_filter import DatasetMinMaxFilter
-from boiler.data_processing.processing_algo.beetween_filter_algorithm import \
+from boiler.data_processing.beetween_filter_algorithm import \
     FullClosedBetweenFilterAlgorithm, LeftClosedBetweenFilterAlgorithm
 
 
@@ -19,23 +18,11 @@ class TestDatasetBetweenFilter:
 
     @pytest.fixture
     def full_closed_filter(self):
-        algo = FullClosedBetweenFilterAlgorithm(column_name=self.column_name_to_filter)
-        processor = DatasetMinMaxFilter(
-            filter_algorithm=algo,
-            min_value=self.min_filter_val,
-            max_value=self.max_filter_val
-        )
-        return processor
+        return FullClosedBetweenFilterAlgorithm(column_name=self.column_name_to_filter)
 
     @pytest.fixture
     def left_closed_filter(self):
-        algo = LeftClosedBetweenFilterAlgorithm(column_name=self.column_name_to_filter)
-        processor = DatasetMinMaxFilter(
-            filter_algorithm=algo,
-            min_value=self.min_filter_val,
-            max_value=self.max_filter_val
-        )
-        return processor
+        return LeftClosedBetweenFilterAlgorithm(column_name=self.column_name_to_filter)
 
     @pytest.fixture
     def dataset(self):
@@ -49,7 +36,11 @@ class TestDatasetBetweenFilter:
         return df
 
     def test_full_closed_between_filter(self, dataset, full_closed_filter):
-        filtered_dataset = full_closed_filter.process_df(dataset)
+        filtered_dataset = full_closed_filter.filter_df_by_min_max_values(
+            dataset,
+            self.min_filter_val,
+            self.max_filter_val
+        )
 
         assert filtered_dataset[self.column_name_to_filter].min() == self.min_filter_val
         assert filtered_dataset[self.column_name_to_filter].max() == self.max_filter_val
@@ -58,7 +49,11 @@ class TestDatasetBetweenFilter:
             assert column_name in filtered_dataset.columns
 
     def test_left_closed_between_filter(self, dataset, left_closed_filter):
-        filtered_dataset = left_closed_filter.process_df(dataset)
+        filtered_dataset = left_closed_filter.filter_df_by_min_max_values(
+            dataset,
+            self.min_filter_val,
+            self.max_filter_val
+        )
 
         assert filtered_dataset[self.column_name_to_filter].min() == self.min_filter_val
         assert filtered_dataset[self.column_name_to_filter].max() <= self.max_filter_val

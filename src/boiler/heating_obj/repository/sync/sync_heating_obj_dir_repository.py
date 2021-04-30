@@ -4,7 +4,7 @@ from typing import List, Optional
 
 import pandas as pd
 
-from boiler.data_processing.processing_algo.beetween_filter_algorithm import AbstractBetweenFilterAlgorithm
+from boiler.data_processing.beetween_filter_algorithm import AbstractBetweenFilterAlgorithm
 from boiler.heating_obj.io.sync.sync_heating_obj_reader import SyncHeatingObjReader
 from boiler.heating_obj.io.sync.sync_heating_obj_writer import SyncHeatingObjWriter
 from boiler.heating_obj.repository.sync.sync_heating_obj_repository_wo_transactions \

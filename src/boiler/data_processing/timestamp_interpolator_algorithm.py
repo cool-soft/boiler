@@ -1,68 +1,66 @@
 import logging
-from typing import Optional, Union
+from typing import Optional
 
 import pandas as pd
 
 from boiler.constants import column_names
-from boiler.data_processing.dataset_processors.abstract_dataset_processor import AbstractDatasetProcessor
-from boiler.data_processing.processing_algo.timestamp_round_algorithm import AbstractRoundAlgorithm
+from boiler.data_processing.timestamp_round_algorithm \
+    import AbstractTimestampRoundAlgorithm
 
 
-class DatasetTimestampInterpolator(AbstractDatasetProcessor):
+class AbstractTimestampInterpolationAlgorithm:
+
+    def process_df(self,
+                   df: pd.DataFrame,
+                   required_min_timestamp: pd.Timestamp,
+                   required_max_timestamp: pd.Timestamp) -> pd.DataFrame:
+        raise NotImplementedError
+
+
+class TimestampInterpolationAlgorithm(AbstractTimestampInterpolationAlgorithm):
 
     def __init__(self,
-                 timestamp_round_algo: Optional[AbstractRoundAlgorithm] = None,
+                 timestamp_round_algo: Optional[AbstractTimestampRoundAlgorithm] = None,
                  interpolation_step: Optional[pd.Timedelta] = None,
-                 start_timestamp: Optional[pd.Timestamp] = None,
-                 end_timestamp: Optional[pd.Timestamp] = None,
                  timestamp_column_name: str = column_names.TIMESTAMP) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance")
 
         self._interpolation_step = interpolation_step
         self._timestamp_round_algo = timestamp_round_algo
-        self._required_min_timestamp = start_timestamp
-        self._required_max_timestamp = end_timestamp
         self._timestamp_column_name = timestamp_column_name
 
         self._logger.debug(f"Timestamp Round algo is {timestamp_round_algo}")
         self._logger.debug(f"Interpolation step is {interpolation_step}")
-        self._logger.debug(f"Start timestamp is {start_timestamp}")
-        self._logger.debug(f"End timestamp is {end_timestamp}")
         self._logger.debug(f"Timestamp column name is {timestamp_column_name}")
-
-    def set_start_timestamp(self, timestamp: Union[pd.Timestamp, None]) -> None:
-        self._logger.debug(f"Start timestamp is set to {timestamp}")
-        self._required_min_timestamp = timestamp
-
-    def set_end_timestamp(self, timestamp: Union[pd.Timestamp, None]) -> None:
-        self._logger.debug(f"End timestamp is set to {timestamp}")
-        self._required_max_timestamp = timestamp
 
     def set_interpolation_step(self, interpolation_step: pd.Timedelta) -> None:
         self._logger.debug(f"Interpolation step is set to {interpolation_step}")
         self._interpolation_step = interpolation_step
 
-    def set_timestamp_round_algo(self, round_algo: AbstractRoundAlgorithm) -> None:
+    def set_timestamp_round_algo(self, round_algo: AbstractTimestampRoundAlgorithm) -> None:
         self._logger.debug(f"Round algo is set to {round_algo}")
         self._timestamp_round_algo = round_algo
 
-    def process_df(self, df: pd.DataFrame) -> pd.DataFrame:
+    def process_df(self,
+                   df: pd.DataFrame,
+                   required_min_timestamp: pd.Timestamp,
+                   required_max_timestamp: pd.Timestamp) -> pd.DataFrame:
         self._logger.debug("Interpolating is requested")
         df = df.copy()
-        if self._required_min_timestamp is not None:
-            df = self._complementary_min_timestamp(df)
-        if self._required_max_timestamp is not None:
-            df = self._complementary_max_timestamp(df)
+        if required_min_timestamp is not None:
+            df = self._complementary_min_timestamp(df, required_min_timestamp)
+        if required_max_timestamp is not None:
+            df = self._complementary_max_timestamp(df, required_max_timestamp)
         df = df.sort_values(by=self._timestamp_column_name, ignore_index=True)
         df = self._interpolate_passes_of_timestamp(df)
         self._logger.debug("Interpolated")
         return df
 
-    def _complementary_min_timestamp(self, df: pd.DataFrame) -> pd.DataFrame:
-        required_min_timestamp = self._timestamp_round_algo.round_value(self._required_min_timestamp)
-        self._logger.debug(f"Complementary min timestamp to {required_min_timestamp} "
-                           f"{[self._required_min_timestamp]}")
+    def _complementary_min_timestamp(self, df: pd.DataFrame, required_min_timestamp) -> pd.DataFrame:
+        rounded_required_min_timestamp = self._timestamp_round_algo.round_value(required_min_timestamp)
+        self._logger.debug(f"Complementary min timestamp to {rounded_required_min_timestamp} "
+                           f"{[required_min_timestamp]}")
 
         df = df.copy()
         min_timestamp = df[self._timestamp_column_name].min()
@@ -76,10 +74,10 @@ class DatasetTimestampInterpolator(AbstractDatasetProcessor):
 
         return df
 
-    def _complementary_max_timestamp(self, df: pd.DataFrame) -> pd.DataFrame:
-        required_max_timestamp = self._timestamp_round_algo.round_value(self._required_max_timestamp)
+    def _complementary_max_timestamp(self, df: pd.DataFrame, required_max_timestamp) -> pd.DataFrame:
+        rounded_required_max_timestamp = self._timestamp_round_algo.round_value(required_max_timestamp)
         self._logger.debug(f"Complementary max timestamp to"
-                           f" {required_max_timestamp} {[self._required_max_timestamp]}")
+                           f" {rounded_required_max_timestamp} {[required_max_timestamp]}")
 
         df = df.copy()
         max_timestamp = df[self._timestamp_column_name].max()

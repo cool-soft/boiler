@@ -5,7 +5,7 @@ import pytest
 from dateutil.tz import tzlocal
 
 from boiler.constants import column_names, time_tick, dataset_prototypes
-from boiler.data_processing.processing_algo.beetween_filter_algorithm import FullClosedBetweenFilterAlgorithm
+from boiler.data_processing.beetween_filter_algorithm import LeftClosedBetweenFilterAlgorithm
 
 
 # noinspection PyMethodMayBeStatic
@@ -23,7 +23,7 @@ class HeatingObjSyncRepoTesting:
 
     @pytest.fixture
     def filter_algorithm(self):
-        return FullClosedBetweenFilterAlgorithm(column_name=column_names.TIMESTAMP)
+        return LeftClosedBetweenFilterAlgorithm(column_name=column_names.TIMESTAMP)
 
     @pytest.fixture
     def heating_obj_df_factory(self):
