@@ -2,13 +2,11 @@ import logging
 
 import numpy as np
 
-from boiler.time_delta.calculators.algo.time_delta_calculator import TimeDeltaCalculator
+from boiler.time_delta.calculators.algo.abstract_time_delta_calculation_algorithm \
+    import AbstractTimeDeltaCalculationAlgorithm
 
 
-# from scipy.signal import correlate
-
-
-class CorrTimeDeltaCalculator(TimeDeltaCalculator):
+class CorrTimeDeltaCalculationAlgorithm(AbstractTimeDeltaCalculationAlgorithm):
 
     def __init__(self) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
