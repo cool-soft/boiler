@@ -4,7 +4,6 @@ from typing import Optional
 import pandas as pd
 
 from boiler.constants import column_names
-from boiler.data_processing.float_round_algorithm import ArithmeticFloatRoundAlgorithm
 
 
 class TempGraphRequirementsCalculator:
@@ -12,17 +11,20 @@ class TempGraphRequirementsCalculator:
     def __init__(self,
                  temp_graph: Optional[pd.DataFrame] = None) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance of the provider")
+        self._logger.debug("Creating instance")
 
         self._temp_graph = temp_graph
-        self._float_round_algorithm = ArithmeticFloatRoundAlgorithm()
 
     def set_temp_graph(self, temp_graph: pd.DataFrame) -> None:
         self._logger.debug("Temp graph is set")
         self._temp_graph = temp_graph
 
-    def get_temp_requirements_for_weather_temp(self, weather_temp: float) -> float:
-        weather_temp = self._float_round_algorithm.round_value(weather_temp)
+    def calc_temp_requirements_for_weather_df(self, weather_df: pd.DataFrame) -> pd.DataFrame:
+        # TODO: вычисление {timestamp, forward_pipe, backward_pipe}
+        pass
+
+    def calc_temp_requirements_for_weather_temp(self, weather_temp: float) -> pd.DataFrame:
+        # TODO: округление погоды
         available_temp = self._temp_graph[self._temp_graph[column_names.WEATHER_TEMP] <= weather_temp]
         if not available_temp.empty:
             required_temp_idx = available_temp[column_names.WEATHER_TEMP].idxmax()
@@ -30,5 +32,4 @@ class TempGraphRequirementsCalculator:
             required_temp_idx = self._temp_graph[column_names.WEATHER_TEMP].idxmin()
             self._logger.debug(f"Weather temp {weather_temp} is not in temp graph.")
         required_temp = self._temp_graph.loc[required_temp_idx].copy()
-
         return required_temp
