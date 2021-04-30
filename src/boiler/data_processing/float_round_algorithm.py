@@ -1,4 +1,5 @@
 import logging
+import math
 
 import pandas as pd
 
@@ -12,7 +13,7 @@ class AbstractFloatRoundAlgorithm:
         raise NotImplementedError
 
 
-class TruncateFloatRoundAlgorithm(AbstractFloatRoundAlgorithm):
+class ArithmeticFloatRoundAlgorithm(AbstractFloatRoundAlgorithm):
 
     def __init__(self, decimals: int = 0) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
@@ -40,5 +41,4 @@ class TruncateFloatRoundAlgorithm(AbstractFloatRoundAlgorithm):
 
     def _round(self, n):
         multiplier = 10 ** self._decimals
-        rounded_value = int(n * multiplier) / multiplier
-        return rounded_value
+        return math.floor(n * multiplier + 0.5) / multiplier

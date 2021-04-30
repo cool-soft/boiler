@@ -4,7 +4,7 @@ from typing import Optional
 import pandas as pd
 
 from boiler.constants import column_names
-from boiler.data_processing.float_round_algorithm import TruncateFloatRoundAlgorithm
+from boiler.data_processing.float_round_algorithm import ArithmeticFloatRoundAlgorithm
 
 
 class TempGraphRequirementsCalculator:
@@ -15,7 +15,7 @@ class TempGraphRequirementsCalculator:
         self._logger.debug("Creating instance of the provider")
 
         self._temp_graph = temp_graph
-        self._float_round_algorithm = TruncateFloatRoundAlgorithm()
+        self._float_round_algorithm = ArithmeticFloatRoundAlgorithm()
 
     def set_temp_graph(self, temp_graph: pd.DataFrame) -> None:
         self._logger.debug("Temp graph is set")
