@@ -21,8 +21,8 @@ class DatasetTimestampInterpolator(AbstractDatasetProcessor):
 
         self._interpolation_step = interpolation_step
         self._timestamp_round_algo = timestamp_round_algo
-        self._start_timestamp = start_timestamp
-        self._end_timestamp = end_timestamp
+        self._required_min_timestamp = start_timestamp
+        self._required_max_timestamp = end_timestamp
         self._timestamp_column_name = timestamp_column_name
 
         self._logger.debug(f"Timestamp Round algo is {timestamp_round_algo}")
@@ -33,11 +33,11 @@ class DatasetTimestampInterpolator(AbstractDatasetProcessor):
 
     def set_start_timestamp(self, timestamp: Union[pd.Timestamp, None]) -> None:
         self._logger.debug(f"Start timestamp is set to {timestamp}")
-        self._start_timestamp = timestamp
+        self._required_min_timestamp = timestamp
 
     def set_end_timestamp(self, timestamp: Union[pd.Timestamp, None]) -> None:
         self._logger.debug(f"End timestamp is set to {timestamp}")
-        self._end_timestamp = timestamp
+        self._required_max_timestamp = timestamp
 
     def set_interpolation_step(self, interpolation_step: pd.Timedelta) -> None:
         self._logger.debug(f"Interpolation step is set to {interpolation_step}")
@@ -50,41 +50,45 @@ class DatasetTimestampInterpolator(AbstractDatasetProcessor):
     def process_df(self, df: pd.DataFrame) -> pd.DataFrame:
         self._logger.debug("Interpolating is requested")
         df = df.copy()
-        if self._start_timestamp is not None:
-            df = self._complementary_start_timestamp(df)
-        if self._end_timestamp is not None:
-            df = self._complementary_end_timestamp(df)
+        if self._required_min_timestamp is not None:
+            df = self._complementary_min_timestamp(df)
+        if self._required_max_timestamp is not None:
+            df = self._complementary_max_timestamp(df)
         df = df.sort_values(by=self._timestamp_column_name, ignore_index=True)
         df = self._interpolate_passes_of_timestamp(df)
         self._logger.debug("Interpolated")
         return df
 
-    def _complementary_start_timestamp(self, df: pd.DataFrame) -> pd.DataFrame:
-        start_timestamp = self._timestamp_round_algo.round_value(self._start_timestamp)
-        self._logger.debug(f"Complementary start timestamp to value {start_timestamp} {[self._start_timestamp]}")
+    def _complementary_min_timestamp(self, df: pd.DataFrame) -> pd.DataFrame:
+        required_min_timestamp = self._timestamp_round_algo.round_value(self._required_min_timestamp)
+        self._logger.debug(f"Complementary min timestamp to {required_min_timestamp} "
+                           f"{[self._required_min_timestamp]}")
+
         df = df.copy()
-        first_datetime_idx = df[self._timestamp_column_name].idxmin()
-        first_datetime = df.loc[first_datetime_idx, self._timestamp_column_name]
-        if first_datetime > start_timestamp:
-            first_row_df = pd.DataFrame(columns=df.columns)
-            first_row_df = first_row_df.append(
-                {self._timestamp_column_name: start_timestamp},
-                ignore_index=True
-            )
-            df = first_row_df.append(df, ignore_index=True)
+        min_timestamp = df[self._timestamp_column_name].min()
+        if min_timestamp > required_min_timestamp:
+            new_df = pd.DataFrame(columns=df.columns)
+            new_row = {
+                self._timestamp_column_name: required_min_timestamp
+            }
+            new_df = new_df.append(new_row, ignore_index=True)
+            df = new_df.append(df, ignore_index=True)
+
         return df
 
-    def _complementary_end_timestamp(self, df: pd.DataFrame) -> pd.DataFrame:
-        end_timestamp = self._timestamp_round_algo.round_value(self._end_timestamp)
-        self._logger.debug(f"Complementary end timestamp to value {end_timestamp} {[self._end_timestamp]}")
+    def _complementary_max_timestamp(self, df: pd.DataFrame) -> pd.DataFrame:
+        required_max_timestamp = self._timestamp_round_algo.round_value(self._required_max_timestamp)
+        self._logger.debug(f"Complementary max timestamp to"
+                           f" {required_max_timestamp} {[self._required_max_timestamp]}")
+
         df = df.copy()
-        last_datetime_idx = df[self._timestamp_column_name].idxmax()
-        last_datetime = df.loc[last_datetime_idx, self._timestamp_column_name]
-        if last_datetime < end_timestamp:
-            df = df.append(
-                {self._timestamp_column_name: end_timestamp},
-                ignore_index=True
-            )
+        max_timestamp = df[self._timestamp_column_name].max()
+        if max_timestamp < required_max_timestamp:
+            new_row = {
+                self._timestamp_column_name: required_max_timestamp
+            }
+            df = df.append(new_row, ignore_index=True)
+
         return df
 
     def _interpolate_passes_of_timestamp(self, df: pd.DataFrame) -> pd.DataFrame:
