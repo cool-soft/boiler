@@ -41,4 +41,5 @@ class ArithmeticFloatRoundAlgorithm(AbstractFloatRoundAlgorithm):
 
     def _round(self, n):
         multiplier = 10 ** self._decimals
-        return math.floor(n * multiplier + 0.5) / multiplier
+        rounded_abs = math.floor(abs(n) * multiplier + 0.5) / multiplier
+        return math.copysign(rounded_abs, n)
