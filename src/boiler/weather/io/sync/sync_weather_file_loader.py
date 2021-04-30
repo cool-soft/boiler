@@ -4,7 +4,9 @@ from typing import Optional
 
 import pandas as pd
 
-from boiler.data_processing.processing_algo.beetween_filter_algorithm import AbstractBetweenFilterAlgorithm
+from boiler.constants import column_names
+from boiler.data_processing.beetween_filter_algorithm import \
+    AbstractBetweenFilterAlgorithm, LeftClosedBetweenFilterAlgorithm
 from boiler.weather.io.sync.sync_weather_loader import SyncWeatherLoader
 from boiler.weather.io.sync.sync_weather_reader import SyncWeatherReader
 
@@ -20,6 +22,8 @@ class SyncWeatherFileLoader(SyncWeatherLoader):
 
         self._filepath = filepath
         self._reader = reader
+        if filter_algorithm is None:
+            filter_algorithm = LeftClosedBetweenFilterAlgorithm(column_name=column_names.TIMESTAMP)
         self._filter_algorithm = filter_algorithm
 
         self._logger.debug(f"Filepath is {filepath}")

@@ -4,19 +4,27 @@ from typing import Optional
 import pandas as pd
 
 from boiler.constants import dataset_prototypes, column_names
-from boiler.data_processing.processing_algo.beetween_filter_algorithm import FullClosedBetweenFilterAlgorithm
+from boiler.data_processing.beetween_filter_algorithm \
+    import LeftClosedBetweenFilterAlgorithm, AbstractBetweenFilterAlgorithm
 from boiler.heating_obj.io.sync.sync_heating_obj_dumper import SyncHeatingObjDumper
 from boiler.heating_obj.io.sync.sync_heating_obj_loader import SyncHeatingObjLoader
 
 
 class SyncHeatingObjInMemoryDumperLoader(SyncHeatingObjDumper, SyncHeatingObjLoader):
 
-    def __init__(self) -> None:
+    def __init__(self,
+                 filter_algorithm: Optional[AbstractBetweenFilterAlgorithm] = None) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance")
 
         self._storage = dataset_prototypes.HEATING_OBJ.copy()
-        self._filter_algorithm = FullClosedBetweenFilterAlgorithm(column_name=column_names.TIMESTAMP)
+        if filter_algorithm is None:
+            filter_algorithm = LeftClosedBetweenFilterAlgorithm(column_name=column_names.TIMESTAMP)
+        self._filter_algorithm = filter_algorithm
+
+    def set_filter_algorithm(self, algorithm: AbstractBetweenFilterAlgorithm) -> None:
+        self._logger.debug(f"Filter algorithm is set to {algorithm}")
+        self._filter_algorithm = algorithm
 
     def load_heating_obj(self,
                          start_datetime: Optional[pd.Timestamp] = None,

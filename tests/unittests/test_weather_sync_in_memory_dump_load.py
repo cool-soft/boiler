@@ -1,7 +1,7 @@
 import pytest
 
 from boiler.constants import column_names
-from boiler.data_processing.processing_algo.beetween_filter_algorithm import FullClosedBetweenFilterAlgorithm
+from boiler.data_processing.beetween_filter_algorithm import FullClosedBetweenFilterAlgorithm
 from boiler.weather.io.sync.sync_weather_in_memory_dumper_loader import SyncWeatherInMemoryDumperLoader
 from unittests.weather_sync_dump_load_testing import WeatherSyncDumpLoadTesting
 

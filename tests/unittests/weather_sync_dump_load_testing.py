@@ -5,7 +5,7 @@ import pytest
 from dateutil.tz import tzlocal
 
 from boiler.constants import column_names, time_tick, dataset_prototypes
-from boiler.data_processing.processing_algo.beetween_filter_algorithm import FullClosedBetweenFilterAlgorithm
+from boiler.data_processing.beetween_filter_algorithm import FullClosedBetweenFilterAlgorithm
 
 
 # noinspection PyMethodMayBeStatic

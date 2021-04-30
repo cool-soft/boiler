@@ -5,9 +5,9 @@ import pytest
 from dateutil.tz import tzlocal
 
 from boiler.constants import column_names
-from boiler.data_processing.dataset_processors.dataset_timestamp_interpolator \
-    import DatasetTimestampInterpolator
-from boiler.data_processing.processing_algo.timestamp_round_algorithm import FloorTimestampRoundAlgorithm
+from boiler.data_processing.timestamp_interpolator_algorithm \
+    import TimestampInterpolationAlgorithm
+from boiler.data_processing.timestamp_round_algorithm import FloorTimestampRoundAlgorithm
 
 
 class TestDatasetTimestampInterpolator:
@@ -55,26 +55,28 @@ class TestDatasetTimestampInterpolator:
         return FloorTimestampRoundAlgorithm(round_step=self.timedelta)
 
     @pytest.fixture
-    def processor(self, timestamp_round_algorithm):
-        return DatasetTimestampInterpolator(
+    def interpolation_algorithm(self, timestamp_round_algorithm):
+        return TimestampInterpolationAlgorithm(
             timestamp_round_algo=timestamp_round_algorithm,
             interpolation_step=self.timedelta,
             timestamp_column_name=self.timestamp_column_name
         )
 
-    def test_dataset_timestamp_interpolation(self, dataset, processor, timestamp_round_algorithm):
+    def test_dataset_timestamp_interpolation(self, dataset, interpolation_algorithm, timestamp_round_algorithm):
 
         start_timestamp = dataset[self.timestamp_column_name].min()
-        start_timestamp -= 5 * self.timedelta
+        required_start_timestamp = start_timestamp - (5 * self.timedelta)
         end_timestamp = dataset[self.timestamp_column_name].max()
-        end_timestamp += 5 * self.timedelta
+        required_end_timestamp = end_timestamp + (5 * self.timedelta)
 
-        processor.set_start_timestamp(start_timestamp)
-        processor.set_end_timestamp(end_timestamp)
-        interpolated_dataset = processor.process_df(dataset)
+        interpolated_dataset = interpolation_algorithm.process_df(
+            dataset,
+            required_start_timestamp,
+            required_end_timestamp
+        )
 
-        assert interpolated_dataset[self.timestamp_column_name].min() == start_timestamp
-        assert interpolated_dataset[self.timestamp_column_name].max() == end_timestamp
+        assert interpolated_dataset[self.timestamp_column_name].min() == required_start_timestamp
+        assert interpolated_dataset[self.timestamp_column_name].max() == required_end_timestamp
 
         timestamp_list = interpolated_dataset[self.timestamp_column_name].to_list()
         for i in range(0, len(timestamp_list)-1):

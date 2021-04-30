@@ -4,7 +4,7 @@ from typing import Optional
 import pandas as pd
 
 
-class AbstractRoundAlgorithm:
+class AbstractTimestampRoundAlgorithm:
 
     def round_value(self, value: pd.Timestamp) -> pd.Timestamp:
         raise NotImplementedError
@@ -13,7 +13,7 @@ class AbstractRoundAlgorithm:
         raise NotImplementedError
 
 
-class FloorTimestampRoundAlgorithm(AbstractRoundAlgorithm):
+class FloorTimestampRoundAlgorithm(AbstractTimestampRoundAlgorithm):
 
     def __init__(self, round_step: Optional[pd.Timedelta] = None) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
@@ -42,7 +42,7 @@ class FloorTimestampRoundAlgorithm(AbstractRoundAlgorithm):
         return rounded_series
 
 
-class CeilTimestampRoundAlgorithm(AbstractRoundAlgorithm):
+class CeilTimestampRoundAlgorithm(AbstractTimestampRoundAlgorithm):
 
     def __init__(self, round_step: Optional[pd.Timedelta] = None) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
@@ -71,7 +71,7 @@ class CeilTimestampRoundAlgorithm(AbstractRoundAlgorithm):
         return rounded_series
 
 
-class NearestTimestampRoundAlgorithm(AbstractRoundAlgorithm):
+class NearestTimestampRoundAlgorithm(AbstractTimestampRoundAlgorithm):
 
     def __init__(self, round_step: Optional[pd.Timedelta] = None) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)

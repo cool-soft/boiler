@@ -5,8 +5,8 @@ from typing import Optional
 import pandas as pd
 
 from boiler.constants import column_names
-from boiler.data_processing.processing_algo.beetween_filter_algorithm import FullClosedBetweenFilterAlgorithm, \
-    AbstractBetweenFilterAlgorithm
+from boiler.data_processing.beetween_filter_algorithm \
+    import AbstractBetweenFilterAlgorithm, LeftClosedBetweenFilterAlgorithm
 from boiler.heating_obj.io.sync.sync_heating_obj_reader import SyncHeatingObjReader
 from boiler.heating_obj.io.sync.sync_heating_obj_loader import SyncHeatingObjLoader
 
@@ -22,6 +22,8 @@ class SyncHeatingObjFileLoader(SyncHeatingObjLoader):
 
         self._filepath = filepath
         self._reader = reader
+        if filter_algorithm is None:
+            filter_algorithm = LeftClosedBetweenFilterAlgorithm(column_name=column_names.TIMESTAMP)
         self._filter_algorithm = filter_algorithm
 
         self._logger.debug(f"Filepath is {filepath}")

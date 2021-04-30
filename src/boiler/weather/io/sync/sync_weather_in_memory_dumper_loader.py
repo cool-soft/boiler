@@ -3,8 +3,9 @@ from typing import Optional
 
 import pandas as pd
 
-from boiler.constants import dataset_prototypes
-from boiler.data_processing.processing_algo.beetween_filter_algorithm import AbstractBetweenFilterAlgorithm
+from boiler.constants import dataset_prototypes, column_names
+from boiler.data_processing.beetween_filter_algorithm import AbstractBetweenFilterAlgorithm, \
+    LeftClosedBetweenFilterAlgorithm
 from boiler.weather.io.sync.sync_weather_dumper import SyncWeatherDumper
 from boiler.weather.io.sync.sync_weather_loader import SyncWeatherLoader
 
@@ -17,6 +18,8 @@ class SyncWeatherInMemoryDumperLoader(SyncWeatherLoader, SyncWeatherDumper):
         self._logger.debug("Creating instance")
 
         self._storage = dataset_prototypes.WEATHER.copy()
+        if filter_algorithm is None:
+            filter_algorithm = LeftClosedBetweenFilterAlgorithm(column_name=column_names.TIMESTAMP)
         self._filter_algorithm = filter_algorithm
 
     def set_filter_algorithm(self, algorithm: AbstractBetweenFilterAlgorithm):
