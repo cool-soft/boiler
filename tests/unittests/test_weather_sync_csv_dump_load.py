@@ -22,11 +22,10 @@ class TestWeatherSyncCSVDumpLoad(WeatherSyncDumpLoadTesting):
         return SyncWeatherCSVReader()
 
     @pytest.fixture
-    def loader(self, reader, filepath, filter_algorithm):
+    def loader(self, reader, filepath):
         return SyncWeatherFileLoader(
             filepath=filepath,
-            reader=reader,
-            filter_algorithm=filter_algorithm
+            reader=reader
         )
 
     @pytest.fixture
