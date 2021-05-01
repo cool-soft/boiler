@@ -58,8 +58,7 @@ class TestDatasetTimestampInterpolator:
     def interpolation_algorithm(self, timestamp_round_algorithm):
         return TimestampInterpolationAlgorithm(
             timestamp_round_algo=timestamp_round_algorithm,
-            interpolation_step=self.timedelta,
-            timestamp_column_name=self.timestamp_column_name
+            interpolation_step=self.timedelta
         )
 
     def test_dataset_timestamp_interpolation(self, dataset, interpolation_algorithm, timestamp_round_algorithm):

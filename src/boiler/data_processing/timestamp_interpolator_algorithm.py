@@ -1,57 +1,45 @@
 import logging
-from typing import Optional
+from typing import Union
 
 import pandas as pd
 
 from boiler.constants import column_names
-from boiler.data_processing.timestamp_round_algorithm \
-    import AbstractTimestampRoundAlgorithm
+from boiler.data_processing.timestamp_round_algorithm import AbstractTimestampRoundAlgorithm
 
 
 class AbstractTimestampInterpolationAlgorithm:
 
     def process_df(self,
                    df: pd.DataFrame,
-                   required_min_timestamp: pd.Timestamp,
-                   required_max_timestamp: pd.Timestamp) -> pd.DataFrame:
+                   min_required_timestamp: Union[pd.Timestamp, None],
+                   max_required_timestamp: Union[pd.Timestamp, None]
+                   ) -> pd.DataFrame:
         raise NotImplementedError
 
 
 class TimestampInterpolationAlgorithm(AbstractTimestampInterpolationAlgorithm):
 
     def __init__(self,
-                 timestamp_round_algo: Optional[AbstractTimestampRoundAlgorithm] = None,
-                 interpolation_step: Optional[pd.Timedelta] = None,
-                 timestamp_column_name: str = column_names.TIMESTAMP) -> None:
+                 timestamp_round_algo: AbstractTimestampRoundAlgorithm,
+                 interpolation_step: pd.Timedelta,
+                 ) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance")
 
         self._interpolation_step = interpolation_step
         self._timestamp_round_algo = timestamp_round_algo
-        self._timestamp_column_name = timestamp_column_name
-
-        self._logger.debug(f"Timestamp Round algo is {timestamp_round_algo}")
-        self._logger.debug(f"Interpolation step is {interpolation_step}")
-        self._logger.debug(f"Timestamp column name is {timestamp_column_name}")
-
-    def set_interpolation_step(self, interpolation_step: pd.Timedelta) -> None:
-        self._logger.debug(f"Interpolation step is set to {interpolation_step}")
-        self._interpolation_step = interpolation_step
-
-    def set_timestamp_round_algo(self, round_algo: AbstractTimestampRoundAlgorithm) -> None:
-        self._logger.debug(f"Round algo is set to {round_algo}")
-        self._timestamp_round_algo = round_algo
+        self._timestamp_column_name = column_names.TIMESTAMP
 
     def process_df(self,
                    df: pd.DataFrame,
-                   required_min_timestamp: pd.Timestamp,
-                   required_max_timestamp: pd.Timestamp) -> pd.DataFrame:
+                   min_required_timestamp: Union[pd.Timestamp, None],
+                   max_required_timestamp: Union[pd.Timestamp, None]
+                   ) -> pd.DataFrame:
         self._logger.debug("Interpolating is requested")
         df = df.copy()
-        if required_min_timestamp is not None:
-            df = self._complementary_min_timestamp(df, required_min_timestamp)
-        if required_max_timestamp is not None:
-            df = self._complementary_max_timestamp(df, required_max_timestamp)
+        if min_required_timestamp is not None:
+            df = self._complementary_min_timestamp(df, min_required_timestamp)
+        if min_required_timestamp is not None:
+            df = self._complementary_max_timestamp(df, max_required_timestamp)
         df = df.sort_values(by=self._timestamp_column_name, ignore_index=True)
         df = self._interpolate_passes_of_timestamp(df)
         self._logger.debug("Interpolated")

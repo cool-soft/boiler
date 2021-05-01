@@ -15,16 +15,9 @@ class AbstractTimestampRoundAlgorithm:
 
 class FloorTimestampRoundAlgorithm(AbstractTimestampRoundAlgorithm):
 
-    def __init__(self, round_step: Optional[pd.Timedelta] = None) -> None:
+    def __init__(self, round_step: pd.Timedelta) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance")
 
-        self._round_step = round_step
-
-        self._logger.debug(f"Round step is {round_step}")
-
-    def set_round_step(self, round_step: pd.Timedelta) -> None:
-        self._logger.debug(f"Round step is set to {round_step}")
         self._round_step = round_step
 
     def round_value(self, value: pd.Timestamp) -> pd.Timestamp:
@@ -44,16 +37,9 @@ class FloorTimestampRoundAlgorithm(AbstractTimestampRoundAlgorithm):
 
 class CeilTimestampRoundAlgorithm(AbstractTimestampRoundAlgorithm):
 
-    def __init__(self, round_step: Optional[pd.Timedelta] = None) -> None:
+    def __init__(self, round_step: pd.Timedelta) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance")
 
-        self._round_step = round_step
-
-        self._logger.debug(f"Round step is {round_step}")
-
-    def set_round_step(self, round_step: pd.Timedelta) -> None:
-        self._logger.debug(f"Round step is set to {round_step}")
         self._round_step = round_step
 
     def round_value(self, value: pd.Timestamp) -> pd.Timestamp:
@@ -73,16 +59,9 @@ class CeilTimestampRoundAlgorithm(AbstractTimestampRoundAlgorithm):
 
 class NearestTimestampRoundAlgorithm(AbstractTimestampRoundAlgorithm):
 
-    def __init__(self, round_step: Optional[pd.Timedelta] = None) -> None:
+    def __init__(self, round_step: pd.Timedelta) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance")
 
-        self._round_step = round_step
-
-        self._logger.debug(f"Round step is {round_step}")
-
-    def set_round_step(self, round_step: pd.Timedelta) -> None:
-        self._logger.debug(f"Round step is set to {round_step}")
         self._round_step = round_step
 
     def round_value(self, value: pd.Timestamp) -> pd.Timestamp:

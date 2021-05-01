@@ -1,71 +1,58 @@
 import logging
-from typing import Any
+from typing import Union
 
 import pandas as pd
 
 from boiler.constants import column_names
 
 
-class AbstractBetweenFilterAlgorithm:
+class AbstractTimestampFilterAlgorithm:
 
-    def filter_df_by_min_max_values(self,
-                                    df: pd.DataFrame,
-                                    min_value: Any,
-                                    max_value: Any) -> pd.DataFrame:
+    def filter_df_by_min_max_timestamp(self,
+                                       df: pd.DataFrame,
+                                       min_timestamp: Union[pd.Timestamp, None],
+                                       max_timestamp: Union[pd.Timestamp, None]
+                                       ) -> pd.DataFrame:
         raise NotImplementedError
 
 
-class FullClosedBetweenFilterAlgorithm(AbstractBetweenFilterAlgorithm):
+class FullClosedTimestampFilterAlgorithm(AbstractTimestampFilterAlgorithm):
 
-    def __init__(self,
-                 column_name: str = column_names.TIMESTAMP) -> None:
+    def __init__(self) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance")
 
-        self._column_name = column_name
+        self._timestamp_column_name = column_names.TIMESTAMP
 
-        self._logger.debug(f"Column is {column_name}")
-
-    def set_column_to_filter_by(self, column_name: str) -> None:
-        self._logger.debug(f"Column to filter by is set to {column_name}")
-        self._column_name = column_name
-
-    def filter_df_by_min_max_values(self,
-                                    df: pd.DataFrame,
-                                    min_value: Any = None,
-                                    max_value: Any = None) -> pd.DataFrame:
-        self._logger.debug(f"Filter by column {self._column_name}: [{min_value}, {max_value}]")
-        if min_value is not None:
-            df = df[df[self._column_name] >= min_value]
-        if max_value is not None:
-            df = df[df[self._column_name] <= max_value]
+    def filter_df_by_min_max_timestamp(self,
+                                       df: pd.DataFrame,
+                                       min_timestamp: Union[pd.Timestamp, None],
+                                       max_timestamp: Union[pd.Timestamp, None]
+                                       ) -> pd.DataFrame:
+        self._logger.debug(f"Filter by range: [{min_timestamp}, {max_timestamp}]")
+        if min_timestamp is not None:
+            df = df[df[self._timestamp_column_name] >= min_timestamp]
+        if max_timestamp is not None:
+            df = df[df[self._timestamp_column_name] <= max_timestamp]
         df = df.copy()
         return df
 
 
-class LeftClosedBetweenFilterAlgorithm(AbstractBetweenFilterAlgorithm):
+class LeftClosedTimestampFilterAlgorithm(AbstractTimestampFilterAlgorithm):
 
-    def __init__(self,
-                 column_name: str = column_names.TIMESTAMP) -> None:
+    def __init__(self) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance")
 
-        self._column_name = column_name
+        self._timestamp_column_name = column_names.TIMESTAMP
 
-        self._logger.debug(f"Column is {column_name}")
-
-    def set_column_to_filter_by(self, column_name: str) -> None:
-        self._logger.debug(f"Column to filter by is set to {column_name}")
-        self._column_name = column_name
-
-    def filter_df_by_min_max_values(self,
-                                    df: pd.DataFrame,
-                                    min_value: Any = None,
-                                    max_value: Any = None) -> pd.DataFrame:
-        self._logger.debug(f"Filter by column {self._column_name}: [{min_value}, {max_value})")
-        if min_value is not None:
-            df = df[df[self._column_name] >= min_value]
-        if max_value is not None:
-            df = df[df[self._column_name] < max_value]
+    def filter_df_by_min_max_timestamp(self,
+                                       df: pd.DataFrame,
+                                       min_timestamp: Union[pd.Timestamp, None],
+                                       max_timestamp: Union[pd.Timestamp, None]
+                                       ) -> pd.DataFrame:
+        self._logger.debug(f"Filter range: [{min_timestamp}, {max_timestamp})")
+        if min_timestamp is not None:
+            df = df[df[self._timestamp_column_name] >= min_timestamp]
+        if max_timestamp is not None:
+            df = df[df[self._timestamp_column_name] < max_timestamp]
         df = df.copy()
         return df
