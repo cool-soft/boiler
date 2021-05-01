@@ -1,9 +1,9 @@
 import pytest
 
-from boiler.temp_graph.io.sync.sync_temp_graph_csv_reader import SyncTempGraphCSVReader
-from boiler.temp_graph.io.sync.sync_temp_graph_csv_writer import SyncTempGraphCSVWriter
-from boiler.temp_graph.io.sync.sync_temp_graph_file_dumper import SyncTempGraphFileDumper
-from boiler.temp_graph.io.sync.sync_temp_graph_file_loader import SyncTempGraphFileLoader
+from boiler.temp_graph.io.sync_temp_graph_csv_reader import SyncTempGraphCSVReader
+from boiler.temp_graph.io.sync_temp_graph_csv_writer import SyncTempGraphCSVWriter
+from boiler.temp_graph.io.sync_temp_graph_file_dumper import SyncTempGraphFileDumper
+from boiler.temp_graph.io.sync_temp_graph_file_loader import SyncTempGraphFileLoader
 from unittests.temp_graph_sync_dump_load_testing import TempGraphSyncDumpLoadTesting
 
 

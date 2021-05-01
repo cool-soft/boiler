@@ -22,10 +22,6 @@ class ArithmeticFloatRoundAlgorithm(AbstractFloatRoundAlgorithm):
         self._decimals = decimals
         self._logger.debug(f"Decimals count is set to {decimals}")
 
-    def set_decimals_count(self, decimals: int):
-        self._logger.debug(f"Decimals count is set to {decimals}")
-        self._decimals = decimals
-
     def round_value(self, value: float) -> float:
         self._logger.debug(f"Rounding value: {value}")
         rounded_value = self._round(value)
