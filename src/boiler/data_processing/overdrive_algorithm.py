@@ -24,14 +24,6 @@ class MinMaxOverdriveAlgorithm(AbstractOverdriveAlgorithm):
         self._logger.debug(f"Min value is {min_value}")
         self._logger.debug(f"Max value is {max_value}")
 
-    def set_min_value(self, value: float) -> None:
-        self._logger.debug(f"Min value is set to {value}")
-        self._min_value = value
-
-    def set_max_value(self, value: float) -> None:
-        self._logger.debug(f"Max value is set to {value}")
-        self._max_value = value
-
     def apply_overdrive_to_series(self, series: pd.Series) -> pd.Series:
         self._logger.debug(f"Apply overdrive [{self._min_value}, {self._max_value}]")
         series = series.copy()

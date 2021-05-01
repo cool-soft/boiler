@@ -6,15 +6,15 @@ import pandas as pd
 
 from boiler.data_processing.beetween_filter_algorithm \
     import AbstractTimestampFilterAlgorithm, LeftClosedTimestampFilterAlgorithm
-from boiler.heating_obj.io.sync.sync_heating_obj_loader import SyncHeatingObjLoader
-from boiler.heating_obj.io.sync.sync_heating_obj_reader import SyncHeatingObjReader
+from boiler.heating_obj.io.abstract_sync_heating_obj_loader import AbstractSyncHeatingObjLoader
+from boiler.heating_obj.io.abstract_sync_heating_obj_reader import AbstractSyncHeatingObjReader
 
 
-class SyncHeatingObjFileLoader(SyncHeatingObjLoader):
+class SyncHeatingObjFileLoader(AbstractSyncHeatingObjLoader):
 
     def __init__(self,
-                 filepath: Optional[str] = None,
-                 reader: Optional[SyncHeatingObjReader] = None,
+                 filepath: str,
+                 reader: AbstractSyncHeatingObjReader,
                  timestamp_filter_algorithm: AbstractTimestampFilterAlgorithm =
                  LeftClosedTimestampFilterAlgorithm()
                  ) -> None:

@@ -5,10 +5,10 @@ from typing import BinaryIO
 import pandas as pd
 
 from boiler.constants import column_names
-from boiler.heating_obj.io.sync.sync_heating_obj_reader import SyncHeatingObjReader
+from boiler.heating_obj.io.abstract_sync_heating_obj_reader import AbstractSyncHeatingObjReader
 
 
-class SyncHeatingObjCSVReader(SyncHeatingObjReader):
+class SyncHeatingObjCSVReader(AbstractSyncHeatingObjReader):
 
     def __init__(self, encoding: str = "utf-8") -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
@@ -17,10 +17,6 @@ class SyncHeatingObjCSVReader(SyncHeatingObjReader):
         self._encoding = encoding
 
         self._logger.debug(f"Encoding is {encoding}")
-
-    def set_encoding(self, encoding: str) -> None:
-        self._logger.debug(f"Encoding is set to {encoding}")
-        self._encoding = encoding
 
     def read_heating_obj_from_binary_stream(self,
                                             binary_stream: BinaryIO) -> pd.DataFrame:

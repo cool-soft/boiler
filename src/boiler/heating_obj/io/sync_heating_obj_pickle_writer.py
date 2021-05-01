@@ -4,10 +4,10 @@ from typing import BinaryIO
 
 import pandas as pd
 
-from boiler.heating_obj.io.sync.sync_heating_obj_writer import SyncHeatingObjWriter
+from boiler.heating_obj.io.abstract_sync_heating_obj_writer import AbstractSyncHeatingObjWriter
 
 
-class SyncHeatingObjPickleWriter(SyncHeatingObjWriter):
+class SyncHeatingObjPickleWriter(AbstractSyncHeatingObjWriter):
 
     def __init__(self) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)

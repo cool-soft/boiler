@@ -4,10 +4,11 @@ from typing import BinaryIO
 
 import pandas as pd
 
-from boiler.heating_obj.io.sync.sync_heating_obj_writer import SyncHeatingObjWriter
+from boiler.heating_obj.io.abstract_sync_heating_obj_writer \
+    import AbstractSyncHeatingObjWriter
 
 
-class SyncHeatingObjCSVWriter(SyncHeatingObjWriter):
+class SyncHeatingObjCSVWriter(AbstractSyncHeatingObjWriter):
 
     def __init__(self, encoding: str = "utf-8") -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
@@ -16,10 +17,6 @@ class SyncHeatingObjCSVWriter(SyncHeatingObjWriter):
         self._encoding = encoding
 
         self._logger.debug(f"Encoding is {encoding}")
-
-    def set_encoding(self, encoding: str) -> None:
-        self._logger.debug(f"Encoding is set to {encoding}")
-        self._encoding = encoding
 
     def write_heating_obj_to_binary_stream(self,
                                            binary_stream: BinaryIO,

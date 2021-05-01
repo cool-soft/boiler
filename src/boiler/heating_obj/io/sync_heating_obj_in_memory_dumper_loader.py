@@ -6,11 +6,11 @@ import pandas as pd
 from boiler.constants import dataset_prototypes
 from boiler.data_processing.beetween_filter_algorithm import AbstractTimestampFilterAlgorithm, \
     LeftClosedTimestampFilterAlgorithm
-from boiler.heating_obj.io.sync.sync_heating_obj_dumper import SyncHeatingObjDumper
-from boiler.heating_obj.io.sync.sync_heating_obj_loader import SyncHeatingObjLoader
+from boiler.heating_obj.io.abstract_sync_heating_obj_dumper import AbstractSyncHeatingObjDumper
+from boiler.heating_obj.io.abstract_sync_heating_obj_loader import AbstractSyncHeatingObjLoader
 
 
-class SyncHeatingObjInMemoryDumperLoader(SyncHeatingObjDumper, SyncHeatingObjLoader):
+class SyncHeatingObjInMemoryDumperLoader(AbstractSyncHeatingObjDumper, AbstractSyncHeatingObjLoader):
 
     def __init__(self,
                  filter_algorithm: AbstractTimestampFilterAlgorithm =
