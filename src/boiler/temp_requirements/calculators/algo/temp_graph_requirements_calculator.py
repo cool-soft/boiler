@@ -19,12 +19,7 @@ class TempGraphRequirementsCalculator:
         self._logger.debug("Temp graph is set")
         self._temp_graph = temp_graph
 
-    def calc_temp_requirements_for_weather_df(self, weather_df: pd.DataFrame) -> pd.DataFrame:
-        # TODO: вычисление {timestamp, forward_pipe, backward_pipe}
-        pass
-
     def calc_temp_requirements_for_weather_temp(self, weather_temp: float) -> pd.DataFrame:
-        # TODO: округление погоды
         available_temp = self._temp_graph[self._temp_graph[column_names.WEATHER_TEMP] <= weather_temp]
         if not available_temp.empty:
             required_temp_idx = available_temp[column_names.WEATHER_TEMP].idxmax()
