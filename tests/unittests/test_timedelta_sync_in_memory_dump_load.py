@@ -1,6 +1,6 @@
 import pytest
 
-from boiler.time_delta.io.sync.sync_timedelta_in_memory_dumper_loader import SyncTimedeltaInMemoryDumperLoader
+from boiler.time_delta.io.sync_timedelta_in_memory_dumper_loader import SyncTimedeltaInMemoryDumperLoader
 from unittests.timedelta_sync_dump_load_testing import TimedeltaSyncDumpLoadTesting
 
 

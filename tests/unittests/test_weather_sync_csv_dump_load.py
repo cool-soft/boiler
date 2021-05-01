@@ -1,9 +1,9 @@
 import pytest
 
-from boiler.weather.io.sync.sync_weather_csv_reader import SyncWeatherCSVReader
-from boiler.weather.io.sync.sync_weather_csv_writer import SyncWeatherCSVWriter
-from boiler.weather.io.sync.sync_weather_file_loader import SyncWeatherFileLoader
-from boiler.weather.io.sync.sync_weather_file_dumper import SyncWeatherFileDumper
+from boiler.weather.io.sync_weather_csv_reader import SyncWeatherCSVReader
+from boiler.weather.io.sync_weather_csv_writer import SyncWeatherCSVWriter
+from boiler.weather.io.sync_weather_file_loader import SyncWeatherFileLoader
+from boiler.weather.io.sync_weather_file_dumper import SyncWeatherFileDumper
 from unittests.weather_sync_dump_load_testing import WeatherSyncDumpLoadTesting
 
 

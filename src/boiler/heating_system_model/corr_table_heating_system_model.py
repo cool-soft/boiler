@@ -1,5 +1,5 @@
 import logging
-from typing import Optional, List
+from typing import List
 
 import numpy as np
 import pandas as pd
@@ -10,9 +10,10 @@ from boiler.constants import column_names
 class CorrTableHeatingSystemModel:
 
     def __init__(self,
-                 temp_correlation_table: Optional[pd.DataFrame] = None,
-                 home_time_deltas: Optional[pd.DataFrame] = None,
-                 home_min_temp_coefficient: float = 1.0) -> None:
+                 temp_correlation_table: pd.DataFrame,
+                 home_time_deltas: pd.DataFrame,
+                 home_min_temp_coefficient: float = 1.0
+                 ) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance of the provider")
 
@@ -21,22 +22,6 @@ class CorrTableHeatingSystemModel:
         self._home_min_temp_coefficient = home_min_temp_coefficient
 
         self._logger.debug(f"Home min temp coefficient is {home_min_temp_coefficient}")
-
-    def set_homes_time_deltas(self, homes_time_deltas: pd.DataFrame) -> None:
-        self._logger.debug("Set homes time deltas")
-        self._homes_time_deltas = homes_time_deltas
-
-    # TODO: Убрать использование
-    def get_homes_time_deltas(self) -> pd.DataFrame:
-        return self._homes_time_deltas.copy()
-
-    def set_temp_correlation_table(self, temp_correlation_table: pd.DataFrame) -> None:
-        self._logger.debug("Set temp correlation table")
-        self._temp_correlation_table = temp_correlation_table
-
-    def set_home_min_temp_coefficient(self, min_temp_coefficient: float) -> None:
-        logging.debug(f"Set home min temp coefficient to {min_temp_coefficient}")
-        self._home_min_temp_coefficient = min_temp_coefficient
 
     # TODO: возвращать np.array
     def predict_on_temp_requirements(self, temp_requirements: np.array) -> List:
