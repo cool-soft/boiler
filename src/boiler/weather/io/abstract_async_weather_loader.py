@@ -3,7 +3,7 @@ from typing import Optional
 import pandas as pd
 
 
-class AsyncWeatherLoader:
+class AbstractAsyncWeatherLoader:
 
     async def load_weather(self,
                            start_datetime: Optional[pd.Timestamp] = None,
