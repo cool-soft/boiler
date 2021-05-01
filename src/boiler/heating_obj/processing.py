@@ -5,11 +5,8 @@ import pandas as pd
 
 class AbstractHeatingObjProcessor:
 
-    def set_min_required_timestamp(self, timestamp: Union[pd.Timestamp, None]) -> None:
-        raise NotImplementedError
-
-    def set_max_required_timestamp(self, timestamp: Union[pd.Timestamp, None]) -> None:
-        raise NotImplementedError
-
-    def process_heating_obj(self, heating_obj: pd.DataFrame) -> pd.DataFrame:
+    def process_heating_obj(self,
+                            heating_obj: pd.DataFrame,
+                            min_required_timestamp: Union[pd.Timestamp, None],
+                            max_required_timestamp: Union[pd.Timestamp, None]) -> pd.DataFrame:
         raise NotImplementedError
