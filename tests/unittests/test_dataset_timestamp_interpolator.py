@@ -15,27 +15,26 @@ class TestDatasetTimestampInterpolator:
     timestamp_column_name = column_names.TIMESTAMP
     columns = ["col_0", "col_1"]
     timedelta = pd.Timedelta(minutes=10)
+    row_count = 100
+    generation_prob = 0.3
 
     @pytest.fixture
     def dataset(self, timestamp_round_algorithm):
         current_timestamp = pd.Timestamp.now(tz=tzlocal())
         current_timestamp = timestamp_round_algorithm.round_value(current_timestamp)
 
-        row_count = 100
-        generation_prob = 0.3
-
         df = pd.DataFrame(columns=self.columns)
 
-        for i in range(row_count//2-1):
-            if random() <= generation_prob:
+        for i in range(self.row_count//2-1):
+            if random() <= self.generation_prob:
                 df = self._append_row(df, current_timestamp)
             current_timestamp += self.timedelta
 
         df = self._append_row(df, current_timestamp)
         current_timestamp += self.timedelta
 
-        for i in range(row_count//2-1):
-            if random() <= generation_prob:
+        for i in range(self.row_count//2-1):
+            if random() <= self.generation_prob:
                 df = self._append_row(df, current_timestamp)
             current_timestamp += self.timedelta
 
@@ -64,9 +63,12 @@ class TestDatasetTimestampInterpolator:
     def test_dataset_timestamp_interpolation(self, dataset, interpolation_algorithm, timestamp_round_algorithm):
 
         start_timestamp = dataset[self.timestamp_column_name].min()
-        required_start_timestamp = start_timestamp - (5 * self.timedelta)
+        required_start_timestamp = start_timestamp - (1.5 * self.timedelta)
+        rounded_required_start_timestamp = timestamp_round_algorithm.round_value(required_start_timestamp)
+
         end_timestamp = dataset[self.timestamp_column_name].max()
-        required_end_timestamp = end_timestamp + (5 * self.timedelta)
+        required_end_timestamp = end_timestamp + (1.5 * self.timedelta)
+        rounded_required_end_timestamp = timestamp_round_algorithm.round_value(required_end_timestamp)
 
         interpolated_dataset = interpolation_algorithm.process_df(
             dataset,
@@ -74,8 +76,8 @@ class TestDatasetTimestampInterpolator:
             required_end_timestamp
         )
 
-        assert interpolated_dataset[self.timestamp_column_name].min() == required_start_timestamp
-        assert interpolated_dataset[self.timestamp_column_name].max() == required_end_timestamp
+        assert interpolated_dataset[self.timestamp_column_name].min() == rounded_required_start_timestamp
+        assert interpolated_dataset[self.timestamp_column_name].max() == rounded_required_end_timestamp
 
         timestamp_list = interpolated_dataset[self.timestamp_column_name].to_list()
         for i in range(0, len(timestamp_list)-1):
