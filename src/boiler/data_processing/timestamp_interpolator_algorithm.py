@@ -52,10 +52,10 @@ class TimestampInterpolationAlgorithm(AbstractTimestampInterpolationAlgorithm):
 
         df = df.copy()
         min_timestamp = df[self._timestamp_column_name].min()
-        if min_timestamp > required_min_timestamp:
+        if min_timestamp > rounded_required_min_timestamp:
             new_df = pd.DataFrame(columns=df.columns)
             new_row = {
-                self._timestamp_column_name: required_min_timestamp
+                self._timestamp_column_name: rounded_required_min_timestamp
             }
             new_df = new_df.append(new_row, ignore_index=True)
             df = new_df.append(df, ignore_index=True)
@@ -69,9 +69,9 @@ class TimestampInterpolationAlgorithm(AbstractTimestampInterpolationAlgorithm):
 
         df = df.copy()
         max_timestamp = df[self._timestamp_column_name].max()
-        if max_timestamp < required_max_timestamp:
+        if max_timestamp < rounded_required_max_timestamp:
             new_row = {
-                self._timestamp_column_name: required_max_timestamp
+                self._timestamp_column_name: rounded_required_max_timestamp
             }
             df = df.append(new_row, ignore_index=True)
 
