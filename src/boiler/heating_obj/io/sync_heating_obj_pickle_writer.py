@@ -1,5 +1,4 @@
 import logging
-import pickle
 from typing import BinaryIO
 
 import pandas as pd
@@ -17,5 +16,6 @@ class SyncHeatingObjPickleWriter(AbstractSyncHeatingObjWriter):
                                            binary_stream: BinaryIO,
                                            heating_obj_df: pd.DataFrame) -> None:
         self._logger.debug("Storing heating object")
-        pickle.dump(heating_obj_df, binary_stream)
+        # noinspection PyTypeChecker
+        heating_obj_df.to_pickle(binary_stream)
         self._logger.debug("Heating object is stored")

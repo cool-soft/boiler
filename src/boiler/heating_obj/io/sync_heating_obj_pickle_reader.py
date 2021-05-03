@@ -1,5 +1,4 @@
 import logging
-import pickle
 from typing import BinaryIO
 
 import pandas as pd
@@ -17,6 +16,6 @@ class SyncHeatingObjPickleReader(AbstractSyncHeatingObjReader):
                                             binary_stream: BinaryIO
                                             ) -> pd.DataFrame:
         self._logger.debug("Loading heating object")
-        heating_obj_df = pickle.load(binary_stream)
+        heating_obj_df = pd.read_pickle(binary_stream)
         self._logger.debug("Heating object is loaded")
         return heating_obj_df
