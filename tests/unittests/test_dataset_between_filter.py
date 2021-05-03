@@ -1,4 +1,4 @@
-from random import random, randint, randrange
+from random import random
 
 import pandas as pd
 import pytest
@@ -13,9 +13,9 @@ class TestDatasetBetweenFilter:
 
     other_columns = ["col_1", "col_2"]
     min_generated_timestamp = pd.Timestamp.now(tz=tzlocal())
-    max_generated_timestamp = min_generated_timestamp + pd.Timedelta(seconds=10000)
+    max_generated_timestamp = min_generated_timestamp + pd.Timedelta(seconds=1000)
     min_filter_val = min_generated_timestamp + pd.Timedelta(seconds=100)
-    max_filter_val = min_generated_timestamp + pd.Timedelta(seconds=1000)
+    max_filter_val = min_generated_timestamp + pd.Timedelta(seconds=500)
     time_step = pd.Timedelta(seconds=10)
 
     @pytest.fixture
