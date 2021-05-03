@@ -45,7 +45,10 @@ class TimestampInterpolationAlgorithm(AbstractTimestampInterpolationAlgorithm):
         self._logger.debug("Interpolated")
         return df
 
-    def _complementary_min_timestamp(self, df: pd.DataFrame, required_min_timestamp) -> pd.DataFrame:
+    def _complementary_min_timestamp(self,
+                                     df: pd.DataFrame,
+                                     required_min_timestamp: pd.Timestamp
+                                     ) -> pd.DataFrame:
         rounded_required_min_timestamp = self._timestamp_round_algo.round_value(required_min_timestamp)
         self._logger.debug(f"Complementary min timestamp to {rounded_required_min_timestamp} "
                            f"{[required_min_timestamp]}")
@@ -53,16 +56,23 @@ class TimestampInterpolationAlgorithm(AbstractTimestampInterpolationAlgorithm):
         df = df.copy()
         min_timestamp = df[self._timestamp_column_name].min()
         if min_timestamp > rounded_required_min_timestamp:
-            new_df = pd.DataFrame(columns=df.columns)
-            new_row = {
-                self._timestamp_column_name: rounded_required_min_timestamp
-            }
-            new_df = new_df.append(new_row, ignore_index=True)
-            df = new_df.append(df, ignore_index=True)
+            new_df = pd.DataFrame(
+                columns=df.columns,
+                data=[
+                    {self._timestamp_column_name: rounded_required_min_timestamp},
+                ]
+            )
+            df = df.append(
+                new_df,
+                ignore_index=True
+            )
 
         return df
 
-    def _complementary_max_timestamp(self, df: pd.DataFrame, required_max_timestamp) -> pd.DataFrame:
+    def _complementary_max_timestamp(self,
+                                     df: pd.DataFrame,
+                                     required_max_timestamp: pd.Timestamp
+                                     ) -> pd.DataFrame:
         rounded_required_max_timestamp = self._timestamp_round_algo.round_value(required_max_timestamp)
         self._logger.debug(f"Complementary max timestamp to"
                            f" {rounded_required_max_timestamp} {[required_max_timestamp]}")
@@ -70,14 +80,19 @@ class TimestampInterpolationAlgorithm(AbstractTimestampInterpolationAlgorithm):
         df = df.copy()
         max_timestamp = df[self._timestamp_column_name].max()
         if max_timestamp < rounded_required_max_timestamp:
-            new_row = {
-                self._timestamp_column_name: rounded_required_max_timestamp
-            }
-            df = df.append(new_row, ignore_index=True)
+            new_df = pd.DataFrame(
+                columns=df.columns,
+                data=[
+                    {self._timestamp_column_name: rounded_required_max_timestamp},
+                ]
+            )
+            df = df.append(new_df, ignore_index=True)
 
         return df
 
-    def _interpolate_passes_of_timestamp(self, df: pd.DataFrame) -> pd.DataFrame:
+    def _interpolate_passes_of_timestamp(self,
+                                         df: pd.DataFrame
+                                         ) -> pd.DataFrame:
         self._logger.debug("Interpolating passes of datetime")
 
         timestamp_to_insert = []
