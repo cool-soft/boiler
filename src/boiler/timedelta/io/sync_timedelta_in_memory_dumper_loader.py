@@ -3,8 +3,8 @@ import logging
 import pandas as pd
 
 from boiler.constants import dataset_prototypes
-from boiler.time_delta.io.abstract_sync_timedelta_dumper import AbstractSyncTimedeltaDumper
-from boiler.time_delta.io.abstract_sync_timedelta_loader import AbstractSyncTimedeltaLoader
+from boiler.timedelta.io.abstract_sync_timedelta_dumper import AbstractSyncTimedeltaDumper
+from boiler.timedelta.io.abstract_sync_timedelta_loader import AbstractSyncTimedeltaLoader
 
 
 class SyncTimedeltaInMemoryDumperLoader(AbstractSyncTimedeltaDumper, AbstractSyncTimedeltaLoader):

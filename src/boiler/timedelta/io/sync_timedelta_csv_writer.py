@@ -5,7 +5,7 @@ from typing import BinaryIO
 import pandas as pd
 
 from boiler.constants import column_names
-from boiler.time_delta.io.abstract_sync_timedelta_writer import AbstractSyncTimedeltaWriter
+from boiler.timedelta.io.abstract_sync_timedelta_writer import AbstractSyncTimedeltaWriter
 
 
 class SyncTimedeltaCSVWriter(AbstractSyncTimedeltaWriter):

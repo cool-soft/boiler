@@ -3,8 +3,8 @@ import os
 
 import pandas as pd
 
-from boiler.time_delta.io.abstract_sync_timedelta_loader import AbstractSyncTimedeltaLoader
-from boiler.time_delta.io.abstract_sync_timedelta_reader import AbstractSyncTimedeltaReader
+from boiler.timedelta.io.abstract_sync_timedelta_loader import AbstractSyncTimedeltaLoader
+from boiler.timedelta.io.abstract_sync_timedelta_reader import AbstractSyncTimedeltaReader
 
 
 class SyncTimedeltaFileLoader(AbstractSyncTimedeltaLoader):
