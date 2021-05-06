@@ -3,7 +3,7 @@ import logging
 import numpy as np
 import pandas as pd
 
-from boiler.time_delta.calculators.algo.abstract_time_delta_calculation_algorithm \
+from boiler.timedelta.calculators.algo.abstract_time_delta_calculation_algorithm \
     import AbstractTimeDeltaCalculationAlgorithm
 
 
