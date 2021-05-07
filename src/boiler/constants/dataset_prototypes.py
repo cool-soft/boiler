@@ -34,6 +34,8 @@ TEMP_REQUIREMENTS = pd.DataFrame(columns=[
     column_names.BACKWARD_PIPE_COOLANT_TEMP
 ])
 
+# TODO: избавляться, перейти на структуры,
+#  которые можно хранить в бд и отдавать в JSON
 CONTROL_ACTION = pd.DataFrame(columns=[
     column_names.TIMESTAMP,
     column_names.FORWARD_PIPE_COOLANT_TEMP
