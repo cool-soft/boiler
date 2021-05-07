@@ -1,6 +1,8 @@
 TIMESTAMP = "timestamp"
 
 HEATING_OBJ_ID = "heating_obj_id"
+HEATING_OBJ_TYPE = "heating_obj_type"
+
 AVG_TIMEDELTA = "avg_timedelta"
 
 WEATHER_TEMP = "weather_temp"
