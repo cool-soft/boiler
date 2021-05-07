@@ -9,7 +9,7 @@ from boiler.temp_requirements.predictors.abstract_temp_requirements_predictor \
 from .abstract_temp_requirements_constraint import AbstractTempRequirementsConstraint
 
 
-class SingleHeatingObjTypeSimpleConstraint(AbstractTempRequirementsConstraint):
+class SingleTypeHeatingObjSimpleConstraint(AbstractTempRequirementsConstraint):
 
     def __init__(self,
                  temp_requirements_predictor: AbstractTempRequirementsPredictor,
