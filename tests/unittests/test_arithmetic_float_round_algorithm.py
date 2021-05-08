@@ -36,6 +36,13 @@ class TestArithmeticFloatRoundAlgorithm:
     def round_algo(self):
         return ArithmeticFloatRoundAlgorithm(decimals=self.DECIMALS)
 
-    def test_algorithm(self, dataset, round_algo):
+    def test_round_series(self, dataset, round_algo):
         rounded_series = round_algo.round_series(dataset[self.TO_ROUND_COLUMN])
         assert (rounded_series == dataset[self.CHECK_COLUMN]).all()
+
+    def test_round_values(self, dataset, round_algo):
+        data_to_round = dataset[self.TO_ROUND_COLUMN].to_list()
+        data_to_check = dataset[self.CHECK_COLUMN].to_list()
+
+        for to_round, to_check in zip(data_to_round, data_to_check):
+            assert round_algo.round_value(to_round) == to_check
