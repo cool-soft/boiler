@@ -4,19 +4,25 @@ from typing import Dict
 import pandas as pd
 from .abstract_temp_requirements_predictor import AbstractTempRequirementsPredictor
 from boiler.constants import column_names
+from boiler.data_processing.float_round_algorithm import AbstractFloatRoundAlgorithm
 
 
 class TempGraphRequirementsPredictor(AbstractTempRequirementsPredictor):
 
     def __init__(self,
-                 temp_graph: pd.DataFrame
+                 temp_graph: pd.DataFrame,
+                 float_round_algorithm: AbstractFloatRoundAlgorithm
                  ) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance")
 
         self._temp_graph = temp_graph
+        self._float_round_algorithm = float_round_algorithm
 
     def predict_on_weather(self, weather_df: pd.DataFrame) -> pd.DataFrame:
+        weather_df = weather_df.copy()
+        weather_df[column_names.WEATHER_TEMP] = \
+            self._float_round_algorithm.round_series(weather_df[column_names.WEATHER_TEMP])
         temp_requirements_list = []
         weather_temp_arr = weather_df[column_names.WEATHER_TEMP].to_numpy()
         timestamp_list = weather_df[column_names.TIMESTAMP].to_list()
