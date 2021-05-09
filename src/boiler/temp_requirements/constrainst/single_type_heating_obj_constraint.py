@@ -67,12 +67,12 @@ class SingleTypeHeatingObjSimpleConstraint(AbstractTempRequirementsConstraint):
         required_column = "REQUIRED"
 
         required_df = required_df[[column_names.TIMESTAMP, column_to_compare]].copy()
-        required_df = required_df.rename({column_to_compare: required_column})
+        required_df = required_df.rename(columns={column_to_compare: required_column})
         required_df[required_column] = required_df[required_column] * self._temp_requirements_coefficient
 
         predicted_df = predicted_df[[column_names.TIMESTAMP, column_to_compare]].copy()
         predicted_df = predicted_df[predicted_df[column_to_compare].notnull()]
-        predicted_df = predicted_df.rename({column_to_compare: predicted_column})
+        predicted_df = predicted_df.rename(columns={column_to_compare: predicted_column})
         predicted_df = predicted_df.dropna()
         predicted_df[predicted_column] = predicted_df[predicted_column] - self._model_error
 
