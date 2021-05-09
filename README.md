@@ -3,4 +3,4 @@
 
 Состояние Develop ветки
 [![Coverage](https://codecov.io/github/cool-soft/boiler/coverage.svg?branch=develop)](https://codecov.io/gh/cool-soft/boiler)
-[![Test status](https://github.com/cool-soft/boiler/blob/main/.github/workflows/main.yml/badge.svg?branch=develop)]
+[![Test status](https://github.com/cool-soft/boiler/actions/workflows/main.yml/badge.svg?branch=develop)]
