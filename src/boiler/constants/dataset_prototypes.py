@@ -44,6 +44,7 @@ HEATING_SYSTEM_STATE = pd.DataFrame(columns=[
     column_names.TIMESTAMP,
     column_names.HEATING_OBJ_ID,
     column_names.HEATING_OBJ_TYPE,
+    column_names.CIRCUIT_TYPE,
     column_names.FORWARD_PIPE_COOLANT_TEMP,
     column_names.BACKWARD_PIPE_COOLANT_TEMP
 ])

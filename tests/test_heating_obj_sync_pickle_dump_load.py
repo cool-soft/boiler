@@ -4,7 +4,7 @@ from boiler.heating_obj.io.sync_heating_obj_file_dumper import SyncHeatingObjFil
 from boiler.heating_obj.io.sync_heating_obj_file_loader import SyncHeatingObjFileLoader
 from boiler.heating_obj.io.sync_heating_obj_pickle_reader import SyncHeatingObjPickleReader
 from boiler.heating_obj.io.sync_heating_obj_pickle_writer import SyncHeatingObjPickleWriter
-from unittests.heating_obj_sync_dump_load_testing import HeatingObjSyncDumpLoadTesting
+from heating_obj_sync_dump_load_testing import HeatingObjSyncDumpLoadTesting
 
 
 class TestHeatingObjSyncPickleDumpLoad(HeatingObjSyncDumpLoadTesting):

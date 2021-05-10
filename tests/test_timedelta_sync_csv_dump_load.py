@@ -4,7 +4,7 @@ from boiler.timedelta.io.sync_timedelta_csv_reader import SyncTimedeltaCSVReader
 from boiler.timedelta.io.sync_timedelta_csv_writer import SyncTimedeltaCSVWriter
 from boiler.timedelta.io.sync_timedelta_file_dumper import SyncTimedeltaFileDumper
 from boiler.timedelta.io.sync_timedelta_file_loader import SyncTimedeltaFileLoader
-from unittests.timedelta_sync_dump_load_testing import TimedeltaSyncDumpLoadTesting
+from timedelta_sync_dump_load_testing import TimedeltaSyncDumpLoadTesting
 
 
 class TestTimedeltaSyncCSVDumpLoad(TimedeltaSyncDumpLoadTesting):

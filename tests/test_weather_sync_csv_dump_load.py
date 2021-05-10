@@ -1,25 +1,25 @@
 import pytest
 
-from boiler.weather.io.sync_weather_file_dumper import SyncWeatherFileDumper
+from boiler.weather.io.sync_weather_csv_reader import SyncWeatherCSVReader
+from boiler.weather.io.sync_weather_csv_writer import SyncWeatherCSVWriter
 from boiler.weather.io.sync_weather_file_loader import SyncWeatherFileLoader
-from boiler.weather.io.sync_weather_pickle_reader import SyncWeatherPickleReader
-from boiler.weather.io.sync_weather_pickle_writer import SyncWeatherPickleWriter
-from unittests.weather_sync_dump_load_testing import WeatherSyncDumpLoadTesting
+from boiler.weather.io.sync_weather_file_dumper import SyncWeatherFileDumper
+from weather_sync_dump_load_testing import WeatherSyncDumpLoadTesting
 
 
-class TestWeatherSyncPickleDumpLoad(WeatherSyncDumpLoadTesting):
+class TestWeatherSyncCSVDumpLoad(WeatherSyncDumpLoadTesting):
 
     @pytest.fixture
     def filepath(self, tmp_path):
-        return tmp_path / "weather.pickle"
+        return tmp_path / "weather.csv"
 
     @pytest.fixture
     def writer(self):
-        return SyncWeatherPickleWriter()
+        return SyncWeatherCSVWriter()
 
     @pytest.fixture
     def reader(self):
-        return SyncWeatherPickleReader()
+        return SyncWeatherCSVReader()
 
     @pytest.fixture
     def loader(self, reader, filepath):

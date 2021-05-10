@@ -4,7 +4,7 @@ from boiler.heating_obj.io.sync_heating_obj_csv_reader import SyncHeatingObjCSVR
 from boiler.heating_obj.io.sync_heating_obj_csv_writer import SyncHeatingObjCSVWriter
 from boiler.heating_obj.io.sync_heating_obj_file_dumper import SyncHeatingObjFileDumper
 from boiler.heating_obj.io.sync_heating_obj_file_loader import SyncHeatingObjFileLoader
-from unittests.heating_obj_sync_dump_load_testing import HeatingObjSyncDumpLoadTesting
+from heating_obj_sync_dump_load_testing import HeatingObjSyncDumpLoadTesting
 
 
 class TestHeatingObjSyncCSVDumpLoad(HeatingObjSyncDumpLoadTesting):

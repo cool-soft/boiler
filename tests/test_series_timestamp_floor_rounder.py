@@ -1,7 +1,7 @@
 import pytest
 
 from boiler.data_processing.timestamp_round_algorithm import FloorTimestampRoundAlgorithm
-from unittests.dataset_timestamp_round_testing import SeriesTimestampRoundTesting
+from dataset_timestamp_round_testing import SeriesTimestampRoundTesting
 
 
 class TestSeriesTimestampFloorRounder(SeriesTimestampRoundTesting):

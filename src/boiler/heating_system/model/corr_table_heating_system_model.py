@@ -24,7 +24,7 @@ class CorrTableHeatingSystemModel(AbstractHeatingSystemModel):
 
     def predict(self,
                 weather_df: pd.DataFrame,
-                system_history_df: pd.DataFrame,
+                system_state_history_df: pd.DataFrame,
                 control_action_df: pd.DataFrame
                 ) -> pd.DataFrame:
         boiler_temp, control_action_timestamp = self._unpack_control_action(control_action_df)
@@ -35,16 +35,17 @@ class CorrTableHeatingSystemModel(AbstractHeatingSystemModel):
         for obj_id, timedelta in zip(heating_obj_ids, timedelta_list):
             coolant_temp = self._calc_coolant_temp_for_object(obj_id, boiler_temp)
             heating_system_reaction.append({
+                column_names.TIMESTAMP: control_action_timestamp + timedelta,
                 column_names.HEATING_OBJ_ID: obj_id,
                 column_names.HEATING_OBJ_TYPE: self._objects_type,
-                column_names.TIMESTAMP: control_action_timestamp + timedelta,
+                column_names.CIRCUIT_TYPE: self._circuit_type,
                 column_names.FORWARD_PIPE_COOLANT_TEMP: coolant_temp,
                 column_names.BACKWARD_PIPE_COOLANT_TEMP: None
             })
 
         return pd.DataFrame(heating_system_reaction)
 
-    def _unpack_control_action(self, control_action_df: pd.DatFrame):
+    def _unpack_control_action(self, control_action_df: pd.DataFrame):
         control_action_df = control_action_df[
             control_action_df[column_names.CIRCUIT_TYPE] == self._circuit_type
         ].copy()
