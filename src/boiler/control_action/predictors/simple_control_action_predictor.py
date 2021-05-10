@@ -1,7 +1,7 @@
 import pandas as pd
 
 from boiler.constants import column_names
-from boiler.heating_system_model.abstract_heating_system_model import AbstractHeatingSystemModel
+from boiler.heating_system.model.abstract_heating_system_model import AbstractHeatingSystemModel
 from boiler.temp_requirements.constrainst.abstract_temp_requirements_constraint import \
     AbstractTempRequirementsConstraint
 from .abstract_control_action_predictor import AbstractControlActionPredictor
