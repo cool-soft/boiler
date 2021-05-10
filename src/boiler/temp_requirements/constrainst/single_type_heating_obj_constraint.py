@@ -73,7 +73,6 @@ class SingleTypeHeatingObjSimpleConstraint(AbstractTempRequirementsConstraint):
         predicted_df = predicted_df[[column_names.TIMESTAMP, column_to_compare]].copy()
         predicted_df = predicted_df[predicted_df[column_to_compare].notnull()]
         predicted_df = predicted_df.rename(columns={column_to_compare: predicted_column})
-        predicted_df = predicted_df.dropna()
         predicted_df[predicted_column] = predicted_df[predicted_column] - self._model_error
 
         combined_df = predicted_df.merge(required_df, how="left", on=column_names.TIMESTAMP)

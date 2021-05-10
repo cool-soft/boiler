@@ -130,8 +130,6 @@ class TestSingleTypeHeatingObjConstraint:
             heating_obj_type=self.heating_object_type
         )
 
-    # TODO: проверка простых случаев, проверка заграничных и граничных случаев - отдельно
-
     def test_base_scenario(self, reaction_df_list, constraint, weather_df, answers):
         for reaction, answer in zip(reaction_df_list, answers):
             assert constraint.check(reaction, weather_df) == answer
