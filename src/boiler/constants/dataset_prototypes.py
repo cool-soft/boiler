@@ -36,10 +36,11 @@ TEMP_REQUIREMENTS = pd.DataFrame(columns=[
 
 CONTROL_ACTION = pd.DataFrame(columns=[
     column_names.TIMESTAMP,
+    column_names.CIRCUIT_TYPE,
     column_names.FORWARD_PIPE_COOLANT_TEMP
 ])
 
-HEATING_SYSTEM_REACTION = pd.DataFrame(columns=[
+HEATING_SYSTEM_STATE = pd.DataFrame(columns=[
     column_names.TIMESTAMP,
     column_names.HEATING_OBJ_ID,
     column_names.HEATING_OBJ_TYPE,

@@ -3,6 +3,9 @@ import pandas as pd
 
 class AbstractHeatingSystemModel:
 
-    # TODO: добавить параметр погоду, нужен для моделей, чье поведение зависит от погоды
-    def predict_on_boiler_temp(self, boiler_temp: float) -> pd.DatFrame:
+    def predict(self,
+                weather_df: pd.DataFrame,
+                system_history_df: pd.DataFrame,
+                control_action_df: pd.DataFrame
+                ) -> pd.DataFrame:
         raise NotImplementedError
