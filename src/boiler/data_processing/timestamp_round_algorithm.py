@@ -27,10 +27,10 @@ class FloorTimestampRoundAlgorithm(AbstractTimestampRoundAlgorithm):
         return rounded_value
 
     def round_series(self, series: pd.Series) -> pd.Series:
-        self._logger.debug(f"Rounding series")
+        self._logger.debug("Rounding series")
         round_step_in_seconds = int(self._round_step.total_seconds())
         rounded_series = series.dt.floor(f"{round_step_in_seconds}s")
-        self._logger.debug(f"Series is rounded")
+        self._logger.debug("Series is rounded")
         return rounded_series
 
 
