@@ -23,6 +23,18 @@ TEMP_GRAPH = pd.DataFrame(columns=[
     column_names.BACKWARD_PIPE_COOLANT_TEMP
 ])
 
+# TODO: Заменить моделью связей элементов тепловой сети и свойствами соединения
+#       Модель связей:
+#           connection_id[int]
+#           src_heating_obj_id[str]
+#           src_circuit_id[str]
+#           src_pipe_type[forward/backward]
+#           dst_heating_obj_id[str]
+#           dst_circuit_id[str]
+#           dst_pipe_type[forward/backward]
+#       Свойтсва соединения:
+#           connection_id[int]
+#           timedelta[pd.Timedelta]
 TIMEDELTA = pd.DataFrame(columns=[
     column_names.HEATING_OBJ_ID,
     column_names.AVG_TIMEDELTA
