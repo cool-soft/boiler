@@ -29,10 +29,10 @@ class ArithmeticFloatRoundAlgorithm(AbstractFloatRoundAlgorithm):
         return rounded_value
 
     def round_series(self, series: pd.Series) -> pd.Series:
-        self._logger.debug(f"Rounding series")
+        self._logger.debug("Rounding series")
         # noinspection PyTypeChecker
         rounded_series = series.apply(lambda x: self._round(x))
-        self._logger.debug(f"Series is rounded")
+        self._logger.debug("Series is rounded")
         return rounded_series
 
     def _round(self, n):
