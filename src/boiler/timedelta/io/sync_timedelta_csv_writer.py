@@ -29,6 +29,7 @@ class SyncTimedeltaCSVWriter(AbstractSyncTimedeltaWriter):
             timedelta_df.to_csv(text_stream, index=False)
         self._logger.debug("Timedelta is stored")
 
+    # noinspection PyMethodMayBeStatic
     def _convert_timedelta_to_seconds(self, timedelta_df: pd.DataFrame) -> pd.DataFrame:
         timedelta_df = timedelta_df.copy()
         timedelta_df[column_names.AVG_TIMEDELTA] = \
