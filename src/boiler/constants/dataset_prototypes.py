@@ -60,3 +60,13 @@ HEATING_SYSTEM_STATE = pd.DataFrame(columns=[
     column_names.FORWARD_PIPE_COOLANT_TEMP,
     column_names.BACKWARD_PIPE_COOLANT_TEMP
 ])
+
+HEATING_SYSTEM_STATES_HISTORY_BORDERS = pd.DataFrame(columns=[
+    column_names.HEATING_OBJ_ID,
+    column_names.CIRCUIT_TYPE,
+    column_names.PIPE_TYPE,
+    column_names.START_TIMESTAMP,
+    column_names.END_TIMESTAMP
+])
+
+

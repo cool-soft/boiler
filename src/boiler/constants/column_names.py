@@ -1,4 +1,6 @@
 TIMESTAMP = "timestamp"
+START_TIMESTAMP = "start_timestamp"
+END_TIMESTAMP = "end_timestamp"
 
 HEATING_OBJ_ID = "heating_obj_id"
 HEATING_OBJ_TYPE = "heating_obj_type"
@@ -9,6 +11,8 @@ WEATHER_TEMP = "weather_temp"
 
 CIRCUIT_TYPE = "circuit_type"
 CIRCUIT_ID = "circuit_id"
+
+PIPE_TYPE = "pipe_type"
 
 FORWARD_PIPE_COOLANT_TEMP = "forward_temp"
 BACKWARD_PIPE_COOLANT_TEMP = "backward_temp"
