@@ -46,3 +46,9 @@ jobs:
         if: ${{!cancelled()}}
         with:
           fail_ci_if_error: true
+
+      - name: "Run codacy-coverage-reporter"
+          uses: codacy/codacy-coverage-reporter-action@v1
+          with:
+            project-token: ${{ secrets.CODACY_PROJECT_API_TOKEN }}
+            coverage-reports: coverage.xml
