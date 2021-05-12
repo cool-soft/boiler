@@ -7,3 +7,5 @@ src/*.egg-info/
 .coverage
 coverage_html_report/
 pytest-report.html
+
+coverage.xml
