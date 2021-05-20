@@ -55,9 +55,3 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_API_TOKEN }}
           coverage-reports: coverage.xml
-
-      - name: "Push coverage to Code climate"
-        uses: paambaati/codeclimate-action@v2.7.5
-        if: ${{!cancelled()}}
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_TEST_REPORTER_ID }}
