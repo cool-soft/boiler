@@ -88,4 +88,5 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_API_TOKEN }}
           upload: true
+          allow-network: true
           max-allowed-issues: 2147483647
