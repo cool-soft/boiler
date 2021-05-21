@@ -85,14 +85,12 @@ jobs:
       - name: "print python path"
         run: python -c 'import sys; print(sys.path)'
 
-      - name: "Install Codacy Analysis CLI"
-          uses: codacy/codacy-analysis-cli-action@master
-          if: ${{!cancelled()}}
-          env:
-            MYPYPATH: ${{ env.REQUIREMENTS_INSTALLATION_DIR }}
-          with:
-            project-token: ${{ secrets.CODACY_PROJECT_API_TOKEN }}
-            directory: ${{ env.SRC_DIR }}
-            upload: true
-            allow-network: true
-            max-allowed-issues: 2147483647
+      - name: "Run Codacy Analysis CLI"
+        uses: codacy/codacy-analysis-cli-action@master
+        if: ${{!cancelled()}}
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_API_TOKEN }}
+          directory: ${{ env.SRC_DIR }}
+          upload: true
+          allow-network: true
+          max-allowed-issues: 2147483647
