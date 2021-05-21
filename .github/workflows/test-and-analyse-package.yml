@@ -66,8 +66,8 @@ jobs:
   run-codacy-analysis:
     runs-on: [ubuntu-latest]
     env:
-      MYPYPATH: ./additional_packages/
-      PACKAGE_DIRECTORY: ./src/
+      MYPYPATH: $GITHUB_WORKSPACE/additional_packages/
+      PACKAGE_DIRECTORY: $GITHUB_WORKSPACE/src/
     steps:
 
       - name: "Checkout repository"
