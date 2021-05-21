@@ -89,5 +89,4 @@ jobs:
           project-token: ${{ secrets.CODACY_PROJECT_API_TOKEN }}
           upload: true
           allow-network: true
-          run-docker-tools: false
           max-allowed-issues: 2147483647
