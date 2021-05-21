@@ -97,4 +97,4 @@ jobs:
           upload: true
           allow-network: true
           max-allowed-issues: 2147483647
-          REQUIREMENTS_INSTALLATION_DIR: ${{ env.REQUIREMENTS_INSTALLATION_DIR }}
+          MYPYPATH: ${{ env.REQUIREMENTS_INSTALLATION_DIR }}
