@@ -82,14 +82,20 @@ jobs:
       - name: "Install project dependencies"
         run: if [ -f requirements.txt ]; then pip install -r requirements.txt --target ${{env.REQUIREMENTS_INSTALLATION_DIR}} --src ${{env.REQUIREMENTS_INSTALLATION_DIR}}; fi
 
-      - name: "Run Codacy Analysis CLI"
-        uses: codacy/codacy-analysis-cli-action@master
+      - name: "Setup Codacy Analysis cli"
+        run: |
+          curl -L https://github.com/codacy/codacy-analysis-cli/archive/master.tar.gz | tar xvz
+          cd codacy-analysis-cli-*
+          sudo make install
+
+      - name: "Run Codacy Analysis cli"
         if: ${{!cancelled()}}
         env:
           MYPYPATH: ${{ env.REQUIREMENTS_INSTALLATION_DIR }}
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_API_TOKEN }}
-          directory: ${{ env.SRC_DIR }}
-          upload: true
-          allow-network: true
-          max-allowed-issues: 2147483647
+        run: |
+          codacy-analysis-cli analyze \
+          --directory ${{ env.SRC_DIR }} \
+          --project-token ${{ secrets.CODACY_PROJECT_API_TOKEN }} \
+          --upload \
+          --allow-network \
+          --max-allowed-issues 2147483647
