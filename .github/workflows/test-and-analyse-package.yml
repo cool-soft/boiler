@@ -114,5 +114,5 @@ jobs:
       - name: "Echo pythonLocation"
         run: echo $pythonLocation
 
-      - name: "ls pythonLocation"
-        run: ls $pythonLocation/lib
+      - name: "tree pythonLocation"
+        run: tree -fi $pythonLocation
