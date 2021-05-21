@@ -93,7 +93,10 @@ jobs:
 
   test-python-copy:
     runs-on: [ubuntu-latest]
+
     steps:
+      - name: "Set path for hosted tools"
+        run: export AGENT_TOOLSDIRECTORY=$GITHUB_WORKSPACE/tools
 
       - name: "Checkout repository"
         uses: actions/checkout@v2
@@ -112,3 +115,6 @@ jobs:
 
       - name: "Echo python path"
         run: echo `which python`
+
+      - name: "Echo ls tools"
+        run: echo `ls ./tools/`
