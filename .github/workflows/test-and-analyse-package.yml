@@ -82,19 +82,14 @@ jobs:
       - name: "Install project dependencies"
         run: if [ -f requirements.txt ]; then pip install -r requirements.txt --target ${{env.REQUIREMENTS_INSTALLATION_DIR}} --src ${{env.REQUIREMENTS_INSTALLATION_DIR}}; fi
 
-      - name: "ECHO REQUIREMENTS_INSTALLATION_DIR"
-        run: echo $REQUIREMENTS_INSTALLATION_DIR
-
-      - name: "LS REQUIREMENTS_INSTALLATION_DIR"
-        run: ls $REQUIREMENTS_INSTALLATION_DIR
-
       - name: "Run Codacy Analysis CLI"
         uses: codacy/codacy-analysis-cli-action@master
         if: ${{!cancelled()}}
+        env:
+          MYPYPATH: ${{ env.REQUIREMENTS_INSTALLATION_DIR }}
         with:
           project-token: ${{ secrets.CODACY_PROJECT_API_TOKEN }}
           directory: ${{ env.SRC_DIR }}
           upload: true
           allow-network: true
           max-allowed-issues: 2147483647
-          MYPYPATH: ${{ env.REQUIREMENTS_INSTALLATION_DIR }}
