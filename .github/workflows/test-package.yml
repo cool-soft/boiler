@@ -27,11 +27,11 @@ jobs:
         run: python -m pip install -e .
 
       - name: "Run Codacy Analysis CLI"
-          uses: codacy/codacy-analysis-cli-action@master
-          with:
-            project-token: ${{ secrets.CODACY_PROJECT_API_TOKEN }}
-            upload: true
-            max-allowed-issues: 2147483647
+        uses: codacy/codacy-analysis-cli-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_API_TOKEN }}
+          upload: true
+          max-allowed-issues: 2147483647
 
 #      - name: "Run tests and code coverage analysis"
 #        run: coverage run
