@@ -66,8 +66,8 @@ jobs:
   run-codacy-analysis:
     runs-on: [ubuntu-latest]
     env:
-      MYPYPATH: ${{env.GITHUB_WORKSPACE}}/additional_packages/
-      PACKAGE_DIRECTORY: ${{env.GITHUB_WORKSPACE}}/src/
+      REQUIREMENTS_INSTALLATION_DIR: ${{github.workspace}}/additional_packages/
+      SRC_DIR: ${{github.workspace}}/src/
     steps:
 
       - name: "Checkout repository"
@@ -80,21 +80,21 @@ jobs:
           architecture: 'x64'
 
       - name: "Install project dependencies"
-        run: if [ -f requirements.txt ]; then pip install -r requirements.txt --target ${{env.MYPYPATH}} --src ${{env.MYPYPATH}}; fi
+        run: if [ -f requirements.txt ]; then pip install -r requirements.txt --target ${{env.REQUIREMENTS_INSTALLATION_DIR}} --src ${{env.REQUIREMENTS_INSTALLATION_DIR}}; fi
 
-      - name: "ECHO MYPYPATH"
-        run: echo $MYPYPATH
+      - name: "ECHO REQUIREMENTS_INSTALLATION_DIR"
+        run: echo $REQUIREMENTS_INSTALLATION_DIR
 
-      - name: "LS MYPYPATH"
-        run: ls $MYPYPATH
+      - name: "LS REQUIREMENTS_INSTALLATION_DIR"
+        run: ls $REQUIREMENTS_INSTALLATION_DIR
 
       - name: "Run Codacy Analysis CLI"
         uses: codacy/codacy-analysis-cli-action@master
         if: ${{!cancelled()}}
         with:
           project-token: ${{ secrets.CODACY_PROJECT_API_TOKEN }}
-          directory: ${{ env.PACKAGE_DIRECTORY }}
+          directory: ${{ env.SRC_DIR }}
           upload: true
           allow-network: true
           max-allowed-issues: 2147483647
-          MYPYPATH: ${{ env.MYPYPATH }}
+          REQUIREMENTS_INSTALLATION_DIR: ${{ env.REQUIREMENTS_INSTALLATION_DIR }}
