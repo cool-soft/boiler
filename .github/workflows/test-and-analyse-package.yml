@@ -85,6 +85,9 @@ jobs:
       - name: "print python path"
         run: python -c 'import sys; print(sys.path)'
 
+      - name: "print python path2"
+        run: echo "$PYTHONPATH"
+
       - name: "Run Codacy Analysis CLI"
         uses: codacy/codacy-analysis-cli-action@master
         if: ${{!cancelled()}}
