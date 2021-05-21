@@ -1,4 +1,4 @@
-name: Test and coverage package
+name: Test and coverage package; run codacy code analysis
 
 on:
   push:
