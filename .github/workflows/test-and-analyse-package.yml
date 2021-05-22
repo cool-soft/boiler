@@ -65,10 +65,30 @@ jobs:
 
   run-codacy-analysis:
     runs-on: [ubuntu-latest]
+    env:
+      venv_path: "/venv"
     steps:
 
       - name: "Checkout repository"
         uses: actions/checkout@v2
+
+      - name: "Install python"
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.8'
+          architecture: 'x64'
+
+      - name: "Create virtual environment"
+        run: python -m venv --copies "$venv_path"
+
+      - name: "Activate virtual environment"
+        run: "$venv_path/bin/activate"
+
+      - name: "Install project dependencies"
+        run: if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: "Deactivate virtual environment"
+        run: "$venv_path/bin/deactivate"
 
       - name: "Run Codacy Analysis CLI"
         if: ${{!cancelled()}}
@@ -78,6 +98,7 @@ jobs:
           --volume /var/run/docker.sock:/var/run/docker.sock \
           --volume "$GITHUB_WORKSPACE":"$GITHUB_WORKSPACE" \
           --volume /tmp:/tmp \
+          --volume "$venv_path":"$venv_path"
           codacy/codacy-analysis-cli:stable \
             analyze \
             --allow-network \
