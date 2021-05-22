@@ -67,7 +67,7 @@ jobs:
     runs-on: [ubuntu-latest]
     env:
       venv_path: "/tmp/venv"
-      stub_path: "$GITHUB_WORKSPACE/src"
+      stub_path: "./src"
     steps:
 
       - name: "Checkout repository"
