@@ -79,7 +79,6 @@ jobs:
           --volume "$GITHUB_WORKSPACE":"$GITHUB_WORKSPACE" \
           --volume /tmp:/tmp \
           codacy/codacy-analysis-cli:stable \
-            codacy-analysis-cli \
             analyze \
             --allow-network \
             --verbose \
