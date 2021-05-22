@@ -2,5 +2,3 @@ pylint:
   run: false
 mypy:
     run: true
-    options:
-      verbosity: 3
