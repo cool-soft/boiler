@@ -85,7 +85,7 @@ jobs:
         run: if [ -f requirements.txt ]; then "$venv_path/bin/python" -m pip install -r requirements.txt; fi
 
       - name: "test"
-        run: ls "$venv_path/Lib/site-packages"
+        run: tree "$venv_path"
 
       - name: "Run Codacy Analysis CLI"
         run: |
