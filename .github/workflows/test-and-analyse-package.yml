@@ -67,6 +67,7 @@ jobs:
     runs-on: [ubuntu-latest]
     env:
       venv_path: "/tmp/venv"
+      stub_path: "/tmp/stubs"
     steps:
 
       - name: "Checkout repository"
@@ -84,11 +85,24 @@ jobs:
       - name: "Install project dependencies"
         run: if [ -f requirements.txt ]; then "$venv_path/bin/python" -m pip install -r requirements.txt; fi
 
+      - name: "Install mypy"
+        run: pip install mypy
+
+      - name: "Generate mypy stubs for installed packages"
+        run: |
+          stubgen \
+            --ignore-errors \
+            --include-private \
+            --outuput "$stub_path" \
+            --python-executable "$venv_path\bin\python" \
+            --verbose \
+            "$venv_path/lib/python3.8/site-packages"
+
       - name: "Run Codacy Analysis CLI"
         run: |
           docker run \
           --rm=true \
-          --env MYPYPATH="$venv_path/lib/python3.8/site-packages" \
+          --env MYPYPATH="$stub_path" \
           --volume /var/run/docker.sock:/var/run/docker.sock \
           --volume "$GITHUB_WORKSPACE":"$GITHUB_WORKSPACE" \
           --volume /tmp:/tmp \

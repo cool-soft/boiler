@@ -2,6 +2,3 @@ pylint:
   run: false
 mypy:
     run: true
-    options:
-      python_executable: "/tmp/venv/bin/python"
-      mypy_path: "/tmp/venv/lib/python3.8/site-packages"
