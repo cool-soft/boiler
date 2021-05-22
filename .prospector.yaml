@@ -1,4 +1,6 @@
+pylint:
+  run: false
 mypy:
     run: true
-#    options:
-#      mypy_path: "/tmp/venv"
+    options:
+      mypy_path: "/tmp/venv"

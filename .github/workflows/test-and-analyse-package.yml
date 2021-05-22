@@ -88,10 +88,9 @@ jobs:
         run: if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: "Deactivate virtual environment"
-        run: "$venv_path/bin/deactivate"
+        run: deactivate
 
       - name: "Run Codacy Analysis CLI"
-        if: ${{!cancelled()}}
         run: |
           docker run \
           --rm=true \
