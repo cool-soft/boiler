@@ -102,6 +102,6 @@ jobs:
             analyze \
             --allow-network \
             --upload \
-            --directory "$GITHUB_WORKSPACE/src" \
+            --directory "$GITHUB_WORKSPACE" \
             --project-token ${{ secrets.CODACY_PROJECT_API_TOKEN }} \
             --max-allowed-issues 2147483647
