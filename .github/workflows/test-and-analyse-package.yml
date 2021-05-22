@@ -84,8 +84,7 @@ jobs:
       - name: "Install project dependencies"
         run: if [ -f requirements.txt ]; then "$venv_path/bin/python" -m pip install -r requirements.txt; fi
 
-      - name: "Test2"
-        run: "$venv_path/bin/python" -m pip uninstall pandas
+      - run: $venv_path/bin/python uninstall pandas
 
       - name: "Test"
         run: tree "$venv_path/lib/site-packages/"
