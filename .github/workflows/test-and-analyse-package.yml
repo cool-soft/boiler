@@ -112,4 +112,3 @@ jobs:
             --directory "$GITHUB_WORKSPACE" \
             --project-token ${{ secrets.CODACY_PROJECT_API_TOKEN }} \
             --max-allowed-issues 2147483647
-            --verbose
