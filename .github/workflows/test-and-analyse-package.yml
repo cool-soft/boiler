@@ -77,11 +77,12 @@ jobs:
           architecture: 'x64'
 
       - name: "Install project dependencies"
-        run: if [ -f requirements.txt ]; then pip install --target ./src -r requirements.txt; fi
+        run: if [ -f requirements.txt ]; then pip install --target /tmp/stubs -r requirements.txt; fi
 
       - name: "Run Codacy Analysis CLI"
         run: |
           docker run \
+          --env PYTHONPATH=/tmp/stubs \
           --rm=true \
           --volume /var/run/docker.sock:/var/run/docker.sock \
           --volume "$GITHUB_WORKSPACE":"$GITHUB_WORKSPACE" \
