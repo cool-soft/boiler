@@ -81,14 +81,8 @@ jobs:
       - name: "Create virtual environment"
         run: python -m venv --copies "$venv_path"
 
-      - name: "Activate virtual environment"
-        run: "$venv_path/bin/activate"
-
       - name: "Install project dependencies"
-        run: if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-#      - name: "Deactivate virtual environment"
-#        run: deactivate
+        run: if [ -f requirements.txt ]; then "$venv_path/bin/python" -m pip install -r requirements.txt; fi
 
       - name: "Run Codacy Analysis CLI"
         run: |
