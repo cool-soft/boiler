@@ -94,7 +94,6 @@ jobs:
             --ignore-errors \
             --parse-only \
             --include-private \
-#            --output "$stub_path" \
             --outupt .
             --verbose \
             "$venv_path/lib/python3.8/site-packages"
