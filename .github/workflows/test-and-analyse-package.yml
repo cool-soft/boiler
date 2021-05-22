@@ -87,7 +87,7 @@ jobs:
       - run: $venv_path/bin/python -m pip uninstall -y pandas
 
       - name: "Test"
-        run: tree "$venv_path/lib/site-packages/"
+        run: tree "$venv_path/"
 
       - name: "Run Codacy Analysis CLI"
         run: |
