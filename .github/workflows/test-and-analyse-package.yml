@@ -98,6 +98,9 @@ jobs:
             --verbose \
             "$venv_path/lib/python3.8/site-packages"
 
+      - name: "test"
+        run: tree .
+
       - name: "Run Codacy Analysis CLI"
         run: |
           docker run \
