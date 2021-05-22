@@ -92,9 +92,9 @@ jobs:
         run: |
           stubgen \
             --ignore-errors \
+            --parse-only \
             --include-private \
             --output "$stub_path" \
-            --python-executable "$venv_path\bin\python" \
             --verbose \
             "$venv_path/lib/python3.8/site-packages"
 
