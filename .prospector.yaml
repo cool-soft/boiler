@@ -1,2 +1,4 @@
 mypy:
     run: true
+#    options:
+#      mypy_path: "/tmp/venv"
