@@ -3,4 +3,4 @@ pylint:
 mypy:
     run: true
     options:
-      mypy_path: "/tmp/stubs"
+      mypy_path: /tmp/stubs

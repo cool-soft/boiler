@@ -67,7 +67,7 @@ jobs:
     runs-on: [ubuntu-latest]
     env:
       venv_path: "/tmp/venv"
-      stub_path: "./src"
+      stub_path: "/tmp/stubs"
     steps:
 
       - name: "Checkout repository"
@@ -97,9 +97,6 @@ jobs:
             --output "$stub_path" \
             --verbose \
             "$venv_path/lib/python3.8/site-packages"
-
-      - name: "test"
-        run: tree .
 
       - name: "Run Codacy Analysis CLI"
         run: |
