@@ -102,6 +102,7 @@ jobs:
         run: |
           docker run \
           --rm=true \
+          --env MYPYPATH="/tmp/stubs" \
           --volume /var/run/docker.sock:/var/run/docker.sock \
           --volume "$GITHUB_WORKSPACE":"$GITHUB_WORKSPACE" \
           --volume /tmp:/tmp \
