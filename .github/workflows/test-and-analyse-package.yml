@@ -94,7 +94,7 @@ jobs:
             --ignore-errors \
             --parse-only \
             --include-private \
-            --outupt .
+            --output .
             --verbose \
             "$venv_path/lib/python3.8/site-packages"
 
