@@ -6,3 +6,4 @@ mypy:
     path: /tmp/stubs
     options:
       mypy_path: /tmp/stubs
+      verbosity: 3
