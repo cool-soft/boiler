@@ -2,8 +2,5 @@ pylint:
   run: false
 mypy:
     run: true
-    mypy_path: /tmp/stubs
-    path: /tmp/stubs
     options:
-      mypy_path: /tmp/stubs
       verbosity: 3
