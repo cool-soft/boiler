@@ -84,11 +84,6 @@ jobs:
       - name: "Install project dependencies"
         run: if [ -f requirements.txt ]; then "$venv_path/bin/python" -m pip install -r requirements.txt; fi
 
-      - run: $venv_path/bin/python -m pip uninstall -y pandas
-
-      - name: "Test"
-        run: tree "$venv_path/lib/python3.8/site-packages"
-
       - name: "Run Codacy Analysis CLI"
         run: |
           docker run \
