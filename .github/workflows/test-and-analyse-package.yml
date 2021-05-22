@@ -87,7 +87,7 @@ jobs:
       - name: "Run Codacy Analysis CLI"
         run: |
           docker run \
-          --env PYTHONPATH="$venv_path/lib/python3.8/site-packages" \
+          --env PYTHONPATH="/tmp/venv/lib/python3.8/site-packages/" \
           --rm=true \
           --volume /var/run/docker.sock:/var/run/docker.sock \
           --volume "$GITHUB_WORKSPACE":"$GITHUB_WORKSPACE" \
