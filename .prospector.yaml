@@ -3,4 +3,4 @@ pylint:
 mypy:
     run: true
     options:
-      mypy_path: "/tmp/venv"
+      python_executable: "/tmp/venv/bin/python"
