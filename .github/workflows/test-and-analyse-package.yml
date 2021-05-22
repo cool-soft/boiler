@@ -1,4 +1,4 @@
-name: Test, coverage, analyse code
+name: Test and coverage code
 
 on:
   push:
@@ -62,35 +62,3 @@ jobs:
         with:
           name: pytest-report
           path: pytest-report.html
-
-  run-codacy-analysis:
-    runs-on: [ubuntu-latest]
-    steps:
-
-      - name: "Checkout repository"
-        uses: actions/checkout@v2
-
-      - name: "Install python"
-        uses: actions/setup-python@v1
-        with:
-          python-version: '3.8'
-          architecture: 'x64'
-
-      - name: "Install project dependencies"
-        run: if [ -f requirements.txt ]; then pip install --target /tmp/stubs -r requirements.txt; fi
-
-      - name: "Run Codacy Analysis CLI"
-        run: |
-          docker run \
-          --env PYTHONPATH="/tmp/stubs" \
-          --rm=true \
-          --volume /var/run/docker.sock:/var/run/docker.sock \
-          --volume "$GITHUB_WORKSPACE":"$GITHUB_WORKSPACE" \
-          --volume /tmp:/tmp \
-          codacy/codacy-analysis-cli:stable \
-            analyze \
-            --allow-network \
-            --upload \
-            --directory "$GITHUB_WORKSPACE" \
-            --project-token ${{ secrets.CODACY_PROJECT_API_TOKEN }} \
-            --max-allowed-issues 2147483647
