@@ -42,17 +42,17 @@ class CeilTimestampRoundAlgorithm(AbstractTimestampRoundAlgorithm):
         self._round_step = round_step
 
     def round_value(self, value: pd.Timestamp) -> pd.Timestamp:
-        self._logger.debug(f"Rounding value: {value}")
+        # self._logger.debug(f"Rounding value: {value}")
         round_step_in_seconds = int(self._round_step.total_seconds())
         rounded_value = value.ceil(f"{round_step_in_seconds}s")
-        self._logger.debug(f"Rounded value: {rounded_value}")
+        # self._logger.debug(f"Rounded value: {rounded_value}")
         return rounded_value
 
     def round_series(self, series: pd.Series) -> pd.Series:
-        self._logger.debug("Rounding series")
+        # self._logger.debug("Rounding series")
         round_step_in_seconds = int(self._round_step.total_seconds())
         rounded_series = series.dt.ceil(f"{round_step_in_seconds}s")
-        self._logger.debug("Series is rounded")
+        # self._logger.debug("Series is rounded")
         return rounded_series
 
 

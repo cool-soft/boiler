@@ -38,6 +38,7 @@ class TestArithmeticFloatRoundAlgorithm:
 
     def test_round_series(self, dataset, round_algo):
         rounded_series = round_algo.round_series(dataset[self.TO_ROUND_COLUMN])
+        assert isinstance(rounded_series, pd.Series)
         assert (rounded_series == dataset[self.CHECK_COLUMN]).all()
 
     def test_round_values(self, dataset, round_algo):
