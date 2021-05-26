@@ -1,5 +1,7 @@
 import logging
+import math
 
+import numpy as np
 import pandas as pd
 
 from boiler.constants import heating_object_types, column_names
@@ -30,17 +32,19 @@ class SingleTypeHeatingObjSimpleConstraint(AbstractTempRequirementsConstraint):
     def check(self,
               system_reaction_df: pd.DataFrame,
               weather_df: pd.DataFrame
-              ) -> bool:
+              ) -> float:
         system_reaction_df = self._filter_reaction_by_heating_obj_type(system_reaction_df)
         system_reaction_df = self._round_timestamp(system_reaction_df)
         # TODO: обрезать из weather_df только нужную для сравнения часть по TIMESTAMP
         weather_df = self._round_timestamp(weather_df)
         temp_requirements_df = self._temp_requirements_predictor.predict_on_weather(weather_df)
+        temp_delta = math.inf
         for column_name in (column_names.FORWARD_PIPE_COOLANT_TEMP,
                             column_names.BACKWARD_PIPE_COOLANT_TEMP):
-            if not self._compare_by_column(system_reaction_df, temp_requirements_df, column_name):
-                return False
-        return True
+            current_temp_delta = self._get_temp_delta(system_reaction_df, temp_requirements_df, column_name)
+            if not np.isnan(current_temp_delta):
+                temp_delta = min(current_temp_delta, temp_delta)
+        return temp_delta
 
     def _round_timestamp(self,
                          df: pd.DataFrame
@@ -58,11 +62,11 @@ class SingleTypeHeatingObjSimpleConstraint(AbstractTempRequirementsConstraint):
             ].copy()
         return system_reaction_df
 
-    def _compare_by_column(self,
-                           predicted_df: pd.DataFrame,
-                           required_df: pd.DataFrame,
-                           column_to_compare: str
-                           ) -> bool:
+    def _get_temp_delta(self,
+                        predicted_df: pd.DataFrame,
+                        required_df: pd.DataFrame,
+                        column_to_compare: str
+                        ) -> float:
         predicted_column = "PREDICTED"
         required_column = "REQUIRED"
 
@@ -76,6 +80,6 @@ class SingleTypeHeatingObjSimpleConstraint(AbstractTempRequirementsConstraint):
         predicted_df[predicted_column] = predicted_df[predicted_column] - self._model_error
 
         combined_df = predicted_df.merge(required_df, how="left", on=column_names.TIMESTAMP)
-        # noinspection PyUnresolvedReferences
-        check = (combined_df[predicted_column] >= combined_df[required_column]).all()
-        return check
+        delta_column = combined_df[predicted_column] - combined_df[required_column]
+        min_temp_delta = delta_column.min()
+        return min_temp_delta

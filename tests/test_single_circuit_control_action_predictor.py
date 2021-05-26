@@ -47,7 +47,7 @@ class TestSingleCircuitControlActionPredictor:
 
     min_boiler_temp = min_corr_temp + 10
     max_boiler_temp = max_corr_temp - 10
-    regulation_step = 0.1
+    regulation_step = 0.3
 
     @pytest.fixture
     def corr_table_df(self):
@@ -160,7 +160,7 @@ class TestSingleCircuitControlActionPredictor:
         )
         assert len(control_action) == 1
         assert abs(control_action[column_names.FORWARD_PIPE_COOLANT_TEMP].to_list().pop()
-                   - self.max_boiler_temp) < self.regulation_step
+                   - self.max_boiler_temp) <= self.regulation_step
 
     def test_on_over_max_weather_temp(self,
                                       control_action_predictor,
@@ -174,4 +174,4 @@ class TestSingleCircuitControlActionPredictor:
         )
         assert len(control_action) == 1
         assert abs(control_action[column_names.FORWARD_PIPE_COOLANT_TEMP].to_list().pop()
-                   - self.min_boiler_temp) < self.regulation_step
+                   - self.min_boiler_temp) <= self.regulation_step

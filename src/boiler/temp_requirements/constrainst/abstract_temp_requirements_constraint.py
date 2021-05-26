@@ -6,5 +6,5 @@ class AbstractTempRequirementsConstraint:
     def check(self,
               system_reaction_df: pd.DataFrame,
               weather_df: pd.DataFrame
-              ) -> bool:
+              ) -> float:
         raise NotImplementedError
