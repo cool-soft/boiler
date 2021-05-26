@@ -5,7 +5,8 @@ import pytest
 from boiler.control_action.predictors.single_circuit_control_action_predictor import SingleCircuitControlActionPredictor
 
 from boiler.data_processing.timestamp_round_algorithm import CeilTimestampRoundAlgorithm
-from boiler.temp_requirements.constrainst.single_type_heating_obj_constraint import SingleTypeHeatingObjSimpleConstraint
+from boiler.temp_requirements.constraint.single_type_heating_obj_on_weather_constraint \
+    import SingleTypeHeatingObjOnWeatherConstraint
 from dateutil.tz import gettz
 
 from boiler.constants import circuit_types, heating_object_types, column_names, dataset_prototypes
@@ -114,7 +115,7 @@ class TestSingleCircuitControlActionPredictor:
 
     @pytest.fixture
     def constraint(self, temp_requirements_predictor):
-        return SingleTypeHeatingObjSimpleConstraint(
+        return SingleTypeHeatingObjOnWeatherConstraint(
             temp_requirements_predictor,
             timestamp_round_algo=CeilTimestampRoundAlgorithm(round_step=self.timedelta),
             temp_requirements_coefficient=1.0,

@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-class AbstractTempRequirementsConstraint:
+class AbstractOnWeatherConstraint:
 
     def check(self,
               system_reaction_df: pd.DataFrame,

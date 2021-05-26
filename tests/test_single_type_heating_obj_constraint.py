@@ -8,7 +8,8 @@ from boiler.constants import column_names, heating_object_types
 from boiler.data_processing.float_round_algorithm import ArithmeticFloatRoundAlgorithm
 from boiler.data_processing.timestamp_round_algorithm import CeilTimestampRoundAlgorithm
 from boiler.temp_requirements.predictors.temp_graph_requirements_predictor import TempGraphRequirementsPredictor
-from boiler.temp_requirements.constrainst.single_type_heating_obj_constraint import SingleTypeHeatingObjSimpleConstraint
+from boiler.temp_requirements.constraint.single_type_heating_obj_on_weather_constraint\
+    import SingleTypeHeatingObjOnWeatherConstraint
 
 random.seed(10)
 
@@ -122,7 +123,7 @@ class TestSingleTypeHeatingObjConstraint:
 
     @pytest.fixture
     def constraint(self, temp_requirements_predictor):
-        return SingleTypeHeatingObjSimpleConstraint(
+        return SingleTypeHeatingObjOnWeatherConstraint(
             temp_requirements_predictor,
             timestamp_round_algo=CeilTimestampRoundAlgorithm(round_step=self.time_step),
             temp_requirements_coefficient=self.temp_requirements_coefficient,

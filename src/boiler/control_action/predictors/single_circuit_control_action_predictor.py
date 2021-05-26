@@ -2,8 +2,8 @@ import pandas as pd
 
 from boiler.constants import column_names, circuit_types
 from boiler.heating_system.model.abstract_heating_system_model import AbstractHeatingSystemModel
-from boiler.temp_requirements.constrainst.abstract_temp_requirements_constraint import \
-    AbstractTempRequirementsConstraint
+from boiler.temp_requirements.constraint.single_type_heating_obj_on_weather_constraint import \
+    SingleTypeHeatingObjOnWeatherConstraint
 from .abstract_control_action_predictor import AbstractControlActionPredictor
 
 
@@ -11,7 +11,7 @@ class SingleCircuitControlActionPredictor(AbstractControlActionPredictor):
 
     def __init__(self,
                  heating_system_model: AbstractHeatingSystemModel,
-                 temp_requirements_constraint: AbstractTempRequirementsConstraint,
+                 temp_requirements_constraint: SingleTypeHeatingObjOnWeatherConstraint,
                  controlled_circuit_type: str = circuit_types.HEATING,
                  min_boiler_temp: float = 30,
                  max_boiler_temp: float = 85,

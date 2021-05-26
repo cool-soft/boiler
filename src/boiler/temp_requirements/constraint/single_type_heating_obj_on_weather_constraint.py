@@ -8,10 +8,10 @@ from boiler.constants import heating_object_types, column_names
 from boiler.data_processing.timestamp_round_algorithm import AbstractTimestampRoundAlgorithm
 from boiler.temp_requirements.predictors.abstract_temp_requirements_predictor \
     import AbstractTempRequirementsPredictor
-from .abstract_temp_requirements_constraint import AbstractTempRequirementsConstraint
+from .abstract_on_weather_constraint import AbstractOnWeatherConstraint
 
 
-class SingleTypeHeatingObjSimpleConstraint(AbstractTempRequirementsConstraint):
+class SingleTypeHeatingObjOnWeatherConstraint(AbstractOnWeatherConstraint):
 
     def __init__(self,
                  temp_requirements_predictor: AbstractTempRequirementsPredictor,
