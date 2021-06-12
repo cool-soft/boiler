@@ -12,25 +12,14 @@ class StdVarTimeDeltaCalculationAlgorithm(AbstractTimeDeltaCalculationAlgorithm)
     def __init__(self,
                  x_round_step: float = 0.1,
                  min_lag: int = 1,
-                 max_lag: int = 20) -> None:
+                 max_lag: int = 20
+                 ) -> None:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.debug("Creating instance")
 
         self._x_round_step = x_round_step
         self._min_lag = min_lag
         self._max_lag = max_lag
-
-    def set_x_round_step(self, round_step: float):
-        self._logger.debug(f"Round step for x is set to {round_step}")
-        self._x_round_step = round_step
-
-    def set_min_lag(self, lag: int):
-        self._logger.debug(f"Min lag is set to {lag}")
-        self._min_lag = lag
-
-    def set_max_lag(self, lag: int):
-        self._logger.debug(f"Max lag is set to {lag}")
-        self._max_lag = lag
 
     def find_lag(self, x: np.ndarray, y: np.ndarray) -> int:
         self._logger.debug("Lag calculation is requested")
