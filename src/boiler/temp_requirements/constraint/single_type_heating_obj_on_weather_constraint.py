@@ -28,7 +28,7 @@ class SingleTypeHeatingObjOnWeatherConstraint(AbstractOnWeatherConstraint):
 
         boiler_logger.debug(
             f"Creating instance"
-            f"temp_requirements_coefficient: {self._temp_requirements_coefficient}" 
+            f"temp_requirements_coefficient: {self._temp_requirements_coefficient}"
             f"temp_requirements_predictor: {self._temp_requirements_predictor}"
             f"min_model_error: {self._model_error}"
             f"timestamp_round_algo: {self._timestamp_round_algorithm}"
