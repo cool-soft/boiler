@@ -2,6 +2,7 @@ import pandas as pd
 
 from boiler.constants import column_names, circuit_types
 from boiler.heating_system.model.abstract_heating_system_model import AbstractHeatingSystemModel
+from boiler.logger import boiler_logger
 from boiler.temp_requirements.constraint.single_type_heating_obj_on_weather_constraint import \
     SingleTypeHeatingObjOnWeatherConstraint
 from .abstract_control_action_predictor import AbstractControlActionPredictor
@@ -25,11 +26,23 @@ class SingleCircuitControlActionPredictor(AbstractControlActionPredictor):
         self._min_regulation_step = min_regulation_step
         self._controlled_circuit_type = controlled_circuit_type
 
+        boiler_logger.debug(
+            f"Created instance: "
+            f"min boiler temp: {self._max_boiler_temp}"
+            f"max boiler temp: {self._max_boiler_temp}"
+            f"min regulation step: {self._min_regulation_step}"
+            f"controlled circuit type: {self._controlled_circuit_type}"
+            f"heating system model: {self._heating_system_model}"
+            f"temp requirements constraint: {self._temp_requirements_constraint}"
+        )
+
     def predict_one(self,
                     weather_forecast_df: pd.DataFrame,
                     system_states_history_df: pd.DataFrame,
                     control_action_timestamp: pd.Timestamp
                     ) -> pd.DataFrame:
+        boiler_logger.debug(f"Requested prediction for timestamp: {control_action_timestamp}")
+
         a_temp, b_temp = self._min_boiler_temp, self._max_boiler_temp
         while True:
             mean_temp = (a_temp + b_temp) / 2

@@ -1,7 +1,6 @@
-import logging
-
 import numpy as np
 import pandas as pd
+from boiler.logger import boiler_logger
 
 from boiler.timedelta.calculators.algo.abstract_time_delta_calculation_algorithm \
     import AbstractTimeDeltaCalculationAlgorithm
@@ -14,15 +13,19 @@ class StdVarTimeDeltaCalculationAlgorithm(AbstractTimeDeltaCalculationAlgorithm)
                  min_lag: int = 1,
                  max_lag: int = 20
                  ) -> None:
-        self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance")
-
         self._x_round_step = x_round_step
         self._min_lag = min_lag
         self._max_lag = max_lag
 
+        boiler_logger.debug(
+            f"Creating instance:"
+            f"x_round_step: {self._x_round_step}"
+            f"min_lag: {self._min_lag}"
+            f"max_lag: {self._max_lag}"
+        )
+
     def find_lag(self, x: np.ndarray, y: np.ndarray) -> int:
-        self._logger.debug("Lag calculation is requested")
+        boiler_logger.debug("Lag calculation is requested")
 
         rounded_x_column = "rounded_x"
         y_column = "y"

@@ -1,7 +1,7 @@
-import logging
 from typing import BinaryIO
 
 import pandas as pd
+from boiler.logger import boiler_logger
 
 from boiler.heating_obj.io.abstract_sync_heating_obj_reader import AbstractSyncHeatingObjReader
 
@@ -9,13 +9,11 @@ from boiler.heating_obj.io.abstract_sync_heating_obj_reader import AbstractSyncH
 class SyncHeatingObjPickleReader(AbstractSyncHeatingObjReader):
 
     def __init__(self) -> None:
-        self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance")
+        boiler_logger.debug("Creating instance")
 
     def read_heating_obj_from_binary_stream(self,
                                             binary_stream: BinaryIO
                                             ) -> pd.DataFrame:
-        self._logger.debug("Loading heating object")
+        boiler_logger.debug("Loading heating object")
         heating_obj_df = pd.read_pickle(binary_stream)
-        self._logger.debug("Heating object is loaded")
         return heating_obj_df

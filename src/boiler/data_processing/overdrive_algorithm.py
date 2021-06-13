@@ -1,7 +1,7 @@
-import logging
 from typing import Optional
 
 import pandas as pd
+from boiler.logger import boiler_logger
 
 
 class AbstractOverdriveAlgorithm:
@@ -14,18 +14,19 @@ class MinMaxOverdriveAlgorithm(AbstractOverdriveAlgorithm):
 
     def __init__(self,
                  min_value: Optional[float] = 0,
-                 max_value: Optional[float] = 100) -> None:
-        self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance")
-
+                 max_value: Optional[float] = 100
+                 ) -> None:
         self._min_value = min_value
         self._max_value = max_value
 
-        self._logger.debug(f"Min value is {min_value}")
-        self._logger.debug(f"Max value is {max_value}")
+        boiler_logger.debug(
+            f"Creating instance"
+            f"min value is {min_value}"
+            f"max value is {max_value}"
+        )
 
     def apply_overdrive_to_series(self, series: pd.Series) -> pd.Series:
-        self._logger.debug(f"Apply overdrive [{self._min_value}, {self._max_value}]")
+        boiler_logger.debug(f"Apply overdrive to series; len={len(series)}")
         series = series.copy()
         series.loc[series > self._max_value] = self._max_value
         series.loc[series < self._min_value] = self._min_value

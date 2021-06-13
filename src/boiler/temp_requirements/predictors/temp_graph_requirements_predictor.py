@@ -1,7 +1,7 @@
-import logging
 from typing import Tuple
 
 import pandas as pd
+from boiler.logger import boiler_logger
 
 from boiler.constants import column_names
 from boiler.data_processing.float_round_algorithm import AbstractFloatRoundAlgorithm
@@ -14,13 +14,13 @@ class TempGraphRequirementsPredictor(AbstractTempRequirementsPredictor):
                  temp_graph: pd.DataFrame,
                  weather_temp_round_algorithm: AbstractFloatRoundAlgorithm
                  ) -> None:
-        self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance")
-
         self._temp_graph = temp_graph
         self._weather_temp_round_algo = weather_temp_round_algorithm
 
+        boiler_logger.debug("Creating instance")
+
     def predict_on_weather(self, weather_df: pd.DataFrame) -> pd.DataFrame:
+        boiler_logger.debug(f"Predicting on weather is requested; weather_df len = {len(weather_df)}")
         weather_df = self._round_weather_temp(weather_df)
         temp_requirements_df = self._calc_for_weather_df(weather_df)
         return temp_requirements_df
@@ -51,7 +51,7 @@ class TempGraphRequirementsPredictor(AbstractTempRequirementsPredictor):
             required_temp_idx = available_temp[column_names.WEATHER_TEMP].idxmax()
         else:
             required_temp_idx = self._temp_graph[column_names.WEATHER_TEMP].idxmin()
-            self._logger.info(f"Weather temp {weather_temp} is not in temp graph")
+            boiler_logger.warning(f"Weather temp {weather_temp} is not in temp graph")
 
         forward_temp = self._temp_graph.loc[required_temp_idx, column_names.FORWARD_PIPE_COOLANT_TEMP]
         backward_temp = self._temp_graph.loc[required_temp_idx, column_names.BACKWARD_PIPE_COOLANT_TEMP]

@@ -1,8 +1,8 @@
 import io
-import logging
 from typing import BinaryIO
 
 import pandas as pd
+from boiler.logger import boiler_logger
 
 from boiler.constants import column_names
 from boiler.timedelta.io.abstract_sync_timedelta_reader import AbstractSyncTimedeltaReader
@@ -11,25 +11,28 @@ from boiler.timedelta.io.abstract_sync_timedelta_reader import AbstractSyncTimed
 class SyncTimedeltaCSVReader(AbstractSyncTimedeltaReader):
 
     def __init__(self,
-                 encoding: str = "utf-8"
+                 encoding: str = "utf-8",
+                 separator: str = ";"
                  ) -> None:
-        self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance")
-
         self._encoding = encoding
+        self._separator = separator
 
-        self._logger.debug(f"Encoding is {encoding}")
+        boiler_logger.debug(
+            f"Creating instance:"
+            f"encoding: {encoding}"
+            f"separator: {separator}"
+        )
 
     def read_timedelta_from_binary_stream(self,
                                           binary_stream: BinaryIO
                                           ) -> pd.DataFrame:
-        self._logger.debug("Loading timedelta")
+        boiler_logger.debug("Loading timedelta")
         with io.TextIOWrapper(binary_stream, encoding=self._encoding) as text_stream:
-            timedelta_df = pd.read_csv(text_stream)
+            timedelta_df = pd.read_csv(text_stream, sep=self._separator)
         timedelta_df = self._convert_timedelta_from_seconds(timedelta_df)
-        self._logger.debug("Timedelta is loaded")
         return timedelta_df
 
+    # noinspection PyMethodMayBeStatic
     def _convert_timedelta_from_seconds(self,
                                         timedelta_df: pd.DataFrame
                                         ) -> pd.DataFrame:

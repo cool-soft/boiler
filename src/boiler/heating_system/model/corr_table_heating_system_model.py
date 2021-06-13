@@ -1,6 +1,5 @@
-import logging
-
 import pandas as pd
+from boiler.logger import boiler_logger
 
 from boiler.constants import column_names, circuit_types, heating_object_types
 from .abstract_heating_system_model import AbstractHeatingSystemModel
@@ -14,19 +13,24 @@ class CorrTableHeatingSystemModel(AbstractHeatingSystemModel):
                  objects_type: str = heating_object_types.APARTMENT_HOUSE,
                  circuit_type: str = circuit_types.HEATING
                  ) -> None:
-        self._logger = logging.getLogger(self.__class__.__name__)
-        self._logger.debug("Creating instance")
-
         self._temp_correlation_df = temp_correlation_df
         self._timedelta_df = timedelta_df
         self._objects_type = objects_type
         self._circuit_type = circuit_type
+
+        boiler_logger.debug(
+            f"Creating instance:"
+            f"objects type: {self._objects_type}"
+            f"circuit type: {self._circuit_type}"
+        )
 
     def predict(self,
                 weather_df: pd.DataFrame,
                 system_state_history_df: pd.DataFrame,
                 control_action_df: pd.DataFrame
                 ) -> pd.DataFrame:
+        boiler_logger.debug("Requested prediction")
+
         boiler_temp, control_action_timestamp = self._unpack_control_action(control_action_df)
 
         heating_system_reaction = []

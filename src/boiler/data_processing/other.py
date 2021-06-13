@@ -7,7 +7,8 @@ import numpy as np
 
 def parse_datetime(datetime_as_str: str,
                    datetime_patterns: List[str],
-                   timezone=None) -> datetime.datetime:
+                   timezone=None
+                   ) -> datetime.datetime:
     for pattern in datetime_patterns:
         parsed = re.match(pattern, datetime_as_str)
         if parsed is not None:
@@ -36,7 +37,10 @@ def parse_datetime(datetime_as_str: str,
     return datetime_
 
 
-def average_values(x: np.array, window_len: int = 4, window: str = 'hanning') -> np.array:
+def average_values(x: np.array,
+                   window_len: int = 4,
+                   window: str = 'hanning'
+                   ) -> np.array:
     if x.ndim != 1:
         raise ValueError("smooth only accepts 1 dimension arrays.")
 
