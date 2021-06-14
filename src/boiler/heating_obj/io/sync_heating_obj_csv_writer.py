@@ -4,7 +4,7 @@ import pandas as pd
 
 from boiler.heating_obj.io.abstract_sync_heating_obj_writer \
     import AbstractSyncHeatingObjWriter
-from boiler.logger import boiler_logger
+from boiler.logger import logger
 
 
 class SyncHeatingObjCSVWriter(AbstractSyncHeatingObjWriter):
@@ -16,7 +16,7 @@ class SyncHeatingObjCSVWriter(AbstractSyncHeatingObjWriter):
         self._encoding = encoding
         self._separator = separator
 
-        boiler_logger.debug(
+        logger.debug(
             f"Creating instance:"
             f"encoding: {encoding}"
             f"separator: {separator}"
@@ -26,5 +26,5 @@ class SyncHeatingObjCSVWriter(AbstractSyncHeatingObjWriter):
                                            binary_stream: BinaryIO,
                                            heating_obj_df: pd.DataFrame
                                            ) -> None:
-        boiler_logger.debug(f"Storing heating object; len = {len(heating_obj_df)}")
+        logger.debug(f"Storing heating object; len = {len(heating_obj_df)}")
         heating_obj_df.to_csv(binary_stream, index=False, encoding=self._encoding, sep=self._separator)

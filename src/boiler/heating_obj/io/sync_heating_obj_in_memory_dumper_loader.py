@@ -1,7 +1,7 @@
 from typing import Optional
 
 import pandas as pd
-from boiler.logger import boiler_logger
+from boiler.logger import logger
 
 from boiler.constants import dataset_prototypes
 from boiler.data_processing.beetween_filter_algorithm import AbstractTimestampFilterAlgorithm, \
@@ -18,7 +18,7 @@ class SyncHeatingObjInMemoryDumperLoader(AbstractSyncHeatingObjDumper, AbstractS
                  ) -> None:
         self._storage = dataset_prototypes.HEATING_OBJ.copy()
         self._filter_algorithm = filter_algorithm
-        boiler_logger.debug(
+        logger.debug(
             f"Creating instance:"
             f"filter algorithm: {filter_algorithm}"
         )
@@ -27,7 +27,7 @@ class SyncHeatingObjInMemoryDumperLoader(AbstractSyncHeatingObjDumper, AbstractS
                          start_datetime: Optional[pd.Timestamp] = None,
                          end_datetime: Optional[pd.Timestamp] = None
                          ) -> pd.DataFrame:
-        boiler_logger.debug(f"Loading for {start_datetime}, {end_datetime}")
+        logger.debug(f"Loading for {start_datetime}, {end_datetime}")
         heating_object_df = self._load_from_storage()
         heating_object_df = self._filter_by_timestamp(end_datetime, heating_object_df, start_datetime)
         return heating_object_df
@@ -45,5 +45,5 @@ class SyncHeatingObjInMemoryDumperLoader(AbstractSyncHeatingObjDumper, AbstractS
         return heating_object_df
 
     def dump_heating_obj(self, heating_obj_df: pd.DataFrame) -> None:
-        boiler_logger.debug(f"Storing heating obj; df len = {len(heating_obj_df)}")
+        logger.debug(f"Storing heating obj; df len = {len(heating_obj_df)}")
         self._storage = heating_obj_df.copy()

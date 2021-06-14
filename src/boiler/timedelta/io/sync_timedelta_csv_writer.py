@@ -2,7 +2,7 @@ import io
 from typing import BinaryIO
 
 import pandas as pd
-from boiler.logger import boiler_logger
+from boiler.logger import logger
 
 from boiler.constants import column_names
 from boiler.timedelta.io.abstract_sync_timedelta_writer import AbstractSyncTimedeltaWriter
@@ -18,7 +18,7 @@ class SyncTimedeltaCSVWriter(AbstractSyncTimedeltaWriter):
         self._encoding = encoding
         self._separator = separator
 
-        boiler_logger.debug(
+        logger.debug(
             f"Creating instance:"
             f"encoding: {encoding}"
             f"separator: {separator}"
@@ -27,7 +27,7 @@ class SyncTimedeltaCSVWriter(AbstractSyncTimedeltaWriter):
     def write_timedelta_to_binary_stream(self,
                                          binary_stream: BinaryIO,
                                          timedelta_df: pd.DataFrame) -> None:
-        boiler_logger.debug("Storing timedelta")
+        logger.debug("Storing timedelta")
         timedelta_df = self._convert_timedelta_to_seconds(timedelta_df)
         with io.TextIOWrapper(binary_stream, encoding=self._encoding) as text_stream:
             timedelta_df.to_csv(text_stream, index=False, sep=self._separator)

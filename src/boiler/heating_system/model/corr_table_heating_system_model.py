@@ -1,5 +1,5 @@
 import pandas as pd
-from boiler.logger import boiler_logger
+from boiler.logger import logger
 
 from boiler.constants import column_names, circuit_types, heating_object_types
 from .abstract_heating_system_model import AbstractHeatingSystemModel
@@ -18,7 +18,7 @@ class CorrTableHeatingSystemModel(AbstractHeatingSystemModel):
         self._objects_type = objects_type
         self._circuit_type = circuit_type
 
-        boiler_logger.debug(
+        logger.debug(
             f"Creating instance:"
             f"objects type: {self._objects_type}"
             f"circuit type: {self._circuit_type}"
@@ -29,7 +29,7 @@ class CorrTableHeatingSystemModel(AbstractHeatingSystemModel):
                 system_state_history_df: pd.DataFrame,
                 control_action_df: pd.DataFrame
                 ) -> pd.DataFrame:
-        boiler_logger.debug("Requested prediction")
+        logger.debug("Requested prediction")
 
         boiler_temp, control_action_timestamp = self._unpack_control_action(control_action_df)
 

@@ -2,7 +2,7 @@ import math
 
 import numpy as np
 import pandas as pd
-from boiler.logger import boiler_logger
+from boiler.logger import logger
 
 from boiler.constants import heating_object_types, column_names
 from boiler.data_processing.timestamp_round_algorithm import AbstractTimestampRoundAlgorithm
@@ -26,7 +26,7 @@ class SingleTypeHeatingObjOnWeatherConstraint(AbstractOnWeatherConstraint):
         self._timestamp_round_algorithm = timestamp_round_algo
         self._heating_obj_type = heating_obj_type
 
-        boiler_logger.debug(
+        logger.debug(
             f"Creating instance"
             f"temp_requirements_coefficient: {self._temp_requirements_coefficient}"
             f"temp_requirements_predictor: {self._temp_requirements_predictor}"
@@ -39,7 +39,7 @@ class SingleTypeHeatingObjOnWeatherConstraint(AbstractOnWeatherConstraint):
               system_reaction_df: pd.DataFrame,
               weather_df: pd.DataFrame
               ) -> float:
-        boiler_logger.debug("Checking constraint")
+        logger.debug("Checking constraint")
 
         system_reaction_df = self._filter_reaction_by_heating_obj_type(system_reaction_df)
         system_reaction_df = self._round_timestamp(system_reaction_df)

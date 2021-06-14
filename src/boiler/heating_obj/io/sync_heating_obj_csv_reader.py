@@ -1,7 +1,7 @@
 from typing import BinaryIO
 
 import pandas as pd
-from boiler.logger import boiler_logger
+from boiler.logger import logger
 
 from boiler.constants import column_names
 from boiler.heating_obj.io.abstract_sync_heating_obj_reader import AbstractSyncHeatingObjReader
@@ -16,7 +16,7 @@ class SyncHeatingObjCSVReader(AbstractSyncHeatingObjReader):
         self._encoding = encoding
         self._separator = separator
 
-        boiler_logger.debug(
+        logger.debug(
             f"Creating instance:"
             f"encoding: {encoding}"
             f"separator: {separator}"
@@ -25,7 +25,7 @@ class SyncHeatingObjCSVReader(AbstractSyncHeatingObjReader):
     def read_heating_obj_from_binary_stream(self,
                                             binary_stream: BinaryIO
                                             ) -> pd.DataFrame:
-        boiler_logger.debug("Loading heating object")
+        logger.debug("Loading heating object")
         heating_obj_df = pd.read_csv(
             binary_stream,
             parse_dates=[column_names.TIMESTAMP],

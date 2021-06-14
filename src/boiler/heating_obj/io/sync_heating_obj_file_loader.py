@@ -2,7 +2,7 @@ import os
 from typing import Optional
 
 import pandas as pd
-from boiler.logger import boiler_logger
+from boiler.logger import logger
 
 from boiler.data_processing.beetween_filter_algorithm \
     import AbstractTimestampFilterAlgorithm, LeftClosedTimestampFilterAlgorithm
@@ -21,7 +21,7 @@ class SyncHeatingObjFileLoader(AbstractSyncHeatingObjLoader):
         self._filepath = filepath
         self._reader = reader
         self._filter_algorithm = timestamp_filter_algorithm
-        boiler_logger.debug(
+        logger.debug(
             f"Creating instance:"
             f"filepath: {filepath}"
             f"reader: {reader}"
@@ -32,7 +32,7 @@ class SyncHeatingObjFileLoader(AbstractSyncHeatingObjLoader):
                          start_datetime: Optional[pd.Timestamp] = None,
                          end_datetime: Optional[pd.Timestamp] = None
                          ) -> pd.DataFrame:
-        boiler_logger.debug(f"Loading for {start_datetime},{end_datetime}")
+        logger.debug(f"Loading for {start_datetime},{end_datetime}")
         heating_object_df = self._load_from_file()
         heating_object_df = self._filter_by_timestamp(end_datetime, heating_object_df, start_datetime)
         return heating_object_df

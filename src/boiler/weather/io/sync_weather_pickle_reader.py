@@ -2,7 +2,7 @@ import pickle
 from typing import BinaryIO
 
 import pandas as pd
-from boiler.logger import boiler_logger
+from boiler.logger import logger
 
 from boiler.weather.io.abstract_sync_weather_reader import AbstractSyncWeatherReader
 
@@ -10,11 +10,11 @@ from boiler.weather.io.abstract_sync_weather_reader import AbstractSyncWeatherRe
 class SyncWeatherPickleReader(AbstractSyncWeatherReader):
 
     def __init__(self) -> None:
-        boiler_logger.debug("Creating instance")
+        logger.debug("Creating instance")
 
     def read_weather_from_binary_stream(self,
                                         binary_stream: BinaryIO
                                         ) -> pd.DataFrame:
-        boiler_logger.debug("Loading weather")
+        logger.debug("Loading weather")
         weather_df = pickle.load(binary_stream)
         return weather_df

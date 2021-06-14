@@ -1,7 +1,7 @@
 import os
 
 import pandas as pd
-from boiler.logger import boiler_logger
+from boiler.logger import logger
 
 from boiler.timedelta.io.abstract_sync_timedelta_dumper import AbstractSyncTimedeltaDumper
 from boiler.timedelta.io.abstract_sync_timedelta_writer import AbstractSyncTimedeltaWriter
@@ -16,7 +16,7 @@ class SyncTimedeltaFileDumper(AbstractSyncTimedeltaDumper):
         self._filepath = filepath
         self._writer = writer
 
-        boiler_logger.debug(
+        logger.debug(
             f"Creating instance:"
             f"filepath: {filepath}"
             f"writer: {writer}"
@@ -24,6 +24,6 @@ class SyncTimedeltaFileDumper(AbstractSyncTimedeltaDumper):
 
     def dump_timedelta(self, timedelta_df: pd.DataFrame) -> None:
         filepath = os.path.abspath(self._filepath)
-        boiler_logger.debug(f"Storing timedelta to {filepath}")
+        logger.debug(f"Storing timedelta to {filepath}")
         with open(filepath, mode="wb") as output_file:
             self._writer.write_timedelta_to_binary_stream(output_file, timedelta_df)

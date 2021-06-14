@@ -1,7 +1,7 @@
 from typing import Union
 
 import pandas as pd
-from boiler.logger import boiler_logger
+from boiler.logger import logger
 
 from boiler.constants import column_names
 from boiler.data_processing.timestamp_round_algorithm import AbstractTimestampRoundAlgorithm
@@ -27,7 +27,7 @@ class TimestampInterpolationAlgorithm(AbstractTimestampInterpolationAlgorithm):
         self._timestamp_round_algo = timestamp_round_algo
         self._timestamp_column_name = column_names.TIMESTAMP
 
-        boiler_logger.debug(
+        logger.debug(
             f"Creating instance:"
             f"timestamp round algo: {timestamp_round_algo}"
             f"interpolation step: {interpolation_step}"
@@ -38,7 +38,7 @@ class TimestampInterpolationAlgorithm(AbstractTimestampInterpolationAlgorithm):
                    min_required_timestamp: Union[pd.Timestamp, None],
                    max_required_timestamp: Union[pd.Timestamp, None]
                    ) -> pd.DataFrame:
-        boiler_logger.debug(
+        logger.debug(
             f"Interpolating for [{min_required_timestamp}, {max_required_timestamp}]; "
             f"df len = {len(df)}"
         )

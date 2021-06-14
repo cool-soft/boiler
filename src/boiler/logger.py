@@ -1,3 +1,4 @@
 import logging
 
-boiler_logger = logging.getLogger("boiler")
+LOGGER_NAME = "boiler"
+logger = logging.getLogger(LOGGER_NAME)

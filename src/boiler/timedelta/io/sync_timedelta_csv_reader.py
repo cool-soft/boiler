@@ -2,7 +2,7 @@ import io
 from typing import BinaryIO
 
 import pandas as pd
-from boiler.logger import boiler_logger
+from boiler.logger import logger
 
 from boiler.constants import column_names
 from boiler.timedelta.io.abstract_sync_timedelta_reader import AbstractSyncTimedeltaReader
@@ -17,7 +17,7 @@ class SyncTimedeltaCSVReader(AbstractSyncTimedeltaReader):
         self._encoding = encoding
         self._separator = separator
 
-        boiler_logger.debug(
+        logger.debug(
             f"Creating instance:"
             f"encoding: {encoding}"
             f"separator: {separator}"
@@ -26,7 +26,7 @@ class SyncTimedeltaCSVReader(AbstractSyncTimedeltaReader):
     def read_timedelta_from_binary_stream(self,
                                           binary_stream: BinaryIO
                                           ) -> pd.DataFrame:
-        boiler_logger.debug("Loading timedelta")
+        logger.debug("Loading timedelta")
         with io.TextIOWrapper(binary_stream, encoding=self._encoding) as text_stream:
             timedelta_df = pd.read_csv(text_stream, sep=self._separator)
         timedelta_df = self._convert_timedelta_from_seconds(timedelta_df)

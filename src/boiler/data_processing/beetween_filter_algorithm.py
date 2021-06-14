@@ -1,7 +1,7 @@
 from typing import Union
 
 import pandas as pd
-from boiler.logger import boiler_logger
+from boiler.logger import logger
 
 from boiler.constants import column_names
 
@@ -26,7 +26,7 @@ class FullClosedTimestampFilterAlgorithm(AbstractTimestampFilterAlgorithm):
                                        min_timestamp: Union[pd.Timestamp, None],
                                        max_timestamp: Union[pd.Timestamp, None]
                                        ) -> pd.DataFrame:
-        boiler_logger.debug(f"Filter by range: [{min_timestamp}, {max_timestamp}]")
+        logger.debug(f"Filter by range: [{min_timestamp}, {max_timestamp}]")
         if min_timestamp is not None:
             df = df[df[self._timestamp_column_name] >= min_timestamp]
         if max_timestamp is not None:
@@ -45,7 +45,7 @@ class LeftClosedTimestampFilterAlgorithm(AbstractTimestampFilterAlgorithm):
                                        min_timestamp: Union[pd.Timestamp, None],
                                        max_timestamp: Union[pd.Timestamp, None]
                                        ) -> pd.DataFrame:
-        boiler_logger.debug(f"Filter range: [{min_timestamp}, {max_timestamp})")
+        logger.debug(f"Filter range: [{min_timestamp}, {max_timestamp})")
         if min_timestamp is not None:
             df = df[df[self._timestamp_column_name] >= min_timestamp]
         if max_timestamp is not None:

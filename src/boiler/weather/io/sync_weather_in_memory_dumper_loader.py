@@ -1,7 +1,7 @@
 from typing import Optional
 
 import pandas as pd
-from boiler.logger import boiler_logger
+from boiler.logger import logger
 
 from boiler.constants import dataset_prototypes
 from boiler.data_processing.beetween_filter_algorithm import AbstractTimestampFilterAlgorithm, \
@@ -19,7 +19,7 @@ class SyncWeatherInMemoryDumperLoader(AbstractSyncWeatherDumper, AbstractSyncWea
         self._storage = dataset_prototypes.WEATHER.copy()
         self._filter_algorithm = timestamp_filter_algorithm
 
-        boiler_logger.debug(
+        logger.debug(
             f"Creating instance:"
             f"Filter algorithm: {self._filter_algorithm}"
         )
@@ -28,7 +28,7 @@ class SyncWeatherInMemoryDumperLoader(AbstractSyncWeatherDumper, AbstractSyncWea
                      start_datetime: Optional[pd.Timestamp] = None,
                      end_datetime: Optional[pd.Timestamp] = None
                      ) -> pd.DataFrame:
-        boiler_logger.debug("Loading weather")
+        logger.debug("Loading weather")
         weather_df = self._load_from_storage()
         weather_df = self._filter_by_timestamp(end_datetime, start_datetime, weather_df)
         return weather_df
@@ -46,5 +46,5 @@ class SyncWeatherInMemoryDumperLoader(AbstractSyncWeatherDumper, AbstractSyncWea
         return weather_df
 
     def dump_weather(self, weather_df: pd.DataFrame) -> None:
-        boiler_logger.debug("Storing weather")
+        logger.debug("Storing weather")
         self._storage = weather_df.copy()

@@ -2,7 +2,7 @@ import math
 
 import numpy as np
 import pandas as pd
-from boiler.logger import boiler_logger
+from boiler.logger import logger
 
 
 class AbstractFloatRoundAlgorithm:
@@ -18,20 +18,20 @@ class ArithmeticFloatRoundAlgorithm(AbstractFloatRoundAlgorithm):
 
     def __init__(self, decimals: int = 0) -> None:
         self._decimals = decimals
-        boiler_logger.debug(
+        logger.debug(
             f"Creating instance:"
             f"decimals: {decimals}"
         )
 
     def round_value(self, value: float) -> float:
-        boiler_logger.debug(f"Rounding value: {value}")
+        logger.debug(f"Rounding value: {value}")
         multiplier = 10 ** self._decimals
         rounded_abs = math.floor(abs(value) * multiplier + 0.5) / multiplier
         rounded_value = math.copysign(rounded_abs, value)
         return rounded_value
 
     def round_series(self, series: pd.Series) -> pd.Series:
-        boiler_logger.debug(f"Rounding series; len: {len(series)}")
+        logger.debug(f"Rounding series; len: {len(series)}")
         multiplier = 10 ** self._decimals
         rounded_series = series.copy()
         rounded_series = rounded_series.abs() * multiplier + 0.5
