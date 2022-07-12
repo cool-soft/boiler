@@ -8,3 +8,5 @@ src/*.egg-info/
 coverage-report-html/
 coverage-report.xml
 pytest-report.html
+
+coverage-report/
