@@ -10,7 +10,6 @@ from boiler.data_processing.beetween_filter_algorithm import \
 
 
 class TestDatasetBetweenFilter:
-
     other_columns = ["col_1", "col_2"]
     min_generated_timestamp = pd.Timestamp.now(tz=tzlocal())
     max_generated_timestamp = min_generated_timestamp + pd.Timedelta(seconds=1000)
@@ -30,13 +29,19 @@ class TestDatasetBetweenFilter:
     def dataset(self):
         df = pd.DataFrame(columns=[column_names.TIMESTAMP, *self.other_columns])
         current_timestamp = self.min_generated_timestamp
+        data_for_dataset = []
         while current_timestamp <= self.max_generated_timestamp:
             row = {}
             for column_name in self.other_columns:
                 row[column_name] = random()
             row[column_names.TIMESTAMP] = current_timestamp
-            df = df.append(row, ignore_index=True)
+            data_for_dataset.append(row)
             current_timestamp += self.time_step
+
+        df = pd.concat(
+            [df, pd.DataFrame(data_for_dataset)],
+            ignore_index=True
+        )
 
         return df
 

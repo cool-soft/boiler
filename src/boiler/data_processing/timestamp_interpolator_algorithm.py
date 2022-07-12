@@ -66,10 +66,7 @@ class TimestampInterpolationAlgorithm(AbstractTimestampInterpolationAlgorithm):
                     {self._timestamp_column_name: rounded_required_min_timestamp},
                 ]
             )
-            df = df.append(
-                new_df,
-                ignore_index=True
-            )
+            df = pd.concat([df, new_df], ignore_index=True)
 
         return df
 
@@ -88,7 +85,7 @@ class TimestampInterpolationAlgorithm(AbstractTimestampInterpolationAlgorithm):
                     {self._timestamp_column_name: rounded_required_max_timestamp},
                 ]
             )
-            df = df.append(new_df, ignore_index=True)
+            df = pd.concat([df, new_df], ignore_index=True)
 
         return df
 
@@ -112,7 +109,7 @@ class TimestampInterpolationAlgorithm(AbstractTimestampInterpolationAlgorithm):
 
             previous_timestamp = next_timestamp
 
-        df = df.append(timestamp_to_insert, ignore_index=True)
+        df = pd.concat([df, pd.DataFrame(timestamp_to_insert)], ignore_index=True)
         df = df.sort_values(by=self._timestamp_column_name, ignore_index=True)
 
         return df

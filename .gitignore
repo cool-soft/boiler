@@ -5,6 +5,4 @@
 src/*.egg-info/
 
 .coverage
-coverage-report-html/
-coverage-report.xml
-pytest-report.html
+coverage-report/

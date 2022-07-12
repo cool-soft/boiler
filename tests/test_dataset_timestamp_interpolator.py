@@ -46,7 +46,7 @@ class TestDatasetTimestampInterpolator:
         for column_name in self.columns:
             new_row[column_name] = random()
         new_row[self.timestamp_column_name] = current_timestamp
-        df = df.append(new_row, ignore_index=True)
+        df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
         return df
 
     @pytest.fixture

@@ -31,7 +31,7 @@ class HeatingObjSyncDumpLoadTesting:
             heating_obj_data_to_append.append(data_part)
 
             current_datetime += self.time_tick_
-        heating_obj_df = heating_obj_df.append(heating_obj_data_to_append)
+        heating_obj_df = pd.concat([heating_obj_df, pd.DataFrame(heating_obj_data_to_append)])
 
         return heating_obj_df
 

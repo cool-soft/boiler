@@ -15,15 +15,18 @@ class TimedeltaSyncDumpLoadTesting:
     @pytest.fixture
     def timedelta_df(self):
         timedelta_df_ = dataset_prototypes.TIMEDELTA.copy()
+        new_data = []
         for i in range(self.row_count):
-            timedelta_df_ = timedelta_df_.append(
+            new_data.append(
                 {
                     column_names.HEATING_OBJ_ID: f"obj_{i}",
                     column_names.AVG_TIMEDELTA: self._random_timedelta()
-                },
-                ignore_index=True
+                }
             )
-
+        timedelta_df_ = pd.concat(
+            [timedelta_df_, pd.DataFrame(new_data)],
+            ignore_index=True
+        )
         return timedelta_df_
 
     def _random_timedelta(self):

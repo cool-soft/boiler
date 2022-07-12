@@ -28,7 +28,10 @@ class WeatherSyncDumpLoadTesting:
                 column_names.WEATHER_TEMP: random()
             })
             current_datetime += self.time_tick_
-        weather_df = weather_df.append(weather_data_to_append)
+        weather_df = pd.concat(
+            [weather_df, pd.DataFrame(weather_data_to_append)],
+            ignore_index=True
+        )
 
         return weather_df
 
