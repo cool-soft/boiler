@@ -1,18 +1,20 @@
-import pytest
-from dateutil.tz import gettz
 from datetime import datetime
 
-from boiler.data_processing.other import parse_datetime
+import pytest
+from dateutil.tz import gettz
+
+from boiler.data_processing.datetime_parsing_algorithm import SimpleDatetimeParsingAlgorithm
 
 
 class TestDatetimeParsing:
 
     @pytest.fixture
-    def patterns(self):
-        return (
+    def parsing_algorithm(self):
+        patterns = [
             r"(?P<year>\d{4})-(?P<month>\d{1,2})-(?P<day>\d{1,2})\s(?P<hours>\d{1,2}):(?P<minutes>\d{2})",
             r"(?P<day>\d{1,2})\.(?P<month>\d{1,2})\.(?P<year>\d{4})\s(?P<hours>\d{1,2}):(?P<minutes>\d{2})"
-        )
+        ]
+        return SimpleDatetimeParsingAlgorithm(patterns)
 
     @pytest.fixture
     def samples(self):
@@ -24,10 +26,10 @@ class TestDatetimeParsing:
             (".3.2096 4:00", True, None),
         )
 
-    def test_datetime_parsing(self, samples, patterns):
+    def test_datetime_parsing(self, samples, parsing_algorithm):
         for datetime_as_str, err, result in samples:
             if err:
                 with pytest.raises(ValueError):
-                    parse_datetime(datetime_as_str, patterns, None)
+                    parsing_algorithm.parse_datetime(datetime_as_str, None)
             else:
-                assert parse_datetime(datetime_as_str, patterns, result.tzinfo) == result
+                assert parsing_algorithm.parse_datetime(datetime_as_str, result.tzinfo) == result
