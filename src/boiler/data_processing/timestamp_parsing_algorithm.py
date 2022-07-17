@@ -3,27 +3,26 @@ from datetime import datetime, tzinfo
 from typing import List, Optional
 
 
-class AbstractDatetimeParsingAlgorithm:
+class AbstractTimestampParsingAlgorithm:
 
-    def parse_datetime(self, datetime_str: str, timezone: Optional[tzinfo] = None) -> datetime:
+    def parse_datetime(self, datetime_str: str) -> datetime:
         raise NotImplementedError
 
 
-class SimpleDatetimeParsingAlgorithm(AbstractDatetimeParsingAlgorithm):
+class SimpleTimestampParsingAlgorithm(AbstractTimestampParsingAlgorithm):
 
     def __init__(self,
                  datetime_patterns: List[str],
-                 default_timezone: Optional[tzinfo] = None
+                 timezone: tzinfo
                  ) -> None:
         self._datetime_parsers = []
         for pattern in datetime_patterns:
             parser = re.compile(pattern)
             self._datetime_parsers.append(parser)
-        self._default_timezone = default_timezone
+        self._timezone = timezone
 
     def parse_datetime(self,
-                       datetime_str: str,
-                       timezone: Optional[tzinfo] = None
+                       datetime_str: str
                        ) -> datetime:
         for parser in self._datetime_parsers:
             parsed = parser.match(datetime_str)
@@ -38,7 +37,6 @@ class SimpleDatetimeParsingAlgorithm(AbstractDatetimeParsingAlgorithm):
         minute = int(parsed.group("minutes"))
         second = 0
         millisecond = 0
-        if timezone is None:
-            timezone = self._default_timezone
-        datetime_ = datetime(year, month, day, hour, minute, second, millisecond, tzinfo=timezone)
+
+        datetime_ = datetime(year, month, day, hour, minute, second, millisecond, tzinfo=self._timezone)
         return datetime_
