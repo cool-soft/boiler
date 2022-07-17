@@ -1,5 +1,5 @@
 import pandas as pd
-from boiler.logger import logger
+from boiler.logging import logger
 
 from boiler.constants import dataset_prototypes
 from boiler.timedelta.io.abstract_sync_timedelta_dumper import AbstractSyncTimedeltaDumper

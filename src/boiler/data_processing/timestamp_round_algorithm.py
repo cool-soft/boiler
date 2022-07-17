@@ -1,5 +1,5 @@
 import pandas as pd
-from boiler.logger import logger
+from boiler.logging import logger
 
 
 class AbstractTimestampRoundAlgorithm:

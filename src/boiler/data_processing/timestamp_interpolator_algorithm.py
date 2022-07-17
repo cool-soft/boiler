@@ -1,7 +1,7 @@
 from typing import Union
 
 import pandas as pd
-from boiler.logger import logger
+from boiler.logging import logger
 
 from boiler.constants import column_names
 from boiler.data_processing.timestamp_round_algorithm import AbstractTimestampRoundAlgorithm

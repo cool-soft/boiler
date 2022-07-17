@@ -1,7 +1,7 @@
 from typing import BinaryIO
 
 import pandas as pd
-from boiler.logger import logger
+from boiler.logging import logger
 
 from boiler.weather.io.abstract_sync_weather_writer import AbstractSyncWeatherWriter
 

@@ -2,7 +2,7 @@ import pandas as pd
 
 from boiler.constants import column_names, circuit_types
 from boiler.heating_system.model.abstract_heating_system_model import AbstractHeatingSystemModel
-from boiler.logger import logger
+from boiler.logging import logger
 from boiler.temp_requirements.constraint.single_type_heating_obj_on_weather_constraint import \
     SingleTypeHeatingObjOnWeatherConstraint
 from .abstract_control_action_predictor import AbstractControlActionPredictor

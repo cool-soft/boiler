@@ -2,7 +2,7 @@ import os
 from typing import Optional
 
 import pandas as pd
-from boiler.logger import logger
+from boiler.logging import logger
 
 from boiler.data_processing.beetween_filter_algorithm import \
     AbstractTimestampFilterAlgorithm, LeftClosedTimestampFilterAlgorithm

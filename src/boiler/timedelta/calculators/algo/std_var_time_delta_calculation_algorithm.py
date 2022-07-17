@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from boiler.logger import logger
+from boiler.logging import logger
 
 from boiler.timedelta.calculators.algo.abstract_time_delta_calculation_algorithm \
     import AbstractTimeDeltaCalculationAlgorithm

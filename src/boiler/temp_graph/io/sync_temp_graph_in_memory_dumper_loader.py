@@ -1,5 +1,5 @@
 import pandas as pd
-from boiler.logger import logger
+from boiler.logging import logger
 
 from boiler.constants import dataset_prototypes
 from boiler.temp_graph.io.abstract_sync_temp_graph_dumper import AbstractSyncTempGraphDumper

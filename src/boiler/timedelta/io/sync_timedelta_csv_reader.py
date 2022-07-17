@@ -2,7 +2,7 @@ import io
 from typing import BinaryIO
 
 import pandas as pd
-from boiler.logger import logger
+from boiler.logging import logger
 
 from boiler.constants import column_names
 from boiler.timedelta.io.abstract_sync_timedelta_reader import AbstractSyncTimedeltaReader

@@ -1,7 +1,7 @@
 import os
 
 import pandas as pd
-from boiler.logger import logger
+from boiler.logging import logger
 
 from boiler.temp_graph.io.abstract_sync_temp_graph_dumper import AbstractSyncTempGraphDumper
 from boiler.temp_graph.io.abstract_sync_temp_graph_writer import AbstractSyncTempGraphWriter

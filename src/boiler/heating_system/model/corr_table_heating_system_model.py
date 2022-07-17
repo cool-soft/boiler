@@ -1,5 +1,5 @@
 import pandas as pd
-from boiler.logger import logger
+from boiler.logging import logger
 
 from boiler.constants import column_names, circuit_types, heating_object_types
 from .abstract_heating_system_model import AbstractHeatingSystemModel

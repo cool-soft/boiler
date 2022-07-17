@@ -1,7 +1,7 @@
 from typing import BinaryIO
 
 import pandas as pd
-from boiler.logger import logger
+from boiler.logging import logger
 
 from boiler.heating_obj.io.abstract_sync_heating_obj_reader import AbstractSyncHeatingObjReader
 

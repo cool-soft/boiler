@@ -1,7 +1,7 @@
 from typing import Tuple
 
 import pandas as pd
-from boiler.logger import logger
+from boiler.logging import logger
 
 from boiler.constants import dataset_prototypes, column_names
 from .abstract_model_requirements import AbstractModelRequirements

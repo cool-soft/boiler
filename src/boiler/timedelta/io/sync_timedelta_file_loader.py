@@ -1,7 +1,7 @@
 import os
 
 import pandas as pd
-from boiler.logger import logger
+from boiler.logging import logger
 
 from boiler.timedelta.io.abstract_sync_timedelta_loader import AbstractSyncTimedeltaLoader
 from boiler.timedelta.io.abstract_sync_timedelta_reader import AbstractSyncTimedeltaReader
