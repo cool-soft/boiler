@@ -9,8 +9,3 @@ class AbstractModelRequirements:
                                          control_action_timestamp: pd.Timestamp
                                          ) -> Tuple[pd.Timestamp, pd.Timestamp]:
         raise NotImplementedError
-
-    def get_heating_states_history_timestamps(self,
-                                              control_action_timestamp: pd.Timestamp
-                                              ) -> pd.DataFrame:
-        raise NotImplementedError

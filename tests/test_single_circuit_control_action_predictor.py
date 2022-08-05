@@ -2,6 +2,8 @@ import math
 import random
 import pandas as pd
 import pytest
+from boiler.control_action.temp_delta_calculator.single_type_temp_delta_calculator import SingleTypeTempDeltaCalculator
+
 from boiler.control_action.predictors.single_circuit_control_action_predictor import SingleCircuitControlActionPredictor
 
 from boiler.data_processing.timestamp_round_algorithm import CeilTimestampRoundAlgorithm
@@ -114,29 +116,19 @@ class TestSingleCircuitControlActionPredictor:
         )
 
     @pytest.fixture
-    def constraint(self, temp_requirements_predictor):
-        return SingleTypeHeatingObjOnWeatherConstraint(
-            temp_requirements_predictor,
-            timestamp_round_algo=CeilTimestampRoundAlgorithm(round_step=self.timedelta),
-            temp_requirements_coefficient=1.0,
-            min_model_error=0.0,
-            heating_obj_type=self.heating_object_type
-        )
+    def temp_delta_calculator(self):
+        return SingleTypeTempDeltaCalculator()
 
     @pytest.fixture
-    def control_action_predictor(self, heating_system_model, constraint):
+    def control_action_predictor(self, heating_system_model, temp_delta_calculator):
         return SingleCircuitControlActionPredictor(
             heating_system_model=heating_system_model,
-            temp_requirements_constraint=constraint,
+            temp_delta_calculator=temp_delta_calculator,
             controlled_circuit_type=self.circuit_type,
             min_boiler_temp=self.min_boiler_temp,
             max_boiler_temp=self.max_boiler_temp,
             min_regulation_step=self.regulation_step,
         )
-
-    @pytest.fixture
-    def heating_system_state_history_df(self):
-        return dataset_prototypes.HEATING_SYSTEM_STATE.copy()
 
     def generate_weather_df(self, weather_temp):
         weather_list = []
@@ -151,11 +143,12 @@ class TestSingleCircuitControlActionPredictor:
 
     def test_on_over_min_weather_temp(self,
                                       control_action_predictor,
-                                      temp_graph_df,
-                                      heating_system_state_history_df):
+                                      temp_requirements_predictor,
+                                      temp_graph_df):
         weather_df = self.generate_weather_df(temp_graph_df[column_names.WEATHER_TEMP].min()-10)
+        temp_requirements_df = temp_requirements_predictor.calc_for_weather(weather_df)
         control_action = control_action_predictor.predict_one(
-            weather_df,
+            temp_requirements_df,
             self.control_timestamp
         )
         assert len(control_action) == 1
@@ -164,11 +157,12 @@ class TestSingleCircuitControlActionPredictor:
 
     def test_on_over_max_weather_temp(self,
                                       control_action_predictor,
-                                      temp_graph_df,
-                                      heating_system_state_history_df):
+                                      temp_requirements_predictor,
+                                      temp_graph_df):
         weather_df = self.generate_weather_df(temp_graph_df[column_names.WEATHER_TEMP].max()+10)
+        temp_requirements_df = temp_requirements_predictor.calc_for_weather(weather_df)
         control_action = control_action_predictor.predict_one(
-            weather_df,
+            temp_requirements_df,
             self.control_timestamp
         )
         assert len(control_action) == 1

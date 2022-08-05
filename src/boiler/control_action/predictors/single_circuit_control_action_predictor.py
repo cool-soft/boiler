@@ -1,10 +1,8 @@
-from math import inf
-
 import pandas as pd
 
 from boiler.constants import column_names, circuit_types
+from boiler.control_action.temp_delta_calculator.abstract_temp_delta_calculator import AbstractTempDeltaCalculator
 from boiler.heating_system.model.abstract_heating_system_model import AbstractHeatingSystemModel
-from boiler.logging import logger
 from .abstract_control_action_predictor import AbstractControlActionPredictor
 
 
@@ -12,33 +10,23 @@ class SingleCircuitControlActionPredictor(AbstractControlActionPredictor):
 
     def __init__(self,
                  heating_system_model: AbstractHeatingSystemModel,
+                 temp_delta_calculator: AbstractTempDeltaCalculator,
                  controlled_circuit_type: str = circuit_types.HEATING,
                  min_boiler_temp: float = 30,
                  max_boiler_temp: float = 85,
                  min_regulation_step: float = 0.3,
                  ) -> None:
         self._heating_system_model = heating_system_model
-
+        self._temp_delta_calculator = temp_delta_calculator
         self._min_boiler_temp = min_boiler_temp
         self._max_boiler_temp = max_boiler_temp
         self._min_regulation_step = min_regulation_step
         self._controlled_circuit_type = controlled_circuit_type
 
-        logger.debug(
-            f"Created instance: "
-            f"min boiler temp: {self._max_boiler_temp}"
-            f"max boiler temp: {self._max_boiler_temp}"
-            f"min regulation step: {self._min_regulation_step}"
-            f"controlled circuit type: {self._controlled_circuit_type}"
-            f"heating system model: {self._heating_system_model}"
-        )
-
     def predict_one(self,
                     temp_requirements_df: pd.DataFrame,
                     control_action_timestamp: pd.Timestamp
                     ) -> pd.DataFrame:
-        logger.debug(f"Requested prediction for timestamp: {control_action_timestamp}")
-
         a_temp, b_temp = self._min_boiler_temp, self._max_boiler_temp
         while True:
             mean_temp = (a_temp + b_temp) / 2
@@ -53,6 +41,7 @@ class SingleCircuitControlActionPredictor(AbstractControlActionPredictor):
                 heating_system_reaction_df,
                 temp_requirements_df
             )
+            temp_delta = temp_delta[column_names.FORWARD_TEMP_DELTA].min()
             if temp_delta < 0:
                 a_temp = mean_temp
             else:

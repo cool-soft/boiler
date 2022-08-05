@@ -4,7 +4,7 @@ from boiler.constants import column_names
 from boiler.control_action.temp_delta_calculator.abstract_temp_delta_calculator import AbstractTempDeltaCalculator
 
 
-class SingleTypeForwardPipeTempDeltaCalculator(AbstractTempDeltaCalculator):
+class SingleTypeTempDeltaCalculator(AbstractTempDeltaCalculator):
 
     def calc_temp_delta(self,
                         heating_system_reaction_df: pd.DataFrame,

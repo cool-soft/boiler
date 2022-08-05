@@ -2,8 +2,8 @@ import pytest
 import pandas as pd
 
 from boiler.constants import column_names
-from boiler.heating_system.model_requirements.timedelta_model_requirements_without_history import \
-    TimedeltaModelRequirementsWithoutHistory
+from boiler.heating_system.model_requirements.corr_table_model_requirements import \
+    CorrTableModelRequirements
 
 
 class TestTimedeltaModelRequirementsWOHistory:
@@ -34,7 +34,7 @@ class TestTimedeltaModelRequirementsWOHistory:
 
     @pytest.fixture
     def model_requirements_calculator(self, timedelta_df):
-        return TimedeltaModelRequirementsWithoutHistory(timedelta_df)
+        return CorrTableModelRequirements(timedelta_df)
 
     def test_weather_timestamp_requirements(self, model_requirements_calculator, timedelta_df):
         min_timedelta = timedelta_df[column_names.AVG_TIMEDELTA].min()
@@ -45,6 +45,3 @@ class TestTimedeltaModelRequirementsWOHistory:
         weather_borders = model_requirements_calculator.get_weather_start_end_timestamps(self.control_action_timestamp)
         assert (start_weather_timestamp, end_weather_timestamp) == weather_borders
 
-    def test_system_states_history_requirements(self, model_requirements_calculator):
-        borders_df = model_requirements_calculator.get_heating_states_history_timestamps(self.control_action_timestamp)
-        assert borders_df.empty

@@ -1,22 +1,17 @@
 import random
 
-import pytest
 import pandas as pd
-from boiler.control_action.temp_delta_calculator.single_type_forward_pipe_temp_delta_calculator import \
-    SingleTypeForwardPipeTempDeltaCalculator
+import pytest
 from dateutil.tz import gettz
 
 from boiler.constants import column_names, heating_object_types
-from boiler.data_processing.float_round_algorithm import ArithmeticFloatRoundAlgorithm
-from boiler.data_processing.timestamp_round_algorithm import CeilTimestampRoundAlgorithm
-from boiler.temp_requirements.calculators.temp_graph_requirements_calculator import TempGraphRequirementsCalculator
-from boiler.temp_requirements.constraint.single_type_heating_obj_on_weather_constraint\
-    import SingleTypeHeatingObjOnWeatherConstraint
+from boiler.control_action.temp_delta_calculator.single_type_temp_delta_calculator import \
+    SingleTypeTempDeltaCalculator
 
 random.seed(10)
 
 
-class TestSingleTypeForwardPipeTempDeltaCalculator:
+class TestSingleTypeTempDeltaCalculator:
     time_step = pd.Timedelta(seconds=60)
     items_count = 10
     start_timestamp = pd.Timestamp.now(tz=gettz("Asia/Yekaterinburg"))
@@ -54,7 +49,7 @@ class TestSingleTypeForwardPipeTempDeltaCalculator:
 
     @pytest.fixture
     def calculator(self):
-        return SingleTypeForwardPipeTempDeltaCalculator()
+        return SingleTypeTempDeltaCalculator()
 
     def test_calculation(self, reaction_df, requirements_df, calculator):
         temp_delta_df = calculator.calc_temp_delta(reaction_df, requirements_df)
