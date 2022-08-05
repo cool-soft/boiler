@@ -1,6 +1,6 @@
 import re
 from datetime import datetime, tzinfo
-from typing import List, Optional
+from typing import List
 
 
 class AbstractTimestampParsingAlgorithm:
