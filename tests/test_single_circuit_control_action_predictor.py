@@ -156,7 +156,6 @@ class TestSingleCircuitControlActionPredictor:
         weather_df = self.generate_weather_df(temp_graph_df[column_names.WEATHER_TEMP].min()-10)
         control_action = control_action_predictor.predict_one(
             weather_df,
-            heating_system_state_history_df,
             self.control_timestamp
         )
         assert len(control_action) == 1
@@ -170,7 +169,6 @@ class TestSingleCircuitControlActionPredictor:
         weather_df = self.generate_weather_df(temp_graph_df[column_names.WEATHER_TEMP].max()+10)
         control_action = control_action_predictor.predict_one(
             weather_df,
-            heating_system_state_history_df,
             self.control_timestamp
         )
         assert len(control_action) == 1

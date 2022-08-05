@@ -38,7 +38,6 @@ class SingleCircuitControlActionPredictor(AbstractControlActionPredictor):
 
     def predict_one(self,
                     weather_forecast_df: pd.DataFrame,
-                    system_states_history_df: pd.DataFrame,
                     control_action_timestamp: pd.Timestamp
                     ) -> pd.DataFrame:
         logger.debug(f"Requested prediction for timestamp: {control_action_timestamp}")
@@ -51,7 +50,6 @@ class SingleCircuitControlActionPredictor(AbstractControlActionPredictor):
                 break
             heating_system_reaction_df = self._heating_system_model.predict(
                 weather_forecast_df,
-                system_states_history_df,
                 control_action_df
             )
             temp_delta = self._temp_requirements_constraint.check(

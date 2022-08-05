@@ -96,7 +96,6 @@ class TestCorrTableHeatingSystemModel:
             }])
             system_reaction_df = heating_system_model.predict(
                 weather_df,
-                heating_system_state_history_df,
                 control_action_df
             )
 
