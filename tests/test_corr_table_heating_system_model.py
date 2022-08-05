@@ -92,7 +92,7 @@ class TestCorrTableHeatingSystemModel:
             control_action_df = pd.DataFrame([{
                 column_names.TIMESTAMP: self.control_timestamp,
                 column_names.CIRCUIT_TYPE: self.circuit_type,
-                column_names.FORWARD_PIPE_COOLANT_TEMP: current_temp
+                column_names.FORWARD_TEMP: current_temp
             }])
             system_reaction_df = heating_system_model.predict(
                 weather_df,
@@ -102,8 +102,8 @@ class TestCorrTableHeatingSystemModel:
             for column_name in dataset_prototypes.HEATING_SYSTEM_STATE.columns.to_list():
                 assert column_name in system_reaction_df
 
-            assert system_reaction_df[column_names.FORWARD_PIPE_COOLANT_TEMP].notnull().all() or\
-                system_reaction_df[column_names.BACKWARD_PIPE_COOLANT_TEMP].notnull().all()
+            assert system_reaction_df[column_names.FORWARD_TEMP].notnull().all() or \
+                   system_reaction_df[column_names.BACKWARD_TEMP].notnull().all()
 
             for obj_id, timedelta in self.obj_and_timedelta.items():
                 assert obj_id in system_reaction_df[column_names.HEATING_OBJ_ID].to_list()

@@ -7,7 +7,7 @@ from dateutil.tz import gettz
 from boiler.constants import column_names, heating_object_types
 from boiler.data_processing.float_round_algorithm import ArithmeticFloatRoundAlgorithm
 from boiler.data_processing.timestamp_round_algorithm import CeilTimestampRoundAlgorithm
-from boiler.temp_requirements.predictors.temp_graph_requirements_predictor import TempGraphRequirementsPredictor
+from boiler.temp_requirements.calculators.temp_graph_requirements_calculator import TempGraphRequirementsCalculator
 from boiler.temp_requirements.constraint.single_type_heating_obj_on_weather_constraint\
     import SingleTypeHeatingObjOnWeatherConstraint
 
@@ -58,21 +58,21 @@ class TestSingleTypeHeatingObjConstraint:
         for weather_temp in range(self.weather_min_temp, self.weather_max_temp+1):
             temp_graph_list.append({
                 column_names.WEATHER_TEMP: weather_temp,
-                column_names.FORWARD_PIPE_COOLANT_TEMP: weather_temp + 50.0,
-                column_names.BACKWARD_PIPE_COOLANT_TEMP: weather_temp + 40.0
+                column_names.FORWARD_TEMP: weather_temp + 50.0,
+                column_names.BACKWARD_TEMP: weather_temp + 40.0
             })
         return pd.DataFrame(temp_graph_list)
 
     @pytest.fixture
     def temp_requirements_predictor(self, temp_graph_df):
-        return TempGraphRequirementsPredictor(
+        return TempGraphRequirementsCalculator(
             temp_graph_df,
             ArithmeticFloatRoundAlgorithm(decimals=self.weather_temp_round_decimals)
         )
 
     @pytest.fixture
     def reaction_df_list(self, weather_df, answers, temp_requirements_predictor):
-        temp_requirements_df = temp_requirements_predictor.predict_on_weather(weather_df)
+        temp_requirements_df = temp_requirements_predictor.calc_for_weather(weather_df)
 
         reactions_df_list = []
         for i, answer in enumerate(answers):
@@ -102,10 +102,10 @@ class TestSingleTypeHeatingObjConstraint:
             column_names.TIMESTAMP: requirements_item[column_names.TIMESTAMP].to_list().pop(),
             column_names.HEATING_OBJ_ID: f"obj_{obj_number}",
             column_names.HEATING_OBJ_TYPE: self.heating_object_type,
-            column_names.FORWARD_PIPE_COOLANT_TEMP:
-                requirements_item[column_names.FORWARD_PIPE_COOLANT_TEMP].to_list().pop()
+            column_names.FORWARD_TEMP:
+                requirements_item[column_names.FORWARD_TEMP].to_list().pop()
                 + random.randint(3, 5),
-            column_names.BACKWARD_PIPE_COOLANT_TEMP: None
+            column_names.BACKWARD_TEMP: None
         }
         return reaction
 
@@ -114,10 +114,10 @@ class TestSingleTypeHeatingObjConstraint:
             column_names.TIMESTAMP: requirements_item[column_names.TIMESTAMP].to_list().pop(),
             column_names.HEATING_OBJ_ID: f"obj_{obj_number}",
             column_names.HEATING_OBJ_TYPE: self.heating_object_type,
-            column_names.FORWARD_PIPE_COOLANT_TEMP:
-                requirements_item[column_names.FORWARD_PIPE_COOLANT_TEMP].to_list().pop()
+            column_names.FORWARD_TEMP:
+                requirements_item[column_names.FORWARD_TEMP].to_list().pop()
                 - random.randint(3, 5),
-            column_names.BACKWARD_PIPE_COOLANT_TEMP: None
+            column_names.BACKWARD_TEMP: None
         }
         return reaction
 

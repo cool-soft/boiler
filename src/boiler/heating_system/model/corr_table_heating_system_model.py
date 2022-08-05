@@ -42,8 +42,8 @@ class CorrTableHeatingSystemModel(AbstractHeatingSystemModel):
                 column_names.HEATING_OBJ_ID: obj_id,
                 column_names.HEATING_OBJ_TYPE: self._objects_type,
                 column_names.CIRCUIT_TYPE: self._circuit_type,
-                column_names.FORWARD_PIPE_COOLANT_TEMP: coolant_temp,
-                column_names.BACKWARD_PIPE_COOLANT_TEMP: None
+                column_names.FORWARD_TEMP: coolant_temp,
+                column_names.BACKWARD_TEMP: None
             })
 
         return pd.DataFrame(heating_system_reaction)
@@ -54,7 +54,7 @@ class CorrTableHeatingSystemModel(AbstractHeatingSystemModel):
         ].copy()
         last_timestamp_idx = control_action_df[column_names.TIMESTAMP].idxmax()
         control_action_timestamp = control_action_df.loc[last_timestamp_idx, column_names.TIMESTAMP]
-        boiler_temp = control_action_df.loc[last_timestamp_idx, column_names.FORWARD_PIPE_COOLANT_TEMP]
+        boiler_temp = control_action_df.loc[last_timestamp_idx, column_names.FORWARD_TEMP]
         return boiler_temp, control_action_timestamp
 
     def _calc_coolant_temp_for_object(self, obj_id: str, boiler_temp: float) -> float:

@@ -16,14 +16,14 @@ class TempGraphSyncDumpLoadTesting:
                 temp_graph, 
                 pd.DataFrame([
                     {column_names.WEATHER_TEMP: -10,
-                     column_names.FORWARD_PIPE_COOLANT_TEMP: 50.1,
-                     column_names.BACKWARD_PIPE_COOLANT_TEMP: 45},
+                     column_names.FORWARD_TEMP: 50.1,
+                     column_names.BACKWARD_TEMP: 45},
                     {column_names.WEATHER_TEMP: 0,
-                     column_names.FORWARD_PIPE_COOLANT_TEMP: 40,
-                     column_names.BACKWARD_PIPE_COOLANT_TEMP: 38.7},
+                     column_names.FORWARD_TEMP: 40,
+                     column_names.BACKWARD_TEMP: 38.7},
                     {column_names.WEATHER_TEMP: 10,
-                     column_names.FORWARD_PIPE_COOLANT_TEMP: 30,
-                     column_names.BACKWARD_PIPE_COOLANT_TEMP: 28},
+                     column_names.FORWARD_TEMP: 30,
+                     column_names.BACKWARD_TEMP: 28},
                 ])
             ]
         )

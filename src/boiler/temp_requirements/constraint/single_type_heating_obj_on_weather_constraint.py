@@ -6,15 +6,15 @@ from boiler.logging import logger
 
 from boiler.constants import heating_object_types, column_names
 from boiler.data_processing.timestamp_round_algorithm import AbstractTimestampRoundAlgorithm
-from boiler.temp_requirements.predictors.abstract_temp_requirements_predictor \
-    import AbstractTempRequirementsPredictor
+from boiler.temp_requirements.calculators.abstract_temp_requirements_calculator \
+    import AbstractTempRequirementsCalculator
 from .abstract_on_weather_constraint import AbstractOnWeatherConstraint
 
 
 class SingleTypeHeatingObjOnWeatherConstraint(AbstractOnWeatherConstraint):
 
     def __init__(self,
-                 temp_requirements_predictor: AbstractTempRequirementsPredictor,
+                 temp_requirements_predictor: AbstractTempRequirementsCalculator,
                  timestamp_round_algo: AbstractTimestampRoundAlgorithm,
                  temp_requirements_coefficient: float = 1.0,
                  min_model_error: float = 1.0,
@@ -45,10 +45,10 @@ class SingleTypeHeatingObjOnWeatherConstraint(AbstractOnWeatherConstraint):
         system_reaction_df = self._round_timestamp(system_reaction_df)
         # TODO: обрезать из weather_df только нужную для сравнения часть по TIMESTAMP
         weather_df = self._round_timestamp(weather_df)
-        temp_requirements_df = self._temp_requirements_predictor.predict_on_weather(weather_df)
+        temp_requirements_df = self._temp_requirements_predictor.calc_for_weather(weather_df)
         temp_delta = math.inf
-        for column_name in (column_names.FORWARD_PIPE_COOLANT_TEMP,
-                            column_names.BACKWARD_PIPE_COOLANT_TEMP):
+        for column_name in (column_names.FORWARD_TEMP,
+                            column_names.BACKWARD_TEMP):
             current_temp_delta = self._get_temp_delta(system_reaction_df, temp_requirements_df, column_name)
             if not np.isnan(current_temp_delta):
                 temp_delta = min(current_temp_delta, temp_delta)

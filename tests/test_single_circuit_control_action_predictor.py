@@ -12,7 +12,7 @@ from dateutil.tz import gettz
 from boiler.constants import circuit_types, heating_object_types, column_names, dataset_prototypes
 from boiler.data_processing.float_round_algorithm import ArithmeticFloatRoundAlgorithm
 from boiler.heating_system.model.corr_table_heating_system_model import CorrTableHeatingSystemModel
-from boiler.temp_requirements.predictors.temp_graph_requirements_predictor import TempGraphRequirementsPredictor
+from boiler.temp_requirements.calculators.temp_graph_requirements_calculator import TempGraphRequirementsCalculator
 
 random.seed(10)
 
@@ -97,8 +97,8 @@ class TestSingleCircuitControlActionPredictor:
         for i in range(self.temp_graph_rows_count):
             requirements = {
                 column_names.WEATHER_TEMP: current_weather_temp,
-                column_names.FORWARD_PIPE_COOLANT_TEMP: current_required_temp,
-                column_names.BACKWARD_PIPE_COOLANT_TEMP: current_required_temp - 1
+                column_names.FORWARD_TEMP: current_required_temp,
+                column_names.BACKWARD_TEMP: current_required_temp - 1
             }
             temp_graph_list.append(requirements)
             current_weather_temp += weather_temp_step
@@ -108,7 +108,7 @@ class TestSingleCircuitControlActionPredictor:
 
     @pytest.fixture
     def temp_requirements_predictor(self, temp_graph_df):
-        return TempGraphRequirementsPredictor(
+        return TempGraphRequirementsCalculator(
             temp_graph=temp_graph_df,
             weather_temp_round_algorithm=ArithmeticFloatRoundAlgorithm()
         )
@@ -159,7 +159,7 @@ class TestSingleCircuitControlActionPredictor:
             self.control_timestamp
         )
         assert len(control_action) == 1
-        assert abs(control_action[column_names.FORWARD_PIPE_COOLANT_TEMP].to_list().pop()
+        assert abs(control_action[column_names.FORWARD_TEMP].to_list().pop()
                    - self.max_boiler_temp) <= self.regulation_step
 
     def test_on_over_max_weather_temp(self,
@@ -172,5 +172,5 @@ class TestSingleCircuitControlActionPredictor:
             self.control_timestamp
         )
         assert len(control_action) == 1
-        assert abs(control_action[column_names.FORWARD_PIPE_COOLANT_TEMP].to_list().pop()
+        assert abs(control_action[column_names.FORWARD_TEMP].to_list().pop()
                    - self.min_boiler_temp) <= self.regulation_step
