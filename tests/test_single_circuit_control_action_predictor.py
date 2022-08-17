@@ -2,16 +2,14 @@ import math
 import random
 import pandas as pd
 import pytest
-from boiler.control_action.temp_delta_calculator.single_type_temp_delta_calculator import SingleTypeTempDeltaCalculator
+from boiler.temp_requirements.temp_delta_calculator.single_type_temp_delta_calculator import \
+    SingleTypeTempDeltaCalculator
 
 from boiler.control_action.predictors.single_circuit_control_action_predictor import SingleCircuitControlActionPredictor
 
-from boiler.data_processing.timestamp_round_algorithm import CeilTimestampRoundAlgorithm
-from boiler.temp_requirements.constraint.single_type_heating_obj_on_weather_constraint \
-    import SingleTypeHeatingObjOnWeatherConstraint
 from dateutil.tz import gettz
 
-from boiler.constants import circuit_types, heating_object_types, column_names, dataset_prototypes
+from boiler.constants import circuit_types, heating_object_types, column_names
 from boiler.data_processing.float_round_algorithm import ArithmeticFloatRoundAlgorithm
 from boiler.heating_system.model.corr_table_heating_system_model import CorrTableHeatingSystemModel
 from boiler.temp_requirements.calculators.temp_graph_requirements_calculator import TempGraphRequirementsCalculator

@@ -1,7 +1,7 @@
 import pandas as pd
 
 from boiler.constants import column_names, circuit_types
-from boiler.control_action.temp_delta_calculator.abstract_temp_delta_calculator import AbstractTempDeltaCalculator
+from boiler.temp_requirements.temp_delta_calculator.abstract_temp_delta_calculator import AbstractTempDeltaCalculator
 from boiler.heating_system.model.abstract_heating_system_model import AbstractHeatingSystemModel
 from .abstract_control_action_predictor import AbstractControlActionPredictor
 
@@ -41,7 +41,6 @@ class SingleCircuitControlActionPredictor(AbstractControlActionPredictor):
                 heating_system_reaction_df,
                 temp_requirements_df
             )
-            temp_delta = temp_delta[column_names.FORWARD_TEMP_DELTA].min()
             if temp_delta < 0:
                 a_temp = mean_temp
             else:
