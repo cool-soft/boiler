@@ -1,3 +1,4 @@
+import math
 import random
 
 import pandas as pd
@@ -48,9 +49,23 @@ class TestSingleTypeTempDeltaCalculator:
         return requirements_df
 
     @pytest.fixture
+    def answer(self, requirements_df, reaction_df):
+        temp_delta = math.inf
+        for requirement, reaction in zip(requirements_df.iterrows(), reaction_df.iterrows()):
+            _, requirement_row = requirement
+            _, reaction_row = reaction
+            reaction_forward_temp = reaction_row[column_names.FORWARD_TEMP]
+            required_forward_temp = requirement_row[column_names.FORWARD_TEMP]
+            current_temp_delta = reaction_forward_temp - required_forward_temp
+            if current_temp_delta < temp_delta:
+                temp_delta = current_temp_delta
+        return temp_delta
+
+    @pytest.fixture
     def calculator(self):
         return SingleTypeTempDeltaCalculator()
 
-    def test_calculation(self, reaction_df, requirements_df, calculator):
-        temp_delta_df = calculator.calc_temp_delta(reaction_df, requirements_df)
-        assert isinstance(temp_delta_df, float)
+    def test_calculation(self, reaction_df, requirements_df, calculator, answer):
+        temp_delta = calculator.calc_temp_delta(reaction_df, requirements_df)
+        assert isinstance(temp_delta, float)
+        assert answer == temp_delta
