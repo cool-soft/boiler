@@ -2,13 +2,10 @@ import pytest
 import pandas as pd
 
 from boiler.constants import column_names
-from boiler.heating_system.model_requirements.corr_table_model_requirements import \
-    CorrTableModelRequirements
+from boiler.heating_system.model_parameters.corr_table_model_parameters import CorrTableModelParameters
 
 
 class TestTimedeltaModelRequirementsWOHistory:
-
-    control_action_timestamp = pd.Timestamp("2017-01-01T12:00+05:00")
 
     @pytest.fixture
     def timedelta_df(self):
@@ -33,15 +30,12 @@ class TestTimedeltaModelRequirementsWOHistory:
         ])
 
     @pytest.fixture
-    def model_requirements_calculator(self, timedelta_df):
-        return CorrTableModelRequirements(timedelta_df)
+    def model_parameters(self, timedelta_df):
+        return CorrTableModelParameters(timedelta_df)
 
-    def test_weather_timestamp_requirements(self, model_requirements_calculator, timedelta_df):
+    def test_min_max_lag_parameters(self, model_parameters, timedelta_df):
         min_timedelta = timedelta_df[column_names.AVG_TIMEDELTA].min()
+        assert min_timedelta == model_parameters.get_min_heating_system_lag()
+
         max_timedelta = timedelta_df[column_names.AVG_TIMEDELTA].max()
-        start_weather_timestamp = self.control_action_timestamp + min_timedelta
-        end_weather_timestamp = self.control_action_timestamp + max_timedelta
-
-        weather_borders = model_requirements_calculator.get_weather_start_end_timestamps(self.control_action_timestamp)
-        assert (start_weather_timestamp, end_weather_timestamp) == weather_borders
-
+        assert max_timedelta == model_parameters.get_max_heating_system_lag()
